@@ -13,11 +13,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
  */
 @Configuration
 public class SecurityConfig {
+    /**
+     * Bean for password encoding using BCrypt.
+     * Bean pour l'encodage des mots de passe avec BCrypt.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Security filter chain configuration for HTTP security.
+     * Configuration de la chaîne de filtres de sécurité HTTP.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

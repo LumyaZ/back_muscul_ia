@@ -29,18 +29,18 @@ class UserServiceImplTest {
         userService.passwordEncoder = passwordEncoder;
 
         RegisterRequest request = new RegisterRequest();
-        request.setUsername("testuser");
+        request.setEmail("testuser@email.com");
         request.setPassword("password");
-        request.setRole("USER");
+        request.setConfirmPassword("password");
 
         // Act / Action
         userService.register(request);
 
         // Assert / Vérification
         Mockito.verify(userRepository).save(Mockito.argThat(user ->
-                user.getUsername().equals("testuser") &&
+                user.getEmail().equals("testuser@email.com") &&
                 user.getPassword().equals("hashedPassword") &&
-                user.getRole().equals("USER")
+                user.getCreationDate() != null
         ));
     }
 
@@ -54,14 +54,14 @@ class UserServiceImplTest {
         userService.passwordEncoder = passwordEncoder;
 
         User user = new User();
-        user.setUsername("testuser");
+        user.setEmail("testuser@email.com");
         user.setPassword("hashedPassword");
-        user.setRole("USER");
-        Mockito.when(userRepository.findByUsername("testuser")).thenReturn(java.util.Optional.of(user));
+        user.setCreationDate(java.time.LocalDateTime.now());
+        Mockito.when(userRepository.findByEmail("testuser@email.com")).thenReturn(java.util.Optional.of(user));
         Mockito.when(passwordEncoder.matches("password", "hashedPassword")).thenReturn(true);
 
         com.example.muscul_ia.dto.LoginRequest request = new com.example.muscul_ia.dto.LoginRequest();
-        request.setUsername("testuser");
+        request.setEmail("testuser@email.com");
         request.setPassword("password");
 
         // Act / Action
@@ -69,7 +69,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void testRegisterWithExistingUsernameThrowsException() {
+    void testRegisterWithExistingEmailThrowsException() {
         // Arrange / Préparation
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
@@ -78,11 +78,29 @@ class UserServiceImplTest {
         userService.passwordEncoder = passwordEncoder;
 
         RegisterRequest request = new RegisterRequest();
-        request.setUsername("existinguser");
+        request.setEmail("existing@email.com");
         request.setPassword("password");
-        request.setRole("USER");
+        request.setConfirmPassword("password");
 
-        Mockito.when(userRepository.findByUsername("existinguser")).thenReturn(java.util.Optional.of(new User()));
+        Mockito.when(userRepository.findByEmail("existing@email.com")).thenReturn(java.util.Optional.of(new User()));
+
+        // Act & Assert / Action & Vérification
+        assertThrows(RuntimeException.class, () -> userService.register(request));
+    }
+
+    @Test
+    void testRegisterWithNonMatchingPasswordsThrowsException() {
+        // Arrange / Préparation
+        UserRepository userRepository = Mockito.mock(UserRepository.class);
+        PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
+        UserServiceImpl userService = new UserServiceImpl();
+        userService.userRepository = userRepository;
+        userService.passwordEncoder = passwordEncoder;
+
+        RegisterRequest request = new RegisterRequest();
+        request.setEmail("testuser@email.com");
+        request.setPassword("password1");
+        request.setConfirmPassword("password2");
 
         // Act & Assert / Action & Vérification
         assertThrows(RuntimeException.class, () -> userService.register(request));

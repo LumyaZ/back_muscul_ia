@@ -1,10 +1,11 @@
 package com.example.muscul_ia.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 /**
- * User entity for authentication and authorization.
- * Entité utilisateur pour l'authentification et l'autorisation.
+ * User entity for authentication.
+ * Entité utilisateur pour l'authentification.
  */
 @Entity
 public class User {
@@ -13,11 +14,11 @@ public class User {
     private Long id;
 
     /**
-     * Username for login (could be email).
-     * Nom d'utilisateur pour la connexion (peut être un email).
+     * Email for login (unique).
+     * Email pour la connexion (unique).
      */
     @Column(nullable = false, unique = true)
-    private String username;
+    private String email;
 
     /**
      * Hashed password (never store plain text).
@@ -27,18 +28,19 @@ public class User {
     private String password;
 
     /**
-     * User role (e.g., USER, ADMIN).
-     * Rôle de l'utilisateur (ex : USER, ADMIN).
+     * Account creation date.
+     * Date de création du compte.
      */
-    private String role;
+    @Column(nullable = false)
+    private LocalDateTime creationDate;
 
     // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public LocalDateTime getCreationDate() { return creationDate; }
+    public void setCreationDate(LocalDateTime creationDate) { this.creationDate = creationDate; }
 } 

@@ -23,31 +23,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto register(RegisterRequest request) {
+        // Vérifie la confirmation du mot de passe
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            throw new RuntimeException("Passwords do not match");
+        }
         // Vérifie si l'utilisateur existe déjà
-        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
-            throw new RuntimeException("Username already exists");
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
         }
         // Hash le mot de passe
         String hashedPassword = passwordEncoder.encode(request.getPassword());
         // Crée l'utilisateur
         User user = new User();
-        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
         user.setPassword(hashedPassword);
-        user.setRole(request.getRole());
+        user.setCreationDate(java.time.LocalDateTime.now());
         // Sauvegarde en base
         userRepository.save(user);
         // Retourne le DTO
         UserDto dto = new UserDto();
         dto.setId(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setRole(user.getRole());
+        dto.setEmail(user.getEmail());
+        dto.setCreationDate(user.getCreationDate());
         return dto;
     }
 
     @Override
     public UserDto login(LoginRequest request) {
-        // Recherche l'utilisateur par username
-        User user = userRepository.findByUsername(request.getUsername())
+        // Recherche l'utilisateur par email
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Vérifie le mot de passe (hashé)
@@ -58,8 +62,8 @@ public class UserServiceImpl implements UserService {
         // Retourne le DTO utilisateur (sans le mot de passe)
         UserDto dto = new UserDto();
         dto.setId(user.getId());
-        dto.setUsername(user.getUsername());
-        dto.setRole(user.getRole());
+        dto.setEmail(user.getEmail());
+        dto.setCreationDate(user.getCreationDate());
         return dto;
     }
 } 
