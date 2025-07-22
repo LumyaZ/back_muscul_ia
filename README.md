@@ -1,7 +1,7 @@
 # Muscul IA - Backend API
 
 ## 📋 Description
-Backend Spring Boot pour l'application Muscul IA - système d'authentification et API REST pour la gestion des programmes d'entraînement de musculation.
+Backend Spring Boot pour l'application Muscul IA - système d'authentification et API REST pour la gestion des profils utilisateur et des programmes d'entraînement de musculation.
 
 ## 🏗️ Architecture
 
@@ -27,6 +27,7 @@ src/main/java/com/example/muscul_ia/
 - **BCrypt** - Hachage des mots de passe
 - **Swagger/OpenAPI** - Documentation API
 - **Maven** - Gestion des dépendances
+- **Flyway** - Migration de base de données
 
 ## 🚀 Installation et démarrage
 
@@ -70,6 +71,7 @@ L'application sera accessible sur : `http://localhost:8080`
 ### Endpoints publics
 - `/api/auth/register` - Inscription utilisateur
 - `/api/auth/login` - Connexion utilisateur
+- `/api/profiles/**` - Gestion des profils utilisateur
 - `/swagger-ui.html` - Documentation API
 - `/v3/api-docs/**` - Spécification OpenAPI
 
@@ -123,6 +125,51 @@ Connexion d'un utilisateur existant.
 }
 ```
 
+### Endpoints de gestion des profils utilisateur
+
+#### POST /api/profiles
+Créer un profil utilisateur.
+
+**Request Body :**
+```json
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "dateOfBirth": "1990-01-01",
+  "phoneNumber": "+33123456789"
+}
+```
+
+**Response :**
+```json
+{
+  "id": 1,
+  "userId": 1,
+  "firstName": "John",
+  "lastName": "Doe",
+  "fullName": "John Doe",
+  "dateOfBirth": "1990-01-01",
+  "age": 34,
+  "phoneNumber": "+33123456789",
+  "createdAt": "2024-01-01T10:00:00",
+  "updatedAt": null
+}
+```
+
+#### GET /api/profiles/me
+Obtenir son propre profil.
+
+#### GET /api/profiles/{userId}
+Obtenir un profil par ID utilisateur.
+
+
+
+#### PUT /api/profiles/me
+Mettre à jour son propre profil.
+
+#### DELETE /api/profiles/me
+Supprimer son propre profil.
+
 ## 🗄️ Modèle de données
 
 ### Entité User
@@ -141,6 +188,45 @@ public class User {
     
     @Column(nullable = false)
     private LocalDateTime creationDate;
+    
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserProfile userProfile;
+}
+```
+
+### Entité UserProfile
+```java
+@Entity
+@Table(name = "user_profile")
+public class UserProfile {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
+    
+    @Column(name = "first_name", length = 50)
+    private String firstName;
+    
+    @Column(name = "last_name", length = 50)
+    private String lastName;
+    
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
+    
+    @Column(name = "age")
+    private Integer age;
+    
+    @Column(name = "phone_number", length = 20)
+    private String phoneNumber;
+    
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+    
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }
 ```
 
@@ -160,6 +246,14 @@ public class User {
   - Inscription avec validation des mots de passe
   - Connexion avec vérification des identifiants
   - Gestion des erreurs (email existant, mots de passe différents)
+- **UserProfileServiceImplTest** : Tests de la logique métier des profils utilisateur
+  - Création de profil avec validation
+  - Récupération de profil par utilisateur et par ID
+  - Mise à jour de profil
+  - Suppression de profil
+  - Gestion des erreurs (profil déjà existant, utilisateur inexistant)
+  - Vérification de l'existence d'un profil
+  - Récupération de tous les profils
 
 ## 🔧 Configuration
 
@@ -174,6 +268,10 @@ spring.datasource.password=your_password
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# Flyway (migrations)
+spring.flyway.enabled=true
+spring.flyway.locations=classpath:db/migration
 
 # Logs
 logging.level.com.example.muscul_ia=DEBUG
@@ -191,6 +289,7 @@ logging.level.com.example.muscul_ia=DEBUG
 - Tentatives de connexion échouées
 - Erreurs de validation des données
 - Problèmes de connexion à la base de données
+- Opérations sur les profils utilisateur
 
 ## 🚀 Déploiement
 
@@ -210,11 +309,13 @@ spring.datasource.password=${DATABASE_PASSWORD}
 ## 🔄 Évolutions futures
 
 ### Fonctionnalités prévues
-- [ ] Gestion des profils utilisateur
+- [x] Gestion des profils utilisateur
 - [ ] API pour les programmes d'entraînement
 - [ ] Système de JWT pour l'authentification
 - [ ] Gestion des rôles et permissions
 - [ ] API pour les exercices et séries
+- [ ] Calcul automatique du BMI et recommandations
+- [ ] Historique des modifications de profil
 
 ### Améliorations techniques
 - [ ] Cache Redis pour les sessions
@@ -222,6 +323,7 @@ spring.datasource.password=${DATABASE_PASSWORD}
 - [ ] Monitoring avec Micrometer
 - [ ] Tests d'intégration
 - [ ] Documentation OpenAPI complète
+- [ ] Validation avancée des données de profil
 
 ## 📞 Support
 
@@ -229,8 +331,9 @@ Pour toute question ou problème :
 - Vérifier les logs de l'application
 - Consulter la documentation Swagger : `http://localhost:8080/swagger-ui.html`
 - Vérifier la configuration de la base de données
+- Consulter la documentation API des profils : `USER_PROFILE_API.md`
 
 ---
 
-**Version :** 1.0.0  
+**Version :** 1.1.0  
 **Dernière mise à jour :** Janvier 2024
