@@ -3,6 +3,8 @@ package com.example.muscul_ia.controller;
 import com.example.muscul_ia.dto.LoginRequest;
 import com.example.muscul_ia.dto.RegisterRequest;
 import com.example.muscul_ia.dto.UserDto;
+import com.example.muscul_ia.dto.CreateUserWithProfileRequest;
+import com.example.muscul_ia.dto.CreateUserWithProfileResponse;
 import com.example.muscul_ia.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -11,7 +13,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 @Tag(name = "Authentication", description = "Endpoints d'authentification pour l'application Muscul IA")
+@CrossOrigin(origins = "*")
 public class AuthController {
     @Autowired
     private UserService userService;
@@ -32,8 +37,8 @@ public class AuthController {
      */
     @PostMapping("/register")
     @Operation(
-        summary = "Inscription utilisateur",
-        description = "Crée un nouveau compte utilisateur avec email et mot de passe"
+        summary = "Inscription",
+        description = "Créer un nouveau compte utilisateur"
     )
     @ApiResponses(value = {
         @ApiResponse(
@@ -60,14 +65,68 @@ public class AuthController {
             )
         )
     })
-    public ResponseEntity<UserDto> register(
-        @RequestBody @Schema(description = "Données d'inscription") RegisterRequest request
-    ) {
+    public ResponseEntity<UserDto> register(@Valid @RequestBody RegisterRequest request) {
+        System.out.println("=== AUTH: REGISTER ===");
+        System.out.println("Request received: " + request);
+        System.out.println("Email: " + request.getEmail());
+        System.out.println("Password: [HIDDEN]");
+        System.out.println("ConfirmPassword: [HIDDEN]");
+        
         try {
-            UserDto user = userService.register(request);
-            return ResponseEntity.ok(user);
+            UserDto createdUser = userService.register(request);
+            System.out.println("User created successfully: " + createdUser.getId() + " - " + createdUser.getEmail());
+            System.out.println("=========================");
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
+            System.out.println("ERROR during registration: " + e.getMessage());
+            System.out.println("=========================");
+            throw e;
+        }
+    }
+
+    /**
+     * Create a new user with profile in one request.
+     * Créer un nouvel utilisateur avec profil en une seule requête.
+     */
+    @PostMapping("/create-user-with-profile")
+    @Operation(
+        summary = "Création utilisateur avec profil",
+        description = "Créer un utilisateur et son profil en une seule opération"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "201",
+            description = "Utilisateur et profil créés avec succès",
+            content = @Content(
+                schema = @Schema(implementation = CreateUserWithProfileResponse.class)
+            )
+        ),
+        @ApiResponse(
+            responseCode = "400",
+            description = "Données invalides"
+        ),
+        @ApiResponse(
+            responseCode = "409",
+            description = "Email déjà utilisé"
+        )
+    })
+    public ResponseEntity<CreateUserWithProfileResponse> createUserWithProfile(@Valid @RequestBody CreateUserWithProfileRequest request) {
+        System.out.println("=== AUTH: CREATE USER WITH PROFILE ===");
+        System.out.println("Request received: " + request);
+        System.out.println("User data: " + request.getUserData());
+        System.out.println("Profile data: " + request.getProfileData());
+        
+        try {
+            CreateUserWithProfileResponse response = userService.createUserWithProfile(request);
+            System.out.println("User and profile created successfully");
+            System.out.println("User: " + response.getUser().getId() + " - " + response.getUser().getEmail());
+            System.out.println("Profile: " + response.getProfile().getId() + " for user " + response.getProfile().getUserId());
+            System.out.println("=========================");
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (RuntimeException e) {
+            System.out.println("ERROR during user and profile creation: " + e.getMessage());
+            System.out.println("=========================");
+            throw e;
         }
     }
 
@@ -77,8 +136,8 @@ public class AuthController {
      */
     @PostMapping("/login")
     @Operation(
-        summary = "Connexion utilisateur",
-        description = "Authentifie un utilisateur avec email et mot de passe"
+        summary = "Connexion",
+        description = "Se connecter avec email et mot de passe"
     )
     @ApiResponses(value = {
         @ApiResponse(
@@ -105,14 +164,21 @@ public class AuthController {
             )
         )
     })
-    public ResponseEntity<UserDto> login(
-        @RequestBody @Schema(description = "Données de connexion") LoginRequest request
-    ) {
+    public ResponseEntity<UserDto> login(@Valid @RequestBody LoginRequest request) {
+        System.out.println("=== AUTH: LOGIN ===");
+        System.out.println("Request received: " + request);
+        System.out.println("Email: " + request.getEmail());
+        System.out.println("Password: [HIDDEN]");
+        
         try {
-            UserDto user = userService.login(request);
-            return ResponseEntity.ok(user);
+            UserDto loggedInUser = userService.login(request);
+            System.out.println("User logged in successfully: " + loggedInUser.getId() + " - " + loggedInUser.getEmail());
+            System.out.println("===================");
+            return ResponseEntity.ok(loggedInUser);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(401).build();
+            System.out.println("ERROR during login: " + e.getMessage());
+            System.out.println("===================");
+            throw e;
         }
     }
 } 

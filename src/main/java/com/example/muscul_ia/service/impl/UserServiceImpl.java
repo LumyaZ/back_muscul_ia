@@ -3,12 +3,18 @@ package com.example.muscul_ia.service.impl;
 import com.example.muscul_ia.dto.RegisterRequest;
 import com.example.muscul_ia.dto.LoginRequest;
 import com.example.muscul_ia.dto.UserDto;
+import com.example.muscul_ia.dto.CreateUserWithProfileRequest;
+import com.example.muscul_ia.dto.CreateUserWithProfileResponse;
+import com.example.muscul_ia.dto.UserProfileDto;
 import com.example.muscul_ia.entity.User;
 import com.example.muscul_ia.repository.UserRepository;
 import com.example.muscul_ia.service.UserService;
+import com.example.muscul_ia.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of UserService for user business logic.
@@ -17,53 +23,91 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserProfileService userProfileService;
 
     @Override
+    @Transactional
     public UserDto register(RegisterRequest request) {
-        // Vérifie la confirmation du mot de passe
+        System.out.println("=== USER SERVICE: REGISTER ===");
+        System.out.println("Request: " + request);
+        
+        // Check if passwords match
         if (!request.getPassword().equals(request.getConfirmPassword())) {
+            System.out.println("ERROR: Passwords do not match");
             throw new RuntimeException("Passwords do not match");
         }
-        // Vérifie si l'utilisateur existe déjà
+        
+        // Check if user already exists
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RuntimeException("Email already exists");
+            System.out.println("ERROR: User already exists with email " + request.getEmail());
+            throw new RuntimeException("User already exists with this email");
         }
-        // Hash le mot de passe
-        String hashedPassword = passwordEncoder.encode(request.getPassword());
-        // Crée l'utilisateur
+
+        // Create new user
         User user = new User();
         user.setEmail(request.getEmail());
-        user.setPassword(hashedPassword);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreationDate(java.time.LocalDateTime.now());
-        // Sauvegarde en base
-        userRepository.save(user);
-        // Retourne le DTO
-        UserDto dto = new UserDto();
-        dto.setId(user.getId());
-        dto.setEmail(user.getEmail());
-        dto.setCreationDate(user.getCreationDate());
-        return dto;
+
+        User savedUser = userRepository.save(user);
+        System.out.println("User created successfully: " + savedUser.getId() + " - " + savedUser.getEmail());
+        
+        return new UserDto(savedUser);
     }
 
     @Override
     public UserDto login(LoginRequest request) {
-        // Recherche l'utilisateur par email
+        System.out.println("=== USER SERVICE: LOGIN ===");
+        System.out.println("Request: " + request);
+        
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
-        // Vérifie le mot de passe (hashé)
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            System.out.println("ERROR: Invalid password for user " + request.getEmail());
+            throw new RuntimeException("Invalid email or password");
         }
 
-        // Retourne le DTO utilisateur (sans le mot de passe)
-        UserDto dto = new UserDto();
-        dto.setId(user.getId());
-        dto.setEmail(user.getEmail());
-        dto.setCreationDate(user.getCreationDate());
-        return dto;
+        System.out.println("User logged in successfully: " + user.getId() + " - " + user.getEmail());
+        return new UserDto(user);
+    }
+
+    @Override
+    public User getCurrentUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new RuntimeException("User not authenticated");
+        }
+        
+        String email = authentication.getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    @Override
+    @Transactional
+    public CreateUserWithProfileResponse createUserWithProfile(CreateUserWithProfileRequest request) {
+        System.out.println("=== USER SERVICE: CREATE USER WITH PROFILE ===");
+        System.out.println("Request: " + request);
+        
+        // First, create the user
+        UserDto createdUser = register(request.getUserData());
+        System.out.println("User created: " + createdUser.getId() + " - " + createdUser.getEmail());
+        
+        // Get the user entity for profile creation
+        User user = userRepository.findById(createdUser.getId())
+                .orElseThrow(() -> new RuntimeException("User not found after creation"));
+        
+        // Then, create the profile
+        UserProfileDto createdProfile = userProfileService.createProfile(user, request.getProfileData());
+        System.out.println("Profile created: " + createdProfile.getId() + " for user " + createdProfile.getUserId());
+        
+        CreateUserWithProfileResponse response = new CreateUserWithProfileResponse(createdUser, createdProfile);
+        System.out.println("Response: " + response);
+        
+        return response;
     }
 } 
