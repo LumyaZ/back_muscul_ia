@@ -6,6 +6,7 @@ import com.example.muscul_ia.dto.UserDto;
 import com.example.muscul_ia.dto.CreateUserWithProfileRequest;
 import com.example.muscul_ia.dto.CreateUserWithProfileResponse;
 import com.example.muscul_ia.service.UserService;
+import com.example.muscul_ia.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -19,6 +20,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Authentication controller for login and registration endpoints.
  * Contrôleur d'authentification pour les endpoints de connexion et d'inscription.
@@ -30,6 +34,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private JwtService jwtService;
 
     /**
      * Register a new user.
@@ -42,14 +49,14 @@ public class AuthController {
     )
     @ApiResponses(value = {
         @ApiResponse(
-            responseCode = "200",
+            responseCode = "201",
             description = "Inscription réussie",
             content = @Content(
                 mediaType = "application/json",
-                schema = @Schema(implementation = UserDto.class),
+                schema = @Schema(implementation = Map.class),
                 examples = @ExampleObject(
                     name = "Succès",
-                    value = "{\"id\": 1, \"email\": \"user@example.com\", \"creationDate\": \"2024-01-01T10:00:00\"}"
+                    value = "{\"user\": {\"id\": 1, \"email\": \"user@example.com\", \"creationDate\": \"2024-01-01T10:00:00\"}, \"token\": \"jwt_token_here\"}"
                 )
             )
         ),
@@ -65,21 +72,24 @@ public class AuthController {
             )
         )
     })
-    public ResponseEntity<UserDto> register(@Valid @RequestBody RegisterRequest request) {
-        System.out.println("=== AUTH: REGISTER ===");
-        System.out.println("Request received: " + request);
-        System.out.println("Email: " + request.getEmail());
-        System.out.println("Password: [HIDDEN]");
-        System.out.println("ConfirmPassword: [HIDDEN]");
-        
+    /**
+     * Register a new user.
+     * Inscrire un nouvel utilisateur.
+     * 
+     * @param request - Données d'inscription
+     * @return ResponseEntity - Réponse avec utilisateur et token JWT
+     */
+    public ResponseEntity<Map<String, Object>> register(@Valid @RequestBody RegisterRequest request) {
         try {
             UserDto createdUser = userService.register(request);
-            System.out.println("User created successfully: " + createdUser.getId() + " - " + createdUser.getEmail());
-            System.out.println("=========================");
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+            String token = jwtService.generateToken(createdUser.getEmail());
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("user", createdUser);
+            response.put("token", token);
+            
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (RuntimeException e) {
-            System.out.println("ERROR during registration: " + e.getMessage());
-            System.out.println("=========================");
             throw e;
         }
     }
@@ -110,22 +120,25 @@ public class AuthController {
             description = "Email déjà utilisé"
         )
     })
-    public ResponseEntity<CreateUserWithProfileResponse> createUserWithProfile(@Valid @RequestBody CreateUserWithProfileRequest request) {
-        System.out.println("=== AUTH: CREATE USER WITH PROFILE ===");
-        System.out.println("Request received: " + request);
-        System.out.println("User data: " + request.getUserData());
-        System.out.println("Profile data: " + request.getProfileData());
-        
+    /**
+     * Create a new user with profile in one request.
+     * Créer un nouvel utilisateur avec profil en une seule requête.
+     * 
+     * @param request - Données utilisateur et profil
+     * @return ResponseEntity - Réponse avec utilisateur, profil et token JWT
+     */
+    public ResponseEntity<Map<String, Object>> createUserWithProfile(@Valid @RequestBody CreateUserWithProfileRequest request) {
         try {
             CreateUserWithProfileResponse response = userService.createUserWithProfile(request);
-            System.out.println("User and profile created successfully");
-            System.out.println("User: " + response.getUser().getId() + " - " + response.getUser().getEmail());
-            System.out.println("Profile: " + response.getProfile().getId() + " for user " + response.getProfile().getUserId());
-            System.out.println("=========================");
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            String token = jwtService.generateToken(response.getUser().getEmail());
+            
+            Map<String, Object> responseMap = new HashMap<>();
+            responseMap.put("user", response.getUser());
+            responseMap.put("profile", response.getProfile());
+            responseMap.put("token", token);
+            
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseMap);
         } catch (RuntimeException e) {
-            System.out.println("ERROR during user and profile creation: " + e.getMessage());
-            System.out.println("=========================");
             throw e;
         }
     }
@@ -145,39 +158,36 @@ public class AuthController {
             description = "Connexion réussie",
             content = @Content(
                 mediaType = "application/json",
-                schema = @Schema(implementation = UserDto.class),
+                schema = @Schema(implementation = Map.class),
                 examples = @ExampleObject(
                     name = "Succès",
-                    value = "{\"id\": 1, \"email\": \"user@example.com\", \"creationDate\": \"2024-01-01T10:00:00\"}"
+                    value = "{\"user\": {\"id\": 1, \"email\": \"user@example.com\"}, \"token\": \"jwt_token_here\"}"
                 )
             )
         ),
         @ApiResponse(
             responseCode = "401",
-            description = "Identifiants invalides",
-            content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                    name = "Erreur",
-                    value = "{\"error\": \"Invalid credentials\"}"
-                )
-            )
+            description = "Identifiants invalides"
         )
     })
-    public ResponseEntity<UserDto> login(@Valid @RequestBody LoginRequest request) {
-        System.out.println("=== AUTH: LOGIN ===");
-        System.out.println("Request received: " + request);
-        System.out.println("Email: " + request.getEmail());
-        System.out.println("Password: [HIDDEN]");
-        
+    /**
+     * Login an existing user.
+     * Connecter un utilisateur existant.
+     * 
+     * @param request - Données de connexion
+     * @return ResponseEntity - Réponse avec utilisateur et token JWT
+     */
+    public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginRequest request) {
         try {
             UserDto loggedInUser = userService.login(request);
-            System.out.println("User logged in successfully: " + loggedInUser.getId() + " - " + loggedInUser.getEmail());
-            System.out.println("===================");
-            return ResponseEntity.ok(loggedInUser);
+            String token = jwtService.generateToken(loggedInUser.getEmail());
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("user", loggedInUser);
+            response.put("token", token);
+            
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
-            System.out.println("ERROR during login: " + e.getMessage());
-            System.out.println("===================");
             throw e;
         }
     }

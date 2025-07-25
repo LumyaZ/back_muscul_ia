@@ -29,50 +29,53 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserProfileService userProfileService;
 
+    /**
+     * Register a new user.
+     * Inscrire un nouvel utilisateur.
+     * 
+     * @param request - Données d'inscription
+     * @return UserDto - Utilisateur créé
+     */
     @Override
     @Transactional
     public UserDto register(RegisterRequest request) {
-        System.out.println("=== USER SERVICE: REGISTER ===");
-        System.out.println("Request: " + request);
-        
-        // Check if passwords match
+        // Vérifier que les mots de passe correspondent
         if (!request.getPassword().equals(request.getConfirmPassword())) {
-            System.out.println("ERROR: Passwords do not match");
             throw new RuntimeException("Passwords do not match");
         }
         
-        // Check if user already exists
+        // Vérifier que l'utilisateur n'existe pas déjà
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            System.out.println("ERROR: User already exists with email " + request.getEmail());
             throw new RuntimeException("User already exists with this email");
         }
 
-        // Create new user
+        // Créer un nouvel utilisateur
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setCreationDate(java.time.LocalDateTime.now());
 
         User savedUser = userRepository.save(user);
-        System.out.println("User created successfully: " + savedUser.getId() + " - " + savedUser.getEmail());
         
         return new UserDto(savedUser);
     }
 
+    /**
+     * Login an existing user.
+     * Connecter un utilisateur existant.
+     * 
+     * @param request - Données de connexion
+     * @return UserDto - Utilisateur connecté
+     */
     @Override
     public UserDto login(LoginRequest request) {
-        System.out.println("=== USER SERVICE: LOGIN ===");
-        System.out.println("Request: " + request);
-        
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            System.out.println("ERROR: Invalid password for user " + request.getEmail());
             throw new RuntimeException("Invalid email or password");
         }
 
-        System.out.println("User logged in successfully: " + user.getId() + " - " + user.getEmail());
         return new UserDto(user);
     }
 
@@ -87,26 +90,27 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
+    /**
+     * Create a new user with profile in one request.
+     * Créer un nouvel utilisateur avec profil en une seule requête.
+     * 
+     * @param request - Données utilisateur et profil
+     * @return CreateUserWithProfileResponse - Réponse avec utilisateur et profil créés
+     */
     @Override
     @Transactional
     public CreateUserWithProfileResponse createUserWithProfile(CreateUserWithProfileRequest request) {
-        System.out.println("=== USER SERVICE: CREATE USER WITH PROFILE ===");
-        System.out.println("Request: " + request);
-        
-        // First, create the user
+        // Créer d'abord l'utilisateur
         UserDto createdUser = register(request.getUserData());
-        System.out.println("User created: " + createdUser.getId() + " - " + createdUser.getEmail());
         
-        // Get the user entity for profile creation
+        // Récupérer l'entité utilisateur pour la création du profil
         User user = userRepository.findById(createdUser.getId())
                 .orElseThrow(() -> new RuntimeException("User not found after creation"));
         
-        // Then, create the profile
+        // Créer ensuite le profil
         UserProfileDto createdProfile = userProfileService.createProfile(user, request.getProfileData());
-        System.out.println("Profile created: " + createdProfile.getId() + " for user " + createdProfile.getUserId());
         
         CreateUserWithProfileResponse response = new CreateUserWithProfileResponse(createdUser, createdProfile);
-        System.out.println("Response: " + response);
         
         return response;
     }
