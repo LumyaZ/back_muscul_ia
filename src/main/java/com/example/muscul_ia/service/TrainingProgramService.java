@@ -36,6 +36,22 @@ public interface TrainingProgramService {
      * @throws RuntimeException if user not found or invalid data
      */
     TrainingProgramDto createTrainingProgram(CreateTrainingProgramRequest request, Long userId);
+
+    /**
+     * Create a new training program without exercises.
+     * Créer un nouveau programme d'entraînement sans exercices.
+     * 
+     * This method creates a basic training program structure that can
+     * be populated with exercises later.
+     * 
+     * Cette méthode crée une structure de programme d'entraînement de base
+     * qui peut être remplie d'exercices plus tard.
+     * 
+     * @param request - Request containing basic program data
+     * @return TrainingProgramDto - Created program
+     * @throws RuntimeException if invalid data
+     */
+    TrainingProgramDto createTrainingProgram(CreateTrainingProgramRequest request);
     
     /**
      * Get all active training programs.

@@ -54,36 +54,40 @@ public class TrainingProgramServiceImpl implements TrainingProgramService {
         program.setCategory(request.getCategory());
         program.setTargetAudience(request.getTargetAudience());
         program.setEquipmentRequired(request.getEquipmentRequired());
-        program.setImageUrl(request.getImageUrl());
         program.setIsPublic(request.getIsPublic() != null ? request.getIsPublic() : false);
         program.setIsActive(true);
         program.setCreatedByUser(userOpt.get());
         
         TrainingProgram savedProgram = trainingProgramRepository.save(program);
         
-        // Ajouter les exercices au programme
-        if (request.getExercises() != null && !request.getExercises().isEmpty()) {
-            for (CreateTrainingProgramRequest.ProgramExerciseRequest exerciseRequest : request.getExercises()) {
-                Optional<Exercise> exerciseOpt = exerciseRepository.findById(exerciseRequest.getExerciseId());
-                if (exerciseOpt.isPresent()) {
-                    ProgramExercise programExercise = new ProgramExercise();
-                    programExercise.setTrainingProgram(savedProgram);
-                    programExercise.setExercise(exerciseOpt.get());
-                    programExercise.setOrderInProgram(exerciseRequest.getOrderInProgram());
-                    programExercise.setSetsCount(exerciseRequest.getSetsCount());
-                    programExercise.setRepsCount(exerciseRequest.getRepsCount());
-                    programExercise.setDurationSeconds(exerciseRequest.getDurationSeconds());
-                    programExercise.setRestDurationSeconds(exerciseRequest.getRestDurationSeconds());
-                    programExercise.setWeightKg(exerciseRequest.getWeightKg());
-                    programExercise.setDistanceMeters(exerciseRequest.getDistanceMeters());
-                    programExercise.setNotes(exerciseRequest.getNotes());
-                    programExercise.setIsOptional(exerciseRequest.getIsOptional() != null ? exerciseRequest.getIsOptional() : false);
-                    
-                    programExerciseRepository.save(programExercise);
-                }
-            }
+        return convertToDto(savedProgram);
+    }
+
+    @Override
+    @Transactional
+    public TrainingProgramDto createTrainingProgram(CreateTrainingProgramRequest request) {
+        // Créer le programme sans utilisateur spécifique (pour les tests ou création anonyme)
+        TrainingProgram program = new TrainingProgram();
+        program.setName(request.getName());
+        program.setDescription(request.getDescription());
+        program.setDifficultyLevel(request.getDifficultyLevel());
+        program.setDurationWeeks(request.getDurationWeeks());
+        program.setSessionsPerWeek(request.getSessionsPerWeek());
+        program.setEstimatedDurationMinutes(request.getEstimatedDurationMinutes());
+        program.setCategory(request.getCategory());
+        program.setTargetAudience(request.getTargetAudience());
+        program.setEquipmentRequired(request.getEquipmentRequired());
+        program.setIsPublic(request.getIsPublic() != null ? request.getIsPublic() : false);
+        program.setIsActive(true);
+        
+        // Pour l'instant, on utilise un utilisateur par défaut (ID 1)
+        // En production, cela devrait être récupéré depuis le contexte de sécurité
+        Optional<User> defaultUser = userRepository.findById(1L);
+        if (defaultUser.isPresent()) {
+            program.setCreatedByUser(defaultUser.get());
         }
         
+        TrainingProgram savedProgram = trainingProgramRepository.save(program);
         return convertToDto(savedProgram);
     }
     
@@ -142,36 +146,9 @@ public class TrainingProgramServiceImpl implements TrainingProgramService {
             program.setCategory(request.getCategory());
             program.setTargetAudience(request.getTargetAudience());
             program.setEquipmentRequired(request.getEquipmentRequired());
-            program.setImageUrl(request.getImageUrl());
             program.setIsPublic(request.getIsPublic() != null ? request.getIsPublic() : program.getIsPublic());
             
             TrainingProgram updatedProgram = trainingProgramRepository.save(program);
-            
-            // Supprimer les anciens exercices du programme
-            programExerciseRepository.deleteByTrainingProgram(program);
-            
-            // Ajouter les nouveaux exercices
-            if (request.getExercises() != null && !request.getExercises().isEmpty()) {
-                for (CreateTrainingProgramRequest.ProgramExerciseRequest exerciseRequest : request.getExercises()) {
-                    Optional<Exercise> exerciseOpt = exerciseRepository.findById(exerciseRequest.getExerciseId());
-                    if (exerciseOpt.isPresent()) {
-                        ProgramExercise programExercise = new ProgramExercise();
-                        programExercise.setTrainingProgram(updatedProgram);
-                        programExercise.setExercise(exerciseOpt.get());
-                        programExercise.setOrderInProgram(exerciseRequest.getOrderInProgram());
-                        programExercise.setSetsCount(exerciseRequest.getSetsCount());
-                        programExercise.setRepsCount(exerciseRequest.getRepsCount());
-                        programExercise.setDurationSeconds(exerciseRequest.getDurationSeconds());
-                        programExercise.setRestDurationSeconds(exerciseRequest.getRestDurationSeconds());
-                        programExercise.setWeightKg(exerciseRequest.getWeightKg());
-                        programExercise.setDistanceMeters(exerciseRequest.getDistanceMeters());
-                        programExercise.setNotes(exerciseRequest.getNotes());
-                        programExercise.setIsOptional(exerciseRequest.getIsOptional() != null ? exerciseRequest.getIsOptional() : false);
-                        
-                        programExerciseRepository.save(programExercise);
-                    }
-                }
-            }
             
             return convertToDto(updatedProgram);
         }

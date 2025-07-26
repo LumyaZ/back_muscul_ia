@@ -21,10 +21,9 @@ public class TrainingProgramController {
     // Créer un nouveau programme d'entraînement
     @PostMapping
     public ResponseEntity<TrainingProgramDto> createTrainingProgram(
-            @RequestBody CreateTrainingProgramRequest request,
-            @RequestParam Long userId) {
+            @RequestBody CreateTrainingProgramRequest request) {
         try {
-            TrainingProgramDto createdProgram = trainingProgramService.createTrainingProgram(request, userId);
+            TrainingProgramDto createdProgram = trainingProgramService.createTrainingProgram(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdProgram);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
