@@ -1,12 +1,18 @@
 package com.example.muscul_ia.service.impl;
 
 import com.example.muscul_ia.dto.ProgramExerciseDto;
+import com.example.muscul_ia.dto.CreateProgramExerciseRequest;
 import com.example.muscul_ia.entity.ProgramExercise;
+import com.example.muscul_ia.entity.TrainingProgram;
+import com.example.muscul_ia.entity.Exercise;
 import com.example.muscul_ia.repository.ProgramExerciseRepository;
+import com.example.muscul_ia.repository.TrainingProgramRepository;
+import com.example.muscul_ia.repository.ExerciseRepository;
 import com.example.muscul_ia.service.ProgramExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,6 +22,12 @@ public class ProgramExerciseServiceImpl implements ProgramExerciseService {
     
     @Autowired
     private ProgramExerciseRepository programExerciseRepository;
+    
+    @Autowired
+    private TrainingProgramRepository trainingProgramRepository;
+    
+    @Autowired
+    private ExerciseRepository exerciseRepository;
     
     @Override
     public List<ProgramExerciseDto> getExercisesByProgramId(Long programId) {
@@ -29,6 +41,39 @@ public class ProgramExerciseServiceImpl implements ProgramExerciseService {
     public Optional<ProgramExerciseDto> getProgramExerciseById(Long id) {
         return programExerciseRepository.findById(id)
                 .map(this::convertToDto);
+    }
+    
+    @Override
+    public ProgramExerciseDto addExerciseToProgram(Long programId, CreateProgramExerciseRequest request) {
+        // Vérifier que le programme existe
+        TrainingProgram trainingProgram = trainingProgramRepository.findById(programId)
+                .orElseThrow(() -> new IllegalArgumentException("Programme d'entraînement non trouvé avec l'ID: " + programId));
+        
+        // Vérifier que l'exercice existe
+        Exercise exercise = exerciseRepository.findById(request.getExerciseId())
+                .orElseThrow(() -> new IllegalArgumentException("Exercice non trouvé avec l'ID: " + request.getExerciseId()));
+        
+        // Créer le nouvel exercice de programme
+        ProgramExercise programExercise = new ProgramExercise();
+        programExercise.setTrainingProgram(trainingProgram);
+        programExercise.setExercise(exercise);
+        programExercise.setOrderInProgram(request.getOrderInProgram());
+        programExercise.setSetsCount(request.getSetsCount());
+        programExercise.setRepsCount(request.getRepsCount());
+        programExercise.setDurationSeconds(request.getDurationSeconds());
+        programExercise.setRestDurationSeconds(request.getRestDurationSeconds());
+        programExercise.setWeightKg(request.getWeightKg());
+        programExercise.setDistanceMeters(request.getDistanceMeters());
+        programExercise.setNotes(request.getNotes());
+        programExercise.setIsOptional(request.getIsOptional() != null ? request.getIsOptional() : false);
+        programExercise.setCreatedAt(LocalDateTime.now());
+        programExercise.setUpdatedAt(LocalDateTime.now());
+        
+        // Sauvegarder l'exercice de programme
+        ProgramExercise savedProgramExercise = programExerciseRepository.save(programExercise);
+        
+        // Retourner le DTO
+        return convertToDto(savedProgramExercise);
     }
     
     private ProgramExerciseDto convertToDto(ProgramExercise programExercise) {

@@ -26910,3 +26910,2932 @@ java.nio.channels.AsynchronousCloseException: null
 2025-07-26 17:23:49 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
 2025-07-26 17:23:49 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
 2025-07-26 17:23:49 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-26 17:23:49 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-26 17:23:49 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 6 JPA repository interfaces.
+2025-07-26 17:23:49 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-26 17:23:49 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-26 17:23:49 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-26 17:23:49 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-26 17:23:49 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 391 ms
+2025-07-26 17:23:49 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-26 17:23:49 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-26 17:23:49 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-26 17:23:49 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
+2025-07-26 17:23:49 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@55f61869
+2025-07-26 17:23:49 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
+2025-07-26 17:23:49 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-26 17:23:49 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-4)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-26 17:23:49 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-26 17:23:49 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:23:49 [restartedMain] DEBUG c.e.m.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-07-26 17:23:50 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-26 17:23:50 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-07-26 17:23:50 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-07-26 17:23:50 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-26 17:23:50 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/muscul_ia_db'
+2025-07-26 17:23:50 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-26 17:23:50 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-26 17:23:50 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Started MusculIaApplication in 0.907 seconds (process running for 282.33)
+2025-07-26 17:23:50 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-07-26 17:24:28 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-07-26 17:24:28 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-07-26 17:24:28 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-07-26 17:24:28 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:24:28 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:24:28 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:24:28 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:24:28 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:24:28 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:27:02 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:27:02 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:27:02 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:27:02 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:27:02 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:27:02 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:27:26 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:27:26 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:27:26 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:27:26 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:27:26 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:27:26 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:27:56 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:27:56 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:27:56 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:27:56 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:27:56 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:27:56 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:29:58 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/41
+2025-07-26 17:29:58 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/41
+2025-07-26 17:29:58 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:29:58 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:29:58 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/41
+2025-07-26 17:29:58 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:29:58 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/program-exercises/program/41
+2025-07-26 17:29:58 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/41
+2025-07-26 17:29:58 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:29:58 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:29:58 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/41
+2025-07-26 17:29:58 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:30:01 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:30:01 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:30:01 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:30:01 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:30:01 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:30:01 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:30:15 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:30:15 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:30:15 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:30:15 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:30:15 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:30:15 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:30:54 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:30:54 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:30:54 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:30:54 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:30:54 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:30:54 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:31:06 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/profiles/me
+2025-07-26 17:31:06 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-info
+2025-07-26 17:31:06 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/profiles/me
+2025-07-26 17:31:06 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-info
+2025-07-26 17:31:06 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:31:06 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:31:06 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:31:06 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:31:06 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/profiles/me
+2025-07-26 17:31:06 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-info
+2025-07-26 17:31:06 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:31:06 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:31:06 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:31:06 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:31:06 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        ti1_0.id,
+        ti1_0.body_fat_percentage,
+        ti1_0.created_at,
+        ti1_0.equipment,
+        ti1_0.experience_level,
+        ti1_0.gender,
+        ti1_0.height,
+        ti1_0.main_goal,
+        ti1_0.session_duration,
+        ti1_0.session_frequency,
+        ti1_0.training_preference,
+        ti1_0.updated_at,
+        ti1_0.user_id,
+        ti1_0.weight 
+    from
+        training_info ti1_0 
+    where
+        ti1_0.user_id=?
+2025-07-26 17:31:06 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:31:08 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:31:08 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:31:08 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:31:08 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:31:08 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:31:08 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:41:57 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:41:57 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:41:57 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:41:57 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:41:57 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:41:57 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:46:01 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:46:01 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:46:01 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:46:01 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:46:01 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:46:01 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:47:19 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:47:19 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:47:19 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:47:19 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:47:19 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:47:19 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:47:22 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/3
+2025-07-26 17:47:22 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:47:22 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:47:22 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:47:22 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:47:22 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:47:22 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/program-exercises/program/3
+2025-07-26 17:47:22 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:47:22 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:47:22 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:47:22 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:47:22 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:47:24 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/exercises
+2025-07-26 17:47:24 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/exercises
+2025-07-26 17:47:24 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:47:24 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:47:24 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/exercises
+2025-07-26 17:47:24 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url 
+    from
+        exercises e1_0 
+    where
+        e1_0.is_active
+2025-07-26 17:48:48 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/exercises
+2025-07-26 17:48:48 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/exercises
+2025-07-26 17:48:48 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:48:48 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:48:48 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/exercises
+2025-07-26 17:48:48 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url 
+    from
+        exercises e1_0 
+    where
+        e1_0.is_active
+2025-07-26 17:48:52 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:48:52 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:48:52 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:48:52 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:48:52 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:48:52 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:48:54 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/3
+2025-07-26 17:48:54 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:48:54 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:48:54 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:48:54 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:48:54 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:48:54 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/program-exercises/program/3
+2025-07-26 17:48:54 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:48:54 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:48:54 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:48:54 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:48:54 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:48:59 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/exercises
+2025-07-26 17:48:59 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/exercises
+2025-07-26 17:48:59 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:48:59 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:48:59 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/exercises
+2025-07-26 17:48:59 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url 
+    from
+        exercises e1_0 
+    where
+        e1_0.is_active
+2025-07-26 17:49:31 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:49:31 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:49:31 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:49:31 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:49:31 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:49:31 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:49:33 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/3
+2025-07-26 17:49:33 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:49:33 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:49:33 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:49:33 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:49:33 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:49:33 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/program-exercises/program/3
+2025-07-26 17:49:33 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:49:33 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:49:33 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:49:33 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:49:33 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:51:17 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/3
+2025-07-26 17:51:17 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:51:17 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:51:17 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:51:17 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:51:17 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:51:17 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/program-exercises/program/3
+2025-07-26 17:51:17 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:51:17 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:51:17 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:51:17 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:51:17 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:51:25 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/3
+2025-07-26 17:51:25 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:51:25 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:51:25 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:51:25 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:51:25 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:51:25 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/program-exercises/program/3
+2025-07-26 17:51:25 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:51:25 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:51:25 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:51:25 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:51:25 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:51:47 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/3
+2025-07-26 17:51:47 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:51:47 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:51:47 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:51:47 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:51:47 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:51:47 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/program-exercises/program/3
+2025-07-26 17:51:47 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:51:47 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:51:47 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:51:47 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:51:47 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:51:52 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:51:52 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:51:52 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:51:52 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:51:52 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:51:52 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:51:52 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:51:52 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:51:52 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:51:52 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:53:11 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/public
+2025-07-26 17:53:11 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/public
+2025-07-26 17:53:11 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:11 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:11 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/public
+2025-07-26 17:53:11 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.is_public 
+        and tp1_0.is_active
+2025-07-26 17:53:12 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/3
+2025-07-26 17:53:12 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:53:12 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:12 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:12 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:53:12 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:53:12 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/program-exercises/program/3
+2025-07-26 17:53:12 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:53:12 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:12 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:12 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:53:12 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:53:14 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/exercises
+2025-07-26 17:53:14 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/exercises
+2025-07-26 17:53:14 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:14 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:14 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/exercises
+2025-07-26 17:53:14 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url 
+    from
+        exercises e1_0 
+    where
+        e1_0.is_active
+2025-07-26 17:53:15 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:53:15 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:15 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:15 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:53:15 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:53:15 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:53:15 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:15 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:15 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:53:15 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:53:17 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/exercises
+2025-07-26 17:53:17 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:17 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:17 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/exercises
+2025-07-26 17:53:17 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url 
+    from
+        exercises e1_0 
+    where
+        e1_0.is_active
+2025-07-26 17:53:35 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/training-programs/3
+2025-07-26 17:53:35 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:53:35 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:35 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:35 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:53:35 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:53:35 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing OPTIONS /api/program-exercises/program/3
+2025-07-26 17:53:35 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:53:35 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:35 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:35 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:53:35 [http-nio-8080-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:53:39 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/training-programs/3
+2025-07-26 17:53:39 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:39 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:39 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/training-programs/3
+2025-07-26 17:53:39 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        tp1_0.id,
+        tp1_0.category,
+        tp1_0.created_at,
+        tp1_0.created_by_user_id,
+        tp1_0.description,
+        tp1_0.difficulty_level,
+        tp1_0.duration_weeks,
+        tp1_0.equipment_required,
+        tp1_0.estimated_duration_minutes,
+        tp1_0.image_url,
+        tp1_0.is_active,
+        tp1_0.is_public,
+        tp1_0.name,
+        tp1_0.sessions_per_week,
+        tp1_0.target_audience,
+        tp1_0.updated_at 
+    from
+        training_programs tp1_0 
+    where
+        tp1_0.id=?
+2025-07-26 17:53:39 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/program-exercises/program/3
+2025-07-26 17:53:39 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.creation_date,
+        u1_0.email,
+        u1_0.password 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-07-26 17:53:39 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        up1_0.id,
+        up1_0.age,
+        up1_0.created_at,
+        up1_0.date_of_birth,
+        up1_0.first_name,
+        up1_0.last_name,
+        up1_0.phone_number,
+        up1_0.updated_at,
+        up1_0.user_id 
+    from
+        user_profile up1_0 
+    where
+        up1_0.user_id=?
+2025-07-26 17:53:39 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/program-exercises/program/3
+2025-07-26 17:53:39 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        pe1_0.id,
+        pe1_0.created_at,
+        pe1_0.distance_meters,
+        pe1_0.duration_seconds,
+        pe1_0.exercise_id,
+        e1_0.id,
+        e1_0.category,
+        e1_0.created_at,
+        e1_0.description,
+        e1_0.difficulty_level,
+        e1_0.equipment_needed,
+        e1_0.image_url,
+        e1_0.is_active,
+        e1_0.muscle_group,
+        e1_0.name,
+        e1_0.updated_at,
+        e1_0.video_url,
+        pe1_0.is_optional,
+        pe1_0.notes,
+        pe1_0.order_in_program,
+        pe1_0.reps_count,
+        pe1_0.rest_duration_seconds,
+        pe1_0.sets_count,
+        pe1_0.training_program_id,
+        pe1_0.updated_at,
+        pe1_0.weight_kg 
+    from
+        program_exercises pe1_0 
+    join
+        exercises e1_0 
+            on e1_0.id=pe1_0.exercise_id 
+    where
+        pe1_0.training_program_id=? 
+    order by
+        pe1_0.order_in_program
+2025-07-26 17:54:36 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-07-26 17:54:36 [Thread-15] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-26 17:54:37 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-26 17:54:37 [http-nio-8080-Acceptor] ERROR org.apache.tomcat.util.net.Acceptor - Socket accept failed
+java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:376) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:399) ~[na:na]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:537) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:72) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:127) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2025-07-26 17:54:37 [Thread-15] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:54:37 [Thread-15] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown initiated...
+2025-07-26 17:54:37 [Thread-15] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown completed.
+2025-07-26 17:54:37 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
+2025-07-26 17:54:37 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-26 17:54:37 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-26 17:54:38 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-26 17:54:38 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 6 JPA repository interfaces.
+2025-07-26 17:54:38 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-26 17:54:38 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-26 17:54:38 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-26 17:54:38 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-26 17:54:38 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 661 ms
+2025-07-26 17:54:38 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-26 17:54:38 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-26 17:54:38 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-26 17:54:38 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Starting...
+2025-07-26 17:54:38 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@597f4986
+2025-07-26 17:54:38 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Start completed.
+2025-07-26 17:54:38 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-26 17:54:38 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-5)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-26 17:54:38 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-26 17:54:38 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:54:38 [restartedMain] DEBUG c.e.m.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-07-26 17:54:38 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-26 17:54:39 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-07-26 17:54:39 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-07-26 17:54:39 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-26 17:54:39 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/muscul_ia_db'
+2025-07-26 17:54:39 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-26 17:54:39 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-26 17:54:39 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Started MusculIaApplication in 1.476 seconds (process running for 2131.334)
+2025-07-26 17:54:39 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-07-26 17:55:08 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 61 class path changes (0 additions, 0 deletions, 61 modifications)
+2025-07-26 17:55:08 [Thread-19] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-26 17:55:09 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-26 17:55:09 [http-nio-8080-Acceptor] ERROR org.apache.tomcat.util.net.Acceptor - Socket accept failed
+java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:376) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:399) ~[na:na]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:537) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:72) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:127) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2025-07-26 17:55:09 [Thread-19] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:09 [Thread-19] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown initiated...
+2025-07-26 17:55:09 [Thread-19] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown completed.
+2025-07-26 17:55:09 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
+2025-07-26 17:55:09 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-26 17:55:09 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-26 17:55:09 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-26 17:55:09 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 22 ms. Found 6 JPA repository interfaces.
+2025-07-26 17:55:09 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-26 17:55:09 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-26 17:55:09 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-26 17:55:09 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-26 17:55:09 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 365 ms
+2025-07-26 17:55:10 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-26 17:55:10 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-26 17:55:10 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-26 17:55:10 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Starting...
+2025-07-26 17:55:10 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7c6b28cc
+2025-07-26 17:55:10 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Start completed.
+2025-07-26 17:55:10 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-26 17:55:10 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-6)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-26 17:55:10 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-26 17:55:10 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:10 [restartedMain] DEBUG c.e.m.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-07-26 17:55:10 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-26 17:55:10 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-07-26 17:55:10 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-07-26 17:55:10 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-26 17:55:10 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/muscul_ia_db'
+2025-07-26 17:55:10 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-26 17:55:10 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-26 17:55:10 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Started MusculIaApplication in 1.034 seconds (process running for 2162.727)
+2025-07-26 17:55:10 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-07-26 17:55:12 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-07-26 17:55:12 [Thread-23] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-26 17:55:12 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-26 17:55:12 [http-nio-8080-Acceptor] ERROR org.apache.tomcat.util.net.Acceptor - Socket accept failed
+java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:376) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:399) ~[na:na]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:537) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:72) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:127) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2025-07-26 17:55:12 [Thread-23] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:12 [Thread-23] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Shutdown initiated...
+2025-07-26 17:55:12 [Thread-23] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Shutdown completed.
+2025-07-26 17:55:13 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
+2025-07-26 17:55:13 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-26 17:55:13 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 6 JPA repository interfaces.
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-26 17:55:13 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-26 17:55:13 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-26 17:55:13 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 418 ms
+2025-07-26 17:55:13 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-26 17:55:13 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-26 17:55:13 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Starting...
+2025-07-26 17:55:13 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3312f737
+2025-07-26 17:55:13 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Start completed.
+2025-07-26 17:55:13 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-26 17:55:13 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-7)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-26 17:55:13 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:13 [restartedMain] DEBUG c.e.m.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-07-26 17:55:13 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-07-26 17:55:13 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/muscul_ia_db'
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-26 17:55:13 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Started MusculIaApplication in 0.921 seconds (process running for 2166.029)
+2025-07-26 17:55:13 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-07-26 17:55:23 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-07-26 17:55:23 [Thread-27] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-26 17:55:24 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-26 17:55:24 [http-nio-8080-Acceptor] ERROR org.apache.tomcat.util.net.Acceptor - Socket accept failed
+java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:376) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:399) ~[na:na]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:537) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:72) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:127) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2025-07-26 17:55:24 [Thread-27] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:24 [Thread-27] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Shutdown initiated...
+2025-07-26 17:55:24 [Thread-27] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-7 - Shutdown completed.
+2025-07-26 17:55:24 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
+2025-07-26 17:55:24 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-26 17:55:24 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-26 17:55:24 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-26 17:55:24 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 23 ms. Found 6 JPA repository interfaces.
+2025-07-26 17:55:24 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-26 17:55:24 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-26 17:55:24 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-26 17:55:24 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-26 17:55:24 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 418 ms
+2025-07-26 17:55:24 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-26 17:55:24 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-26 17:55:24 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-26 17:55:24 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Starting...
+2025-07-26 17:55:24 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4e14027c
+2025-07-26 17:55:24 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Start completed.
+2025-07-26 17:55:24 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-26 17:55:24 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-8)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-26 17:55:25 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-26 17:55:25 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:25 [restartedMain] DEBUG c.e.m.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-07-26 17:55:25 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-26 17:55:25 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-07-26 17:55:25 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-07-26 17:55:25 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-26 17:55:25 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/muscul_ia_db'
+2025-07-26 17:55:25 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-26 17:55:25 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-26 17:55:25 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Started MusculIaApplication in 0.997 seconds (process running for 2177.478)
+2025-07-26 17:55:25 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-07-26 17:55:34 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-07-26 17:55:34 [Thread-31] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-26 17:55:34 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-26 17:55:34 [http-nio-8080-Acceptor] ERROR org.apache.tomcat.util.net.Acceptor - Socket accept failed
+java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:376) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:399) ~[na:na]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:537) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:72) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:127) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2025-07-26 17:55:34 [Thread-31] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:34 [Thread-31] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Shutdown initiated...
+2025-07-26 17:55:34 [Thread-31] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-8 - Shutdown completed.
+2025-07-26 17:55:34 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
+2025-07-26 17:55:34 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-26 17:55:34 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 17 ms. Found 6 JPA repository interfaces.
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-26 17:55:35 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-26 17:55:35 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-26 17:55:35 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 409 ms
+2025-07-26 17:55:35 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-26 17:55:35 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-26 17:55:35 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Starting...
+2025-07-26 17:55:35 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-9 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5009397d
+2025-07-26 17:55:35 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Start completed.
+2025-07-26 17:55:35 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-26 17:55:35 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-9)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-26 17:55:35 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:35 [restartedMain] DEBUG c.e.m.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-07-26 17:55:35 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-07-26 17:55:35 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/muscul_ia_db'
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-26 17:55:35 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Started MusculIaApplication in 0.976 seconds (process running for 2187.873)
+2025-07-26 17:55:35 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-07-26 17:55:43 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 3 class path changes (0 additions, 0 deletions, 3 modifications)
+2025-07-26 17:55:43 [Thread-35] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-26 17:55:44 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-26 17:55:44 [http-nio-8080-Acceptor] ERROR org.apache.tomcat.util.net.Acceptor - Socket accept failed
+java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:376) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:399) ~[na:na]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:537) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:72) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:127) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2025-07-26 17:55:44 [Thread-35] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:44 [Thread-35] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown initiated...
+2025-07-26 17:55:44 [Thread-35] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-9 - Shutdown completed.
+2025-07-26 17:55:44 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
+2025-07-26 17:55:44 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-26 17:55:44 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-26 17:55:44 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-26 17:55:44 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27 ms. Found 6 JPA repository interfaces.
+2025-07-26 17:55:44 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-26 17:55:44 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-26 17:55:44 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-26 17:55:44 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-26 17:55:44 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 671 ms
+2025-07-26 17:55:44 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-26 17:55:44 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-26 17:55:44 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-26 17:55:44 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Starting...
+2025-07-26 17:55:44 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-10 - Added connection com.mysql.cj.jdbc.ConnectionImpl@147c521f
+2025-07-26 17:55:44 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Start completed.
+2025-07-26 17:55:44 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-26 17:55:44 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-10)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-26 17:55:45 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-26 17:55:45 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:45 [restartedMain] DEBUG c.e.m.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-07-26 17:55:45 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-26 17:55:45 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-07-26 17:55:45 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-07-26 17:55:45 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-26 17:55:45 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/muscul_ia_db'
+2025-07-26 17:55:45 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-26 17:55:45 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-26 17:55:45 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Started MusculIaApplication in 1.324 seconds (process running for 2197.583)
+2025-07-26 17:55:45 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-07-26 17:55:57 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-07-26 17:55:57 [Thread-39] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-26 17:55:57 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-26 17:55:57 [http-nio-8080-Acceptor] ERROR org.apache.tomcat.util.net.Acceptor - Socket accept failed
+java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:376) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:399) ~[na:na]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:537) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:72) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:127) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2025-07-26 17:55:57 [Thread-39] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:57 [Thread-39] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Shutdown initiated...
+2025-07-26 17:55:57 [Thread-39] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-10 - Shutdown completed.
+2025-07-26 17:55:58 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
+2025-07-26 17:55:58 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-26 17:55:58 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-26 17:55:58 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-26 17:55:58 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 23 ms. Found 6 JPA repository interfaces.
+2025-07-26 17:55:58 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-26 17:55:58 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-26 17:55:58 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-26 17:55:58 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-26 17:55:58 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 483 ms
+2025-07-26 17:55:58 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-26 17:55:58 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-26 17:55:58 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-26 17:55:58 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-11 - Starting...
+2025-07-26 17:55:58 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-11 - Added connection com.mysql.cj.jdbc.ConnectionImpl@67d757fc
+2025-07-26 17:55:58 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-11 - Start completed.
+2025-07-26 17:55:58 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-26 17:55:58 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-11)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-26 17:55:58 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-26 17:55:58 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:55:58 [restartedMain] DEBUG c.e.m.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-07-26 17:55:58 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-26 17:55:59 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-07-26 17:55:59 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-07-26 17:55:59 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-26 17:55:59 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/muscul_ia_db'
+2025-07-26 17:55:59 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-26 17:55:59 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-26 17:55:59 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Started MusculIaApplication in 1.128 seconds (process running for 2211.251)
+2025-07-26 17:55:59 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-07-26 17:56:01 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-07-26 17:56:01 [Thread-43] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-26 17:56:02 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-26 17:56:02 [http-nio-8080-Acceptor] ERROR org.apache.tomcat.util.net.Acceptor - Socket accept failed
+java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:376) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:399) ~[na:na]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:537) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:72) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:127) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2025-07-26 17:56:02 [Thread-43] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:56:02 [Thread-43] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-11 - Shutdown initiated...
+2025-07-26 17:56:02 [Thread-43] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-11 - Shutdown completed.
+2025-07-26 17:56:02 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
+2025-07-26 17:56:02 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-26 17:56:02 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-26 17:56:02 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-26 17:56:02 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28 ms. Found 6 JPA repository interfaces.
+2025-07-26 17:56:02 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-26 17:56:02 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-26 17:56:02 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-26 17:56:02 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-26 17:56:02 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 509 ms
+2025-07-26 17:56:03 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-26 17:56:03 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-26 17:56:03 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-26 17:56:03 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-12 - Starting...
+2025-07-26 17:56:03 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-12 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6639a28b
+2025-07-26 17:56:03 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-12 - Start completed.
+2025-07-26 17:56:03 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-26 17:56:03 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-12)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-26 17:56:03 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-26 17:56:03 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:56:03 [restartedMain] DEBUG c.e.m.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-07-26 17:56:03 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-26 17:56:03 [restartedMain] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-07-26 17:56:03 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2025-07-26 17:56:03 [restartedMain] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-07-26 17:56:03 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/muscul_ia_db'
+2025-07-26 17:56:03 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-07-26 17:56:03 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-26 17:56:03 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Started MusculIaApplication in 1.207 seconds (process running for 2215.757)
+2025-07-26 17:56:03 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-07-26 17:56:11 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-07-26 17:56:11 [Thread-47] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-26 17:56:12 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-26 17:56:12 [http-nio-8080-Acceptor] ERROR org.apache.tomcat.util.net.Acceptor - Socket accept failed
+java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:376) ~[na:na]
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:399) ~[na:na]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:537) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:72) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:127) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+2025-07-26 17:56:12 [Thread-47] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-26 17:56:12 [Thread-47] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-12 - Shutdown initiated...
+2025-07-26 17:56:12 [Thread-47] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-12 - Shutdown completed.
+2025-07-26 17:56:12 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - Starting MusculIaApplication using Java 17.0.9 with PID 10228 (C:\Users\cornu\muscul_ia\back_muscul_ia\target\classes started by cornu in C:\Users\cornu\muscul_ia\back_muscul_ia)
+2025-07-26 17:56:12 [restartedMain] DEBUG c.e.muscul_ia.MusculIaApplication - Running with Spring Boot v3.5.3, Spring v6.2.8
+2025-07-26 17:56:12 [restartedMain] INFO  c.e.muscul_ia.MusculIaApplication - No active profile set, falling back to 1 default profile: "default"
