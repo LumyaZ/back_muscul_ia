@@ -3,6 +3,7 @@ package com.example.muscul_ia.controller;
 import com.example.muscul_ia.dto.CreateTrainingProgramRequest;
 import com.example.muscul_ia.dto.TrainingProgramDto;
 import com.example.muscul_ia.service.TrainingProgramService;
+import com.example.muscul_ia.service.UserTrainingProgramService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST Controller for managing training programs.
+ * Contrôleur REST pour gérer les programmes d'entraînement.
+ * 
+ * This controller provides endpoints for creating, reading, updating, and deleting
+ * training programs, as well as searching and filtering functionality.
+ * 
+ * Ce contrôleur fournit des endpoints pour créer, lire, mettre à jour et supprimer
+ * des programmes d'entraînement, ainsi que des fonctionnalités de recherche et de filtrage.
+ * 
+ * @author Muscul IA Team
+ * @version 1.0
+ * @since 2024-01-01
+ */
 @RestController
 @RequestMapping("/api/training-programs")
 @CrossOrigin(origins = "*")
@@ -18,12 +33,21 @@ public class TrainingProgramController {
     @Autowired
     private TrainingProgramService trainingProgramService;
     
-    // Créer un nouveau programme d'entraînement
+    @Autowired
+    private UserTrainingProgramService userTrainingProgramService;
+    
+    // Créer un nouveau programme d'entraînement et lier automatiquement l'utilisateur
     @PostMapping
     public ResponseEntity<TrainingProgramDto> createTrainingProgram(
-            @RequestBody CreateTrainingProgramRequest request) {
+            @RequestBody CreateTrainingProgramRequest request,
+            @RequestParam Long userId) {
         try {
-            TrainingProgramDto createdProgram = trainingProgramService.createTrainingProgram(request);
+            // Créer le programme
+            TrainingProgramDto createdProgram = trainingProgramService.createTrainingProgram(request, userId);
+            
+            // Lier automatiquement l'utilisateur au programme créé
+            userTrainingProgramService.subscribeUserToProgram(userId, createdProgram.getId());
+            
             return ResponseEntity.status(HttpStatus.CREATED).body(createdProgram);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -126,28 +150,28 @@ public class TrainingProgramController {
         return ResponseEntity.ok(programs);
     }
     
-    // Récupérer les programmes par audience cible
+    // Récupérer les programmes par public cible
     @GetMapping("/audience/{targetAudience}")
     public ResponseEntity<List<TrainingProgramDto>> getProgramsByTargetAudience(@PathVariable String targetAudience) {
         List<TrainingProgramDto> programs = trainingProgramService.getProgramsByTargetAudience(targetAudience);
         return ResponseEntity.ok(programs);
     }
     
-    // Récupérer les programmes publics par audience cible
+    // Récupérer les programmes publics par public cible
     @GetMapping("/public/audience/{targetAudience}")
     public ResponseEntity<List<TrainingProgramDto>> getPublicProgramsByTargetAudience(@PathVariable String targetAudience) {
         List<TrainingProgramDto> programs = trainingProgramService.getPublicProgramsByTargetAudience(targetAudience);
         return ResponseEntity.ok(programs);
     }
     
-    // Récupérer les programmes par durée (en semaines)
+    // Récupérer les programmes par durée
     @GetMapping("/duration/{durationWeeks}")
     public ResponseEntity<List<TrainingProgramDto>> getProgramsByDuration(@PathVariable Integer durationWeeks) {
         List<TrainingProgramDto> programs = trainingProgramService.getProgramsByDuration(durationWeeks);
         return ResponseEntity.ok(programs);
     }
     
-    // Récupérer les programmes publics par durée (en semaines)
+    // Récupérer les programmes publics par durée
     @GetMapping("/public/duration/{durationWeeks}")
     public ResponseEntity<List<TrainingProgramDto>> getPublicProgramsByDuration(@PathVariable Integer durationWeeks) {
         List<TrainingProgramDto> programs = trainingProgramService.getPublicProgramsByDuration(durationWeeks);

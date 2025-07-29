@@ -1,5 +1,6 @@
 package com.example.muscul_ia.controller;
 
+import com.example.muscul_ia.config.TestSecurityConfig;
 import com.example.muscul_ia.dto.CreateExerciseRequest;
 import com.example.muscul_ia.dto.ExerciseDto;
 import com.example.muscul_ia.service.ExerciseService;
@@ -8,10 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -24,7 +29,10 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(ExerciseController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@Import(TestSecurityConfig.class)
+@ActiveProfiles("test")
 @DisplayName("ExerciseController Tests")
 class ExerciseControllerTest {
 

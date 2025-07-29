@@ -1,5 +1,6 @@
 package com.example.muscul_ia.controller;
 
+import com.example.muscul_ia.config.TestSecurityConfig;
 import com.example.muscul_ia.dto.CreateTrainingProgramRequest;
 import com.example.muscul_ia.dto.TrainingProgramDto;
 import com.example.muscul_ia.service.TrainingProgramService;
@@ -8,10 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -24,7 +29,10 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(TrainingProgramController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+@Import(TestSecurityConfig.class)
+@ActiveProfiles("test")
 @DisplayName("TrainingProgramController Tests")
 class TrainingProgramControllerTest {
 
@@ -70,15 +78,6 @@ class TrainingProgramControllerTest {
         createRequest.setTargetAudience("Sportifs confirmés");
         createRequest.setEquipmentRequired("Barre, haltères");
         createRequest.setIsPublic(true);
-
-        CreateTrainingProgramRequest.ProgramExerciseRequest exerciseRequest = 
-            new CreateTrainingProgramRequest.ProgramExerciseRequest();
-        exerciseRequest.setExerciseId(1L);
-        exerciseRequest.setOrderInProgram(1);
-        exerciseRequest.setSetsCount(3);
-        exerciseRequest.setRepsCount(12);
-        exerciseRequest.setIsOptional(false);
-        createRequest.setExercises(Arrays.asList(exerciseRequest));
 
         programList = Arrays.asList(trainingProgramDto);
     }
