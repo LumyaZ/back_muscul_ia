@@ -81,13 +81,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentUser(Authentication authentication) {
+        System.out.println("=== USER SERVICE: GET CURRENT USER ===");
+        System.out.println("Authentication: " + authentication);
+        System.out.println("Authentication is authenticated: " + (authentication != null ? authentication.isAuthenticated() : "null"));
+        System.out.println("Authentication name: " + (authentication != null ? authentication.getName() : "null"));
+        
         if (authentication == null || !authentication.isAuthenticated()) {
+            System.out.println("User not authenticated");
             throw new RuntimeException("User not authenticated");
         }
         
         String email = authentication.getName();
-        return userRepository.findByEmail(email)
+        System.out.println("Looking for user with email: " + email);
+        
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        System.out.println("User found: " + user.getEmail() + " (ID: " + user.getId() + ")");
+        return user;
     }
 
     /**
