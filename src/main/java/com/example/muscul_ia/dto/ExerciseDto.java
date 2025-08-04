@@ -63,18 +63,6 @@ public class ExerciseDto {
     private String difficultyLevel;
     
     /**
-     * URL to a video demonstrating the exercise.
-     * URL vers une vidéo démontrant l'exercice.
-     */
-    private String videoUrl;
-    
-    /**
-     * URL to an image showing the exercise.
-     * URL vers une image montrant l'exercice.
-     */
-    private String imageUrl;
-    
-    /**
      * Flag indicating if the exercise is currently active.
      * Indicateur indiquant si l'exercice est actuellement actif.
      */
@@ -253,46 +241,6 @@ public class ExerciseDto {
      */
     public void setDifficultyLevel(String difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
-    }
-    
-    /**
-     * Get the video URL for the exercise.
-     * Récupérer l'URL de la vidéo pour l'exercice.
-     * 
-     * @return String - Video URL
-     */
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-    
-    /**
-     * Set the video URL for the exercise.
-     * Définir l'URL de la vidéo pour l'exercice.
-     * 
-     * @param videoUrl - Video URL
-     */
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-    
-    /**
-     * Get the image URL for the exercise.
-     * Récupérer l'URL de l'image pour l'exercice.
-     * 
-     * @return String - Image URL
-     */
-    public String getImageUrl() {
-        return imageUrl;
-    }
-    
-    /**
-     * Set the image URL for the exercise.
-     * Définir l'URL de l'image pour l'exercice.
-     * 
-     * @param imageUrl - Image URL
-     */
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
     
     /**

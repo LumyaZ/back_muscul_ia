@@ -18,8 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * REST controller for UserProfile operations.
- * Contrôleur REST pour les opérations UserProfile.
+ * User profile controller for managing user profiles.
+ * Contrôleur de profils utilisateur pour gérer les profils utilisateur.
  */
 @RestController
 @RequestMapping("/api/profiles")
@@ -43,15 +43,8 @@ public class UserProfileController {
             @Parameter(description = "Données du profil à créer") @Valid @RequestBody CreateUserProfileRequest request,
             Authentication authentication) {
         
-        System.out.println("=== CREATE PROFILE (AUTHENTICATED) ===");
-        System.out.println("Request received: " + request);
-        System.out.println("Authentication: " + (authentication != null ? authentication.getName() : "null"));
-        
         User user = userService.getCurrentUser(authentication);
         UserProfileDto createdProfile = userProfileService.createProfile(user, request);
-        
-        System.out.println("Profile created successfully: " + createdProfile);
-        System.out.println("=====================================");
         
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProfile);
     }
@@ -65,18 +58,7 @@ public class UserProfileController {
     public ResponseEntity<UserProfileDto> createProfileByEmail(
             @Parameter(description = "Données du profil à créer avec email") @Valid @RequestBody CreateUserProfileWithEmailRequest request) {
         
-        System.out.println("=== CREATE PROFILE BY EMAIL (PUBLIC) ===");
-        System.out.println("Request received: " + request);
-        System.out.println("Email: " + request.getEmail());
-        System.out.println("FirstName: " + request.getFirstName());
-        System.out.println("LastName: " + request.getLastName());
-        System.out.println("DateOfBirth: " + request.getDateOfBirth());
-        System.out.println("PhoneNumber: " + request.getPhoneNumber());
-        
         UserProfileDto createdProfile = userProfileService.createProfileByEmail(request);
-        
-        System.out.println("Profile created successfully: " + createdProfile);
-        System.out.println("=========================================");
         
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProfile);
     }
@@ -89,14 +71,8 @@ public class UserProfileController {
     @Operation(summary = "Obtenir son propre profil", description = "Récupérer le profil de l'utilisateur authentifié")
     public ResponseEntity<UserProfileDto> getMyProfile(Authentication authentication) {
         
-        System.out.println("=== GET MY PROFILE ===");
-        System.out.println("Authentication: " + (authentication != null ? authentication.getName() : "null"));
-        
         User user = userService.getCurrentUser(authentication);
         UserProfileDto profile = userProfileService.getProfileByUser(user);
-        
-        System.out.println("Profile retrieved: " + profile);
-        System.out.println("=====================");
         
         return ResponseEntity.ok(profile);
     }
@@ -110,13 +86,7 @@ public class UserProfileController {
     public ResponseEntity<UserProfileDto> getProfileByUserId(
             @Parameter(description = "ID de l'utilisateur") @PathVariable Long userId) {
         
-        System.out.println("=== GET PROFILE BY USER ID ===");
-        System.out.println("UserId requested: " + userId);
-        
         UserProfileDto profile = userProfileService.getProfileByUserId(userId);
-        
-        System.out.println("Profile retrieved: " + profile);
-        System.out.println("=============================");
         
         return ResponseEntity.ok(profile);
     }
@@ -131,15 +101,8 @@ public class UserProfileController {
             @Parameter(description = "Données du profil à mettre à jour") @Valid @RequestBody UpdateUserProfileRequest request,
             Authentication authentication) {
         
-        System.out.println("=== UPDATE MY PROFILE ===");
-        System.out.println("Request received: " + request);
-        System.out.println("Authentication: " + (authentication != null ? authentication.getName() : "null"));
-        
         User user = userService.getCurrentUser(authentication);
         UserProfileDto updatedProfile = userProfileService.updateProfile(user, request);
-        
-        System.out.println("Profile updated successfully: " + updatedProfile);
-        System.out.println("===========================");
         
         return ResponseEntity.ok(updatedProfile);
     }
@@ -152,14 +115,8 @@ public class UserProfileController {
     @Operation(summary = "Supprimer son propre profil", description = "Supprimer le profil de l'utilisateur authentifié")
     public ResponseEntity<Void> deleteMyProfile(Authentication authentication) {
         
-        System.out.println("=== DELETE MY PROFILE ===");
-        System.out.println("Authentication: " + (authentication != null ? authentication.getName() : "null"));
-        
         User user = userService.getCurrentUser(authentication);
         userProfileService.deleteProfile(user);
-        
-        System.out.println("Profile deleted successfully");
-        System.out.println("===========================");
         
         return ResponseEntity.noContent().build();
     }

@@ -8,35 +8,66 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Exercise repository for managing exercise data operations.
+ * Repository d'exercices pour gérer les opérations de données d'exercices.
+ */
 @Repository
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     
-    // Trouver tous les exercices actifs
+    /**
+     * Find all active exercises.
+     * Trouver tous les exercices actifs.
+     */
     List<Exercise> findByIsActiveTrue();
-    
-    // Trouver les exercices par catégorie
+
+    /**
+     * Find active exercises by category.
+     * Trouver les exercices actifs par catégorie.
+     */
     List<Exercise> findByCategoryAndIsActiveTrue(String category);
     
-    // Trouver les exercices par groupe musculaire
+    /**
+     * Find active exercises by muscle group.
+     * Trouver les exercices actifs par groupe musculaire.
+     */
     List<Exercise> findByMuscleGroupAndIsActiveTrue(String muscleGroup);
     
-    // Trouver les exercices par niveau de difficulté
+    /**
+     * Find active exercises by difficulty level.
+     * Trouver les exercices actifs par niveau de difficulté.
+     */
     List<Exercise> findByDifficultyLevelAndIsActiveTrue(String difficultyLevel);
     
-    // Trouver les exercices par équipement nécessaire
+    /**
+     * Find active exercises by equipment needed.
+     * Trouver les exercices actifs par équipement nécessaire.
+     */
     List<Exercise> findByEquipmentNeededAndIsActiveTrue(String equipmentNeeded);
     
-    // Recherche par nom (insensible à la casse)
+    /**
+     * Search active exercises by name.
+     * Rechercher les exercices actifs par nom.
+     */
     @Query("SELECT e FROM Exercise e WHERE LOWER(e.name) LIKE LOWER(CONCAT('%', :name, '%')) AND e.isActive = true")
     List<Exercise> findByNameContainingIgnoreCaseAndIsActiveTrue(@Param("name") String name);
     
-    // Recherche par description (insensible à la casse)
+    /**
+     * Search active exercises by description.
+     * Rechercher les exercices actifs par description.
+     */
     @Query("SELECT e FROM Exercise e WHERE LOWER(e.description) LIKE LOWER(CONCAT('%', :description, '%')) AND e.isActive = true")
     List<Exercise> findByDescriptionContainingIgnoreCaseAndIsActiveTrue(@Param("description") String description);
     
-    // Trouver les exercices par catégorie et niveau de difficulté
+    /**
+     * Find active exercises by category and difficulty level.
+     * Trouver les exercices actifs par catégorie et niveau de difficulté.
+     */
     List<Exercise> findByCategoryAndDifficultyLevelAndIsActiveTrue(String category, String difficultyLevel);
     
-    // Trouver les exercices par groupe musculaire et équipement
+    /**
+     * Find active exercises by muscle group and equipment needed.
+     * Trouver les exercices actifs par groupe musculaire et équipement nécessaire.
+     */
     List<Exercise> findByMuscleGroupAndEquipmentNeededAndIsActiveTrue(String muscleGroup, String equipmentNeeded);
 } 

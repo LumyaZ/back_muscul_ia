@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Program exercise service implementation for managing program-exercise relationship business logic.
+ * Implémentation du service d'exercices de programme pour gérer la logique métier de relation programme-exercice.
+ */
 @Service
 public class ProgramExerciseServiceImpl implements ProgramExerciseService {
     
@@ -45,34 +49,26 @@ public class ProgramExerciseServiceImpl implements ProgramExerciseService {
     
     @Override
     public ProgramExerciseDto addExerciseToProgram(Long programId, CreateProgramExerciseRequest request) {
-        // Vérifier que le programme existe
         TrainingProgram trainingProgram = trainingProgramRepository.findById(programId)
                 .orElseThrow(() -> new IllegalArgumentException("Programme d'entraînement non trouvé avec l'ID: " + programId));
         
-        // Vérifier que l'exercice existe
         Exercise exercise = exerciseRepository.findById(request.getExerciseId())
                 .orElseThrow(() -> new IllegalArgumentException("Exercice non trouvé avec l'ID: " + request.getExerciseId()));
         
-        // Créer le nouvel exercice de programme
         ProgramExercise programExercise = new ProgramExercise();
         programExercise.setTrainingProgram(trainingProgram);
         programExercise.setExercise(exercise);
-        programExercise.setOrderInProgram(request.getOrderInProgram());
         programExercise.setSetsCount(request.getSetsCount());
         programExercise.setRepsCount(request.getRepsCount());
-        programExercise.setDurationSeconds(request.getDurationSeconds());
         programExercise.setRestDurationSeconds(request.getRestDurationSeconds());
         programExercise.setWeightKg(request.getWeightKg());
         programExercise.setDistanceMeters(request.getDistanceMeters());
         programExercise.setNotes(request.getNotes());
-        programExercise.setIsOptional(request.getIsOptional() != null ? request.getIsOptional() : false);
         programExercise.setCreatedAt(LocalDateTime.now());
         programExercise.setUpdatedAt(LocalDateTime.now());
         
-        // Sauvegarder l'exercice de programme
         ProgramExercise savedProgramExercise = programExerciseRepository.save(programExercise);
         
-        // Retourner le DTO
         return convertToDto(savedProgramExercise);
     }
     
@@ -87,15 +83,12 @@ public class ProgramExerciseServiceImpl implements ProgramExerciseService {
         dto.setExerciseMuscleGroup(programExercise.getExercise().getMuscleGroup());
         dto.setExerciseEquipmentNeeded(programExercise.getExercise().getEquipmentNeeded());
         dto.setExerciseDifficultyLevel(programExercise.getExercise().getDifficultyLevel());
-        dto.setOrderInProgram(programExercise.getOrderInProgram());
         dto.setSetsCount(programExercise.getSetsCount());
         dto.setRepsCount(programExercise.getRepsCount());
-        dto.setDurationSeconds(programExercise.getDurationSeconds());
         dto.setRestDurationSeconds(programExercise.getRestDurationSeconds());
-        dto.setWeightKg(programExercise.getWeightKg());
+        dto.setWeightKg(programExercise.getWeightKg()); 
         dto.setDistanceMeters(programExercise.getDistanceMeters());
         dto.setNotes(programExercise.getNotes());
-        dto.setIsOptional(programExercise.getIsOptional());
         dto.setCreatedAt(programExercise.getCreatedAt());
         dto.setUpdatedAt(programExercise.getUpdatedAt());
         return dto;

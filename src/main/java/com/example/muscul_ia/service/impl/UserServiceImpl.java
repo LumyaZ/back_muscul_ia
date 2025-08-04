@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Implementation of UserService for user business logic.
- * Implémentation de UserService pour la logique métier utilisateur.
+ * User service implementation for managing user business logic.
+ * Implémentation du service utilisateur pour gérer la logique métier utilisateur.
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -32,24 +32,18 @@ public class UserServiceImpl implements UserService {
     /**
      * Register a new user.
      * Inscrire un nouvel utilisateur.
-     * 
-     * @param request - Données d'inscription
-     * @return UserDto - Utilisateur créé
      */
     @Override
     @Transactional
     public UserDto register(RegisterRequest request) {
-        // Vérifier que les mots de passe correspondent
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             throw new RuntimeException("Passwords do not match");
         }
         
-        // Vérifier que l'utilisateur n'existe pas déjà
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("User already exists with this email");
         }
 
-        // Créer un nouvel utilisateur
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -63,9 +57,6 @@ public class UserServiceImpl implements UserService {
     /**
      * Login an existing user.
      * Connecter un utilisateur existant.
-     * 
-     * @param request - Données de connexion
-     * @return UserDto - Utilisateur connecté
      */
     @Override
     public UserDto login(LoginRequest request) {
@@ -79,50 +70,39 @@ public class UserServiceImpl implements UserService {
         return new UserDto(user);
     }
 
+    /**
+     * Get current authenticated user.
+     * Récupérer l'utilisateur actuellement authentifié.
+     */
     @Override
     public User getCurrentUser(Authentication authentication) {
-        System.out.println("=== USER SERVICE: GET CURRENT USER ===");
-        System.out.println("Authentication: " + authentication);
-        System.out.println("Authentication is authenticated: " + (authentication != null ? authentication.isAuthenticated() : "null"));
-        System.out.println("Authentication name: " + (authentication != null ? authentication.getName() : "null"));
         
         if (authentication == null || !authentication.isAuthenticated()) {
-            System.out.println("User not authenticated");
             throw new RuntimeException("User not authenticated");
         }
         
         String email = authentication.getName();
-        System.out.println("Looking for user with email: " + email);
         
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         
-        System.out.println("User found: " + user.getEmail() + " (ID: " + user.getId() + ")");
         return user;
     }
 
     /**
      * Create a new user with profile in one request.
      * Créer un nouvel utilisateur avec profil en une seule requête.
-     * 
-     * @param request - Données utilisateur et profil
-     * @return CreateUserWithProfileResponse - Réponse avec utilisateur et profil créés
      */
     @Override
     @Transactional
     public CreateUserWithProfileResponse createUserWithProfile(CreateUserWithProfileRequest request) {
-        // Créer d'abord l'utilisateur
         UserDto createdUser = register(request.getUserData());
         
-        // Récupérer l'entité utilisateur pour la création du profil
-        User user = userRepository.findById(createdUser.getId())
+        User user = userRepository.findByEmail(createdUser.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found after creation"));
         
-        // Créer ensuite le profil
         UserProfileDto createdProfile = userProfileService.createProfile(user, request.getProfileData());
         
-        CreateUserWithProfileResponse response = new CreateUserWithProfileResponse(createdUser, createdProfile);
-        
-        return response;
+        return new CreateUserWithProfileResponse(createdUser, createdProfile);
     }
 } 

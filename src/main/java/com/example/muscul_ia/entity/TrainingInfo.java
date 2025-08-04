@@ -21,13 +21,13 @@ public class TrainingInfo {
     private Gender gender;
 
     @Column(name = "weight", nullable = false)
-    private Double weight; // en kg
+    private Double weight;
 
     @Column(name = "height", nullable = false)
-    private Double height; // en cm
+    private Double height;
 
     @Column(name = "body_fat_percentage")
-    private Double bodyFatPercentage; // pourcentage de matière grasse
+    private Double bodyFatPercentage;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "experience_level", nullable = false)
@@ -59,7 +59,10 @@ public class TrainingInfo {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    public TrainingInfo() {}
+    public TrainingInfo() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
 
     public TrainingInfo(User user) {
         this.user = user;
@@ -74,9 +77,17 @@ public class TrainingInfo {
     public Gender getGender() { return gender; }
     public void setGender(Gender gender) { this.gender = gender; }
     public Double getWeight() { return weight; }
-    public void setWeight(Double weight) { this.weight = weight; }
+    public void setWeight(Double weight) { 
+        if (weight != null && weight > 0 && weight < 500) {
+            this.weight = weight;
+        }
+    }
     public Double getHeight() { return height; }
-    public void setHeight(Double height) { this.height = height; }
+    public void setHeight(Double height) { 
+        if (height != null && height > 0 && height < 300) {
+            this.height = height;
+        }
+    }
     public Double getBodyFatPercentage() { return bodyFatPercentage; }
     public void setBodyFatPercentage(Double bodyFatPercentage) { this.bodyFatPercentage = bodyFatPercentage; }
     public ExperienceLevel getExperienceLevel() { return experienceLevel; }

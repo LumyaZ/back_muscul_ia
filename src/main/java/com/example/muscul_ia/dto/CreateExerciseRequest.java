@@ -14,99 +14,36 @@ package com.example.muscul_ia.dto;
  * un nouvel exercice incluant le nom, la description, la catégorie, le groupe
  * musculaire, les équipements requis, le niveau de difficulté et les URLs média.
  * 
- * @author Muscul IA Team
- * @version 1.0
- * @since 2024-01-01
- */
+ */ 
 public class CreateExerciseRequest {
     
-    /**
-     * Name of the exercise to be created.
-     * Nom de l'exercice à créer.
-     */
     private String name;
     
-    /**
-     * Detailed description of how to perform the exercise.
-     * Description détaillée de la façon d'effectuer l'exercice.
-     */
     private String description;
     
-    /**
-     * Category of the exercise (e.g., "Musculation", "Cardio", "Flexibilité").
-     * Catégorie de l'exercice (ex: "Musculation", "Cardio", "Flexibilité").
-     */
     private String category;
     
-    /**
-     * Primary muscle group targeted by the exercise.
-     * Groupe musculaire principal ciblé par l'exercice.
-     */
     private String muscleGroup;
     
-    /**
-     * Equipment required to perform the exercise.
-     * Équipement requis pour effectuer l'exercice.
-     */
     private String equipmentNeeded;
     
-    /**
-     * Difficulty level of the exercise.
-     * Niveau de difficulté de l'exercice.
-     */
     private String difficultyLevel;
     
-    /**
-     * URL to a video demonstrating the exercise.
-     * URL vers une vidéo démontrant l'exercice.
-     */
-    private String videoUrl;
-    
-    /**
-     * URL to an image showing the exercise.
-     * URL vers une image montrant l'exercice.
-     */
-    private String imageUrl;
-    
-    /**
-     * Default constructor.
-     * Constructeur par défaut.
-     */
     public CreateExerciseRequest() {}
     
-    /**
-     * Constructor with all exercise creation parameters.
-     * Constructeur avec tous les paramètres de création d'exercice.
-     * 
-     * @param name - Exercise name
-     * @param description - Exercise description
-     * @param category - Exercise category
-     * @param muscleGroup - Target muscle group
-     * @param equipmentNeeded - Required equipment
-     * @param difficultyLevel - Difficulty level
-     * @param videoUrl - Video demonstration URL
-     * @param imageUrl - Exercise image URL
-     */
+
     public CreateExerciseRequest(String name, String description, String category,
-                                String muscleGroup, String equipmentNeeded, String difficultyLevel,
-                                String videoUrl, String imageUrl) {
+                                String muscleGroup, String equipmentNeeded, String difficultyLevel
+                                ) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.muscleGroup = muscleGroup;
         this.equipmentNeeded = equipmentNeeded;
         this.difficultyLevel = difficultyLevel;
-        this.videoUrl = videoUrl;
-        this.imageUrl = imageUrl;
     }
     
-    // Getters et Setters
-    /**
-     * Get the exercise name.
-     * Récupérer le nom de l'exercice.
-     * 
-     * @return String - Exercise name
-     */
+
     public String getName() {
         return name;
     }
@@ -219,45 +156,5 @@ public class CreateExerciseRequest {
      */
     public void setDifficultyLevel(String difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
-    }
-    
-    /**
-     * Get the video URL for the exercise.
-     * Récupérer l'URL de la vidéo pour l'exercice.
-     * 
-     * @return String - Video URL
-     */
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-    
-    /**
-     * Set the video URL for the exercise.
-     * Définir l'URL de la vidéo pour l'exercice.
-     * 
-     * @param videoUrl - Video URL
-     */
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
-    }
-    
-    /**
-     * Get the image URL for the exercise.
-     * Récupérer l'URL de l'image pour l'exercice.
-     * 
-     * @return String - Image URL
-     */
-    public String getImageUrl() {
-        return imageUrl;
-    }
-    
-    /**
-     * Set the image URL for the exercise.
-     * Définir l'URL de l'image pour l'exercice.
-     * 
-     * @param imageUrl - Image URL
-     */
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 } 

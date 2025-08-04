@@ -6,7 +6,10 @@ import org.junit.jupiter.api.DisplayName;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Exercise Entity Tests")
 class ExerciseTest {
@@ -61,8 +64,6 @@ class ExerciseTest {
         String muscleGroup = "Jambes";
         String equipmentNeeded = "Poids du corps";
         String difficultyLevel = "Débutant";
-        String videoUrl = "https://example.com/video";
-        String imageUrl = "https://example.com/image.jpg";
         Boolean isActive = true;
         LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime updatedAt = LocalDateTime.now();
@@ -75,8 +76,7 @@ class ExerciseTest {
         exercise.setMuscleGroup(muscleGroup);
         exercise.setEquipmentNeeded(equipmentNeeded);
         exercise.setDifficultyLevel(difficultyLevel);
-        exercise.setVideoUrl(videoUrl);
-        exercise.setImageUrl(imageUrl);
+
         exercise.setIsActive(isActive);
         exercise.setCreatedAt(createdAt);
         exercise.setUpdatedAt(updatedAt);
@@ -89,8 +89,7 @@ class ExerciseTest {
         assertEquals(muscleGroup, exercise.getMuscleGroup());
         assertEquals(equipmentNeeded, exercise.getEquipmentNeeded());
         assertEquals(difficultyLevel, exercise.getDifficultyLevel());
-        assertEquals(videoUrl, exercise.getVideoUrl());
-        assertEquals(imageUrl, exercise.getImageUrl());
+
         assertEquals(isActive, exercise.getIsActive());
         assertEquals(createdAt, exercise.getCreatedAt());
         assertEquals(updatedAt, exercise.getUpdatedAt());
@@ -104,8 +103,7 @@ class ExerciseTest {
         exercise.setMuscleGroup(null);
         exercise.setEquipmentNeeded(null);
         exercise.setDifficultyLevel(null);
-        exercise.setVideoUrl(null);
-        exercise.setImageUrl(null);
+
         exercise.setUpdatedAt(null);
 
         // Then
@@ -113,8 +111,7 @@ class ExerciseTest {
         assertNull(exercise.getMuscleGroup());
         assertNull(exercise.getEquipmentNeeded());
         assertNull(exercise.getDifficultyLevel());
-        assertNull(exercise.getVideoUrl());
-        assertNull(exercise.getImageUrl());
+
         assertNull(exercise.getUpdatedAt());
     }
 

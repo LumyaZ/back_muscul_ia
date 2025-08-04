@@ -48,24 +48,6 @@ public class TrainingProgramDto {
     private String difficultyLevel;
     
     /**
-     * Duration of the program in weeks.
-     * Durée du programme en semaines.
-     */
-    private Integer durationWeeks;
-    
-    /**
-     * Number of training sessions per week.
-     * Nombre de sessions d'entraînement par semaine.
-     */
-    private Integer sessionsPerWeek;
-    
-    /**
-     * Estimated duration of each session in minutes.
-     * Durée estimée de chaque session en minutes.
-     */
-    private Integer estimatedDurationMinutes;
-    
-    /**
      * Category of the training program (e.g., "Musculation", "Cardio", "Mixte").
      * Catégorie du programme d'entraînement (ex: "Musculation", "Cardio", "Mixte").
      */
@@ -76,30 +58,6 @@ public class TrainingProgramDto {
      * Audience cible pour le programme (ex: "Débutants", "Sportifs confirmés").
      */
     private String targetAudience;
-    
-    /**
-     * Equipment required to follow the program.
-     * Équipement requis pour suivre le programme.
-     */
-    private String equipmentRequired;
-    
-    /**
-     * URL to an image representing the program.
-     * URL vers une image représentant le programme.
-     */
-    private String imageUrl;
-    
-    /**
-     * Flag indicating if the program is public and visible to all users.
-     * Indicateur indiquant si le programme est public et visible par tous les utilisateurs.
-     */
-    private Boolean isPublic;
-    
-    /**
-     * Flag indicating if the program is currently active and available for use.
-     * Indicateur indiquant si le programme est actuellement actif et disponible.
-     */
-    private Boolean isActive;
     
     /**
      * Timestamp when the program was created.
@@ -223,66 +181,6 @@ public class TrainingProgramDto {
     }
     
     /**
-     * Get the duration in weeks.
-     * Récupérer la durée en semaines.
-     * 
-     * @return Integer - Duration in weeks
-     */
-    public Integer getDurationWeeks() {
-        return durationWeeks;
-    }
-    
-    /**
-     * Set the duration in weeks.
-     * Définir la durée en semaines.
-     * 
-     * @param durationWeeks - Duration in weeks
-     */
-    public void setDurationWeeks(Integer durationWeeks) {
-        this.durationWeeks = durationWeeks;
-    }
-    
-    /**
-     * Get the number of sessions per week.
-     * Récupérer le nombre de sessions par semaine.
-     * 
-     * @return Integer - Sessions per week
-     */
-    public Integer getSessionsPerWeek() {
-        return sessionsPerWeek;
-    }
-    
-    /**
-     * Set the number of sessions per week.
-     * Définir le nombre de sessions par semaine.
-     * 
-     * @param sessionsPerWeek - Sessions per week
-     */
-    public void setSessionsPerWeek(Integer sessionsPerWeek) {
-        this.sessionsPerWeek = sessionsPerWeek;
-    }
-    
-    /**
-     * Get the estimated duration in minutes.
-     * Récupérer la durée estimée en minutes.
-     * 
-     * @return Integer - Estimated duration in minutes
-     */
-    public Integer getEstimatedDurationMinutes() {
-        return estimatedDurationMinutes;
-    }
-    
-    /**
-     * Set the estimated duration in minutes.
-     * Définir la durée estimée en minutes.
-     * 
-     * @param estimatedDurationMinutes - Estimated duration in minutes
-     */
-    public void setEstimatedDurationMinutes(Integer estimatedDurationMinutes) {
-        this.estimatedDurationMinutes = estimatedDurationMinutes;
-    }
-    
-    /**
      * Get the program category.
      * Récupérer la catégorie du programme.
      * 
@@ -320,86 +218,6 @@ public class TrainingProgramDto {
      */
     public void setTargetAudience(String targetAudience) {
         this.targetAudience = targetAudience;
-    }
-    
-    /**
-     * Get the required equipment.
-     * Récupérer l'équipement requis.
-     * 
-     * @return String - Required equipment
-     */
-    public String getEquipmentRequired() {
-        return equipmentRequired;
-    }
-    
-    /**
-     * Set the required equipment.
-     * Définir l'équipement requis.
-     * 
-     * @param equipmentRequired - Required equipment
-     */
-    public void setEquipmentRequired(String equipmentRequired) {
-        this.equipmentRequired = equipmentRequired;
-    }
-    
-    /**
-     * Get the image URL.
-     * Récupérer l'URL de l'image.
-     * 
-     * @return String - Image URL
-     */
-    public String getImageUrl() {
-        return imageUrl;
-    }
-    
-    /**
-     * Set the image URL.
-     * Définir l'URL de l'image.
-     * 
-     * @param imageUrl - Image URL
-     */
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-    
-    /**
-     * Check if the program is public.
-     * Vérifier si le programme est public.
-     * 
-     * @return Boolean - True if public, false otherwise
-     */
-    public Boolean getIsPublic() {
-        return isPublic;
-    }
-    
-    /**
-     * Set the public status.
-     * Définir le statut public.
-     * 
-     * @param isPublic - Public status
-     */
-    public void setIsPublic(Boolean isPublic) {
-        this.isPublic = isPublic;
-    }
-    
-    /**
-     * Check if the program is active.
-     * Vérifier si le programme est actif.
-     * 
-     * @return Boolean - True if active, false otherwise
-     */
-    public Boolean getIsActive() {
-        return isActive;
-    }
-    
-    /**
-     * Set the active status.
-     * Définir le statut actif.
-     * 
-     * @param isActive - Active status
-     */
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
     }
     
     /**

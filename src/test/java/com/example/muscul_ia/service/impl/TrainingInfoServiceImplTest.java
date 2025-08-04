@@ -5,7 +5,13 @@ import com.example.muscul_ia.dto.UpdateTrainingInfoRequest;
 import com.example.muscul_ia.dto.TrainingInfoDto;
 import com.example.muscul_ia.entity.TrainingInfo;
 import com.example.muscul_ia.entity.User;
-import com.example.muscul_ia.enums.*;
+import com.example.muscul_ia.enums.Equipment;
+import com.example.muscul_ia.enums.ExperienceLevel;
+import com.example.muscul_ia.enums.Gender;
+import com.example.muscul_ia.enums.MainGoal;
+import com.example.muscul_ia.enums.SessionDuration;
+import com.example.muscul_ia.enums.SessionFrequency;
+import com.example.muscul_ia.enums.TrainingPreference;
 import com.example.muscul_ia.repository.TrainingInfoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,9 +23,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TrainingInfoServiceImplTest {
@@ -243,16 +255,5 @@ class TrainingInfoServiceImplTest {
         verify(trainingInfoRepository).existsByUser(testUser);
     }
 
-    @Test
-    void testExistsByUserId() {
-        // Arrange
-        when(trainingInfoRepository.existsByUserId(1L)).thenReturn(false);
 
-        // Act
-        boolean result = trainingInfoService.existsByUserId(1L);
-
-        // Assert
-        assertFalse(result);
-        verify(trainingInfoRepository).existsByUserId(1L);
-    }
 } 

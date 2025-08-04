@@ -14,17 +14,38 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * JWT Authentication Filter for processing JWT tokens in HTTP requests.
+ * Filtre d'authentification JWT pour traiter les tokens JWT dans les requêtes HTTP.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Constructor for JWT Authentication Filter.
+     * Constructeur pour le filtre d'authentification JWT.
+     * 
+     * @param jwtService Service for JWT operations / Service pour les opérations JWT
+     * @param userDetailsService Service for loading user details / Service pour charger les détails utilisateur
+     */
     public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     * Process JWT token from Authorization header and set authentication if valid.
+     * Traite le token JWT depuis l'en-tête Authorization et définit l'authentification si valide.
+     * 
+     * @param request HTTP request / Requête HTTP
+     * @param response HTTP response / Réponse HTTP
+     * @param filterChain Filter chain / Chaîne de filtres
+     * @throws ServletException Servlet exception / Exception Servlet
+     * @throws IOException IO exception / Exception IO
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, 
                                   HttpServletResponse response, 
@@ -32,47 +53,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         
         final String authHeader = request.getHeader("Authorization");
         
-        System.out.println("=== JWT FILTER ===");
-        System.out.println("Request URI: " + request.getRequestURI());
-        System.out.println("Auth header: " + (authHeader != null ? authHeader.substring(0, Math.min(20, authHeader.length())) + "..." : "null"));
-        
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            System.out.println("No Bearer token found, continuing without authentication");
             filterChain.doFilter(request, response);
             return;
         }
 
         try {
             final String jwt = authHeader.substring(7);
-            System.out.println("JWT token: " + jwt.substring(0, Math.min(20, jwt.length())) + "...");
             
             final String userEmail = jwtService.extractEmail(jwt);
-            System.out.println("Extracted email: " + userEmail);
 
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                System.out.println("Loading user details for: " + userEmail);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-                System.out.println("User details loaded: " + userDetails.getUsername());
                 
                 if (jwtService.validateToken(jwt)) {
-                    System.out.println("Token is valid, setting authentication");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                    System.out.println("Authentication set successfully");
-                } else {
-                    System.out.println("Token validation failed");
                 }
-            } else {
-                System.out.println("Email is null or authentication already exists");
             }
         } catch (Exception e) {
-            System.out.println("Exception in JWT filter: " + e.getMessage());
-            e.printStackTrace();
-            // Token invalide, continuer sans authentification
+            logger.error("Error processing JWT token", e);
         }
 
-        System.out.println("Final authentication: " + SecurityContextHolder.getContext().getAuthentication());
         filterChain.doFilter(request, response);
     }
 } 

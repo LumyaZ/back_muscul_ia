@@ -29,14 +29,6 @@ public class CreateProgramExerciseRequest {
     private Long exerciseId;
     
     /**
-     * Order of the exercise within the program (1, 2, 3, etc.).
-     * Ordre de l'exercice dans le programme (1, 2, 3, etc.).
-     */
-    @NotNull(message = "L'ordre dans le programme est requis")
-    @Min(value = 1, message = "L'ordre doit être au moins 1")
-    private Integer orderInProgram;
-    
-    /**
      * Number of sets for this exercise.
      * Nombre de séries pour cet exercice.
      */
@@ -50,13 +42,6 @@ public class CreateProgramExerciseRequest {
      */
     @Min(value = 1, message = "Le nombre de répétitions doit être au moins 1")
     private Integer repsCount;
-    
-    /**
-     * Duration in seconds (optional for rep-based exercises).
-     * Durée en secondes (optionnel pour les exercices basés sur les répétitions).
-     */
-    @Min(value = 1, message = "La durée doit être au moins 1 seconde")
-    private Integer durationSeconds;
     
     /**
      * Rest duration in seconds between sets.
@@ -87,12 +72,6 @@ public class CreateProgramExerciseRequest {
     private String notes;
     
     /**
-     * Whether this exercise is optional in the program.
-     * Si cet exercice est optionnel dans le programme.
-     */
-    private Boolean isOptional = false;
-
-    /**
      * Default constructor.
      * Constructeur par défaut.
      */
@@ -103,29 +82,23 @@ public class CreateProgramExerciseRequest {
      * Constructeur avec tous les champs.
      * 
      * @param exerciseId - ID of the exercise
-     * @param orderInProgram - Order in the program
      * @param setsCount - Number of sets
      * @param repsCount - Number of repetitions
-     * @param durationSeconds - Duration in seconds
      * @param restDurationSeconds - Rest duration in seconds
      * @param weightKg - Weight in kilograms
      * @param distanceMeters - Distance in meters
      * @param notes - Additional notes
-     * @param isOptional - Whether the exercise is optional
      */
-    public CreateProgramExerciseRequest(Long exerciseId, Integer orderInProgram, Integer setsCount,
-                                      Integer repsCount, Integer durationSeconds, Integer restDurationSeconds,
-                                      Double weightKg, Double distanceMeters, String notes, Boolean isOptional) {
+    public CreateProgramExerciseRequest(Long exerciseId, Integer setsCount,
+                                      Integer repsCount, Integer restDurationSeconds,
+                                      Double weightKg, Double distanceMeters, String notes) {
         this.exerciseId = exerciseId;
-        this.orderInProgram = orderInProgram;
         this.setsCount = setsCount;
         this.repsCount = repsCount;
-        this.durationSeconds = durationSeconds;
         this.restDurationSeconds = restDurationSeconds;
         this.weightKg = weightKg;
         this.distanceMeters = distanceMeters;
         this.notes = notes;
-        this.isOptional = isOptional;
     }
 
     // Getters and Setters
@@ -148,26 +121,6 @@ public class CreateProgramExerciseRequest {
      */
     public void setExerciseId(Long exerciseId) {
         this.exerciseId = exerciseId;
-    }
-
-    /**
-     * Gets the order in program.
-     * Obtient l'ordre dans le programme.
-     * 
-     * @return Order in program
-     */
-    public Integer getOrderInProgram() {
-        return orderInProgram;
-    }
-
-    /**
-     * Sets the order in program.
-     * Définit l'ordre dans le programme.
-     * 
-     * @param orderInProgram - Order to set
-     */
-    public void setOrderInProgram(Integer orderInProgram) {
-        this.orderInProgram = orderInProgram;
     }
 
     /**
@@ -208,26 +161,6 @@ public class CreateProgramExerciseRequest {
      */
     public void setRepsCount(Integer repsCount) {
         this.repsCount = repsCount;
-    }
-
-    /**
-     * Gets the duration in seconds.
-     * Obtient la durée en secondes.
-     * 
-     * @return Duration in seconds
-     */
-    public Integer getDurationSeconds() {
-        return durationSeconds;
-    }
-
-    /**
-     * Sets the duration in seconds.
-     * Définit la durée en secondes.
-     * 
-     * @param durationSeconds - Duration to set
-     */
-    public void setDurationSeconds(Integer durationSeconds) {
-        this.durationSeconds = durationSeconds;
     }
 
     /**
@@ -310,39 +243,16 @@ public class CreateProgramExerciseRequest {
         this.notes = notes;
     }
 
-    /**
-     * Gets whether the exercise is optional.
-     * Obtient si l'exercice est optionnel.
-     * 
-     * @return True if optional, false otherwise
-     */
-    public Boolean getIsOptional() {
-        return isOptional;
-    }
-
-    /**
-     * Sets whether the exercise is optional.
-     * Définit si l'exercice est optionnel.
-     * 
-     * @param isOptional - Optional flag to set
-     */
-    public void setIsOptional(Boolean isOptional) {
-        this.isOptional = isOptional;
-    }
-
     @Override
     public String toString() {
         return "CreateProgramExerciseRequest{" +
                 "exerciseId=" + exerciseId +
-                ", orderInProgram=" + orderInProgram +
                 ", setsCount=" + setsCount +
                 ", repsCount=" + repsCount +
-                ", durationSeconds=" + durationSeconds +
                 ", restDurationSeconds=" + restDurationSeconds +
                 ", weightKg=" + weightKg +
                 ", distanceMeters=" + distanceMeters +
                 ", notes='" + notes + '\'' +
-                ", isOptional=" + isOptional +
                 '}';
     }
 } 

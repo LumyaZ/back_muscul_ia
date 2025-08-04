@@ -11,18 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * REST Controller for managing user-training program relationships.
- * Contrôleur REST pour gérer les relations utilisateur-programme d'entraînement.
- * 
- * This controller provides endpoints for subscribing users to training programs
- * and retrieving relationship data.
- * 
- * Ce contrôleur fournit des endpoints pour abonner les utilisateurs aux programmes
- * d'entraînement et récupérer les données de relation.
- * 
- * @author Muscul IA Team
- * @version 1.0
- * @since 2024-01-01
+ * User training program controller for managing user-training program relationships.
+ * Contrôleur de programmes d'entraînement utilisateur pour gérer les relations utilisateur-programme.
  */
 @RestController
 @RequestMapping("/api/user-training-programs")
@@ -38,10 +28,6 @@ public class UserTrainingProgramController {
     /**
      * Subscribe a user to a training program.
      * Abonner un utilisateur à un programme d'entraînement.
-     * 
-     * @param userId - ID of the user
-     * @param trainingProgramId - ID of the training program
-     * @return ResponseEntity with the created relationship
      */
     @PostMapping("/subscribe")
     public ResponseEntity<UserTrainingProgramDto> subscribeUserToProgram(
@@ -65,10 +51,6 @@ public class UserTrainingProgramController {
     /**
      * Unsubscribe a user from a training program.
      * Désabonner un utilisateur d'un programme d'entraînement.
-     * 
-     * @param userId - ID of the user
-     * @param trainingProgramId - ID of the training program
-     * @return ResponseEntity indicating success
      */
     @DeleteMapping("/unsubscribe")
     public ResponseEntity<Void> unsubscribeUserFromProgram(
@@ -92,9 +74,6 @@ public class UserTrainingProgramController {
     /**
      * Get all training programs that a user is subscribed to.
      * Récupérer tous les programmes d'entraînement auxquels un utilisateur est abonné.
-     * 
-     * @param userId - ID of the user
-     * @return ResponseEntity with list of user programs
      */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<UserTrainingProgramDto>> getUserPrograms(
@@ -117,9 +96,6 @@ public class UserTrainingProgramController {
     /**
      * Get all users subscribed to a specific training program.
      * Récupérer tous les utilisateurs abonnés à un programme d'entraînement spécifique.
-     * 
-     * @param trainingProgramId - ID of the training program
-     * @return ResponseEntity with list of program users
      */
     @GetMapping("/program/{trainingProgramId}")
     public ResponseEntity<List<UserTrainingProgramDto>> getProgramUsers(@PathVariable Long trainingProgramId) {
@@ -134,10 +110,6 @@ public class UserTrainingProgramController {
     /**
      * Check if a user is subscribed to a specific training program.
      * Vérifier si un utilisateur est abonné à un programme d'entraînement spécifique.
-     * 
-     * @param userId - ID of the user
-     * @param trainingProgramId - ID of the training program
-     * @return ResponseEntity with the relationship if it exists
      */
     @GetMapping("/check")
     public ResponseEntity<UserTrainingProgramDto> checkUserProgram(

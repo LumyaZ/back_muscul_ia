@@ -1,12 +1,16 @@
 package com.example.muscul_ia.entity;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("TrainingProgram Entity Tests")
 class TrainingProgramTest {
@@ -25,13 +29,11 @@ class TrainingProgramTest {
     @Test
     @DisplayName("Should create training program with default values")
     void shouldCreateTrainingProgramWithDefaultValues() {
-        // Given & When
+        // When
         TrainingProgram newProgram = new TrainingProgram();
 
         // Then
         assertNotNull(newProgram);
-        assertFalse(newProgram.getIsPublic());
-        assertTrue(newProgram.getIsActive());
         assertNotNull(newProgram.getCreatedAt());
         assertNull(newProgram.getUpdatedAt());
     }
@@ -51,8 +53,6 @@ class TrainingProgramTest {
         assertEquals(name, newProgram.getName());
         assertEquals(description, newProgram.getDescription());
         assertEquals(difficultyLevel, newProgram.getDifficultyLevel());
-        assertFalse(newProgram.getIsPublic());
-        assertTrue(newProgram.getIsActive());
         assertNotNull(newProgram.getCreatedAt());
     }
 
@@ -64,15 +64,8 @@ class TrainingProgramTest {
         String name = "Programme Avancé";
         String description = "Programme pour sportifs confirmés";
         String difficultyLevel = "Avancé";
-        Integer durationWeeks = 12;
-        Integer sessionsPerWeek = 4;
-        Integer estimatedDurationMinutes = 60;
         String category = "Musculation";
         String targetAudience = "Sportifs confirmés";
-        String equipmentRequired = "Barre, haltères, rack";
-        String imageUrl = "https://example.com/image.jpg";
-        Boolean isPublic = true;
-        Boolean isActive = true;
         LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime updatedAt = LocalDateTime.now();
 
@@ -81,15 +74,8 @@ class TrainingProgramTest {
         trainingProgram.setName(name);
         trainingProgram.setDescription(description);
         trainingProgram.setDifficultyLevel(difficultyLevel);
-        trainingProgram.setDurationWeeks(durationWeeks);
-        trainingProgram.setSessionsPerWeek(sessionsPerWeek);
-        trainingProgram.setEstimatedDurationMinutes(estimatedDurationMinutes);
         trainingProgram.setCategory(category);
         trainingProgram.setTargetAudience(targetAudience);
-        trainingProgram.setEquipmentRequired(equipmentRequired);
-        trainingProgram.setImageUrl(imageUrl);
-        trainingProgram.setIsPublic(isPublic);
-        trainingProgram.setIsActive(isActive);
         trainingProgram.setCreatedAt(createdAt);
         trainingProgram.setUpdatedAt(updatedAt);
         trainingProgram.setCreatedByUser(user);
@@ -99,15 +85,8 @@ class TrainingProgramTest {
         assertEquals(name, trainingProgram.getName());
         assertEquals(description, trainingProgram.getDescription());
         assertEquals(difficultyLevel, trainingProgram.getDifficultyLevel());
-        assertEquals(durationWeeks, trainingProgram.getDurationWeeks());
-        assertEquals(sessionsPerWeek, trainingProgram.getSessionsPerWeek());
-        assertEquals(estimatedDurationMinutes, trainingProgram.getEstimatedDurationMinutes());
         assertEquals(category, trainingProgram.getCategory());
         assertEquals(targetAudience, trainingProgram.getTargetAudience());
-        assertEquals(equipmentRequired, trainingProgram.getEquipmentRequired());
-        assertEquals(imageUrl, trainingProgram.getImageUrl());
-        assertEquals(isPublic, trainingProgram.getIsPublic());
-        assertEquals(isActive, trainingProgram.getIsActive());
         assertEquals(createdAt, trainingProgram.getCreatedAt());
         assertEquals(updatedAt, trainingProgram.getUpdatedAt());
         assertEquals(user, trainingProgram.getCreatedByUser());
@@ -119,28 +98,16 @@ class TrainingProgramTest {
         // When
         trainingProgram.setDescription(null);
         trainingProgram.setDifficultyLevel(null);
-        trainingProgram.setDurationWeeks(null);
-        trainingProgram.setSessionsPerWeek(null);
-        trainingProgram.setEstimatedDurationMinutes(null);
         trainingProgram.setCategory(null);
         trainingProgram.setTargetAudience(null);
-        trainingProgram.setEquipmentRequired(null);
-        trainingProgram.setImageUrl(null);
         trainingProgram.setUpdatedAt(null);
-        trainingProgram.setCreatedByUser(null);
 
         // Then
         assertNull(trainingProgram.getDescription());
         assertNull(trainingProgram.getDifficultyLevel());
-        assertNull(trainingProgram.getDurationWeeks());
-        assertNull(trainingProgram.getSessionsPerWeek());
-        assertNull(trainingProgram.getEstimatedDurationMinutes());
         assertNull(trainingProgram.getCategory());
         assertNull(trainingProgram.getTargetAudience());
-        assertNull(trainingProgram.getEquipmentRequired());
-        assertNull(trainingProgram.getImageUrl());
         assertNull(trainingProgram.getUpdatedAt());
-        assertNull(trainingProgram.getCreatedByUser());
     }
 
     @Test
@@ -164,17 +131,66 @@ class TrainingProgramTest {
     @Test
     @DisplayName("Should handle user relationship correctly")
     void shouldHandleUserRelationshipCorrectly() {
-        // Given
-        User newUser = new User();
-        newUser.setId(2L);
-        newUser.setEmail("newuser@example.com");
-
         // When
-        trainingProgram.setCreatedByUser(newUser);
+        trainingProgram.setCreatedByUser(user);
 
         // Then
-        assertEquals(newUser, trainingProgram.getCreatedByUser());
-        assertEquals(2L, trainingProgram.getCreatedByUser().getId());
-        assertEquals("newuser@example.com", trainingProgram.getCreatedByUser().getEmail());
+        assertEquals(user, trainingProgram.getCreatedByUser());
+        assertEquals(1L, trainingProgram.getCreatedByUser().getId());
+        assertEquals("test@example.com", trainingProgram.getCreatedByUser().getEmail());
+    }
+
+    @Test
+    @DisplayName("Should handle equality correctly")
+    void shouldHandleEqualityCorrectly() {
+        // Given
+        TrainingProgram program1 = new TrainingProgram();
+        program1.setId(1L);
+        program1.setName("Program 1");
+
+        TrainingProgram program2 = new TrainingProgram();
+        program2.setId(1L);
+        program2.setName("Program 1");
+
+        TrainingProgram program3 = new TrainingProgram();
+        program3.setId(2L);
+        program3.setName("Program 2");
+
+        // Then
+        assertEquals(program1, program2);
+        assertNotEquals(program1, program3);
+        assertNotEquals(program1, null);
+        assertNotEquals(program1, new Object());
+    }
+
+    @Test
+    @DisplayName("Should handle hashCode correctly")
+    void shouldHandleHashCodeCorrectly() {
+        // Given
+        TrainingProgram program1 = new TrainingProgram();
+        program1.setId(1L);
+        program1.setName("Program 1");
+
+        TrainingProgram program2 = new TrainingProgram();
+        program2.setId(1L);
+        program2.setName("Program 1");
+
+        // Then
+        assertEquals(program1.hashCode(), program2.hashCode());
+    }
+
+    @Test
+    @DisplayName("Should handle toString correctly")
+    void shouldHandleToStringCorrectly() {
+        // Given
+        trainingProgram.setId(1L);
+        trainingProgram.setName("Test Program");
+
+        // When
+        String toString = trainingProgram.toString();
+
+        // Then
+        assertTrue(toString.contains("1"));
+        assertTrue(toString.contains("Test Program"));
     }
 } 

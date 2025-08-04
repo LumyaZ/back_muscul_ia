@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +20,8 @@ class JwtServiceTest {
     @BeforeEach
     void setUp() {
         jwtService = new JwtService();
+        ReflectionTestUtils.setField(jwtService, "secretKey", "test-secret-key-for-testing-only");
+        ReflectionTestUtils.setField(jwtService, "expirationTime", 86400000L);
     }
 
     /**
@@ -32,7 +35,7 @@ class JwtServiceTest {
         
         assertNotNull(token);
         assertFalse(token.isEmpty());
-        assertTrue(token.contains(".")); // JWT format validation
+        assertTrue(token.contains(".")); 
     }
 
     /**
@@ -80,7 +83,8 @@ class JwtServiceTest {
         String email = "test@example.com";
         String token = jwtService.generateToken(email);
         
-        // Token should be valid immediately after generation
         assertTrue(jwtService.validateToken(token));
+        
+        assertFalse(jwtService.isTokenExpired(token));
     }
 } 

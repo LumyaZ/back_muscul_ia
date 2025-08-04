@@ -18,18 +18,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of UserTrainingProgramService.
- * Implémentation de UserTrainingProgramService.
- * 
- * This service provides business logic for managing the simple relationship between
- * users and training programs.
- * 
- * Ce service fournit la logique métier pour gérer la relation simple entre les
- * utilisateurs et les programmes d'entraînement.
- * 
- * @author Muscul IA Team
- * @version 1.0
- * @since 2024-01-01
+ * User training program service implementation for managing user-training program relationship business logic.
+ * Implémentation du service de programmes d'entraînement utilisateur pour gérer la logique métier de relation utilisateur-programme.
  */
 @Service
 @Transactional
@@ -46,20 +36,16 @@ public class UserTrainingProgramServiceImpl implements UserTrainingProgramServic
     
     @Override
     public UserTrainingProgramDto subscribeUserToProgram(Long userId, Long trainingProgramId) {
-        // Check if user exists
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         
-        // Check if training program exists
         TrainingProgram trainingProgram = trainingProgramRepository.findById(trainingProgramId)
                 .orElseThrow(() -> new RuntimeException("Training program not found with id: " + trainingProgramId));
         
-        // Check if user is already subscribed
         if (userTrainingProgramRepository.findByUserIdAndTrainingProgramId(userId, trainingProgramId).isPresent()) {
             throw new RuntimeException("User is already subscribed to this program");
         }
         
-        // Create new relationship
         UserTrainingProgram userTrainingProgram = new UserTrainingProgram(user, trainingProgram);
         
         UserTrainingProgram saved = userTrainingProgramRepository.save(userTrainingProgram);
@@ -98,9 +84,6 @@ public class UserTrainingProgramServiceImpl implements UserTrainingProgramServic
     /**
      * Convert UserTrainingProgram entity to DTO.
      * Convertir l'entité UserTrainingProgram en DTO.
-     * 
-     * @param userTrainingProgram - Entity to convert
-     * @return UserTrainingProgramDto - Converted DTO
      */
     private UserTrainingProgramDto convertToDto(UserTrainingProgram userTrainingProgram) {
         UserDto userDto = new UserDto();
@@ -112,15 +95,8 @@ public class UserTrainingProgramServiceImpl implements UserTrainingProgramServic
         trainingProgramDto.setName(userTrainingProgram.getTrainingProgram().getName());
         trainingProgramDto.setDescription(userTrainingProgram.getTrainingProgram().getDescription());
         trainingProgramDto.setDifficultyLevel(userTrainingProgram.getTrainingProgram().getDifficultyLevel());
-        trainingProgramDto.setDurationWeeks(userTrainingProgram.getTrainingProgram().getDurationWeeks());
-        trainingProgramDto.setSessionsPerWeek(userTrainingProgram.getTrainingProgram().getSessionsPerWeek());
-        trainingProgramDto.setEstimatedDurationMinutes(userTrainingProgram.getTrainingProgram().getEstimatedDurationMinutes());
         trainingProgramDto.setCategory(userTrainingProgram.getTrainingProgram().getCategory());
         trainingProgramDto.setTargetAudience(userTrainingProgram.getTrainingProgram().getTargetAudience());
-        trainingProgramDto.setEquipmentRequired(userTrainingProgram.getTrainingProgram().getEquipmentRequired());
-        trainingProgramDto.setImageUrl(userTrainingProgram.getTrainingProgram().getImageUrl());
-        trainingProgramDto.setIsPublic(userTrainingProgram.getTrainingProgram().getIsPublic());
-        trainingProgramDto.setIsActive(userTrainingProgram.getTrainingProgram().getIsActive());
         trainingProgramDto.setCreatedAt(userTrainingProgram.getTrainingProgram().getCreatedAt());
         trainingProgramDto.setUpdatedAt(userTrainingProgram.getTrainingProgram().getUpdatedAt());
         

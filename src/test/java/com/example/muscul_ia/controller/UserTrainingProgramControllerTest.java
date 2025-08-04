@@ -1,66 +1,56 @@
 package com.example.muscul_ia.controller;
 
-import com.example.muscul_ia.config.TestSecurityConfig;
 import com.example.muscul_ia.dto.UserTrainingProgramDto;
 import com.example.muscul_ia.service.UserTrainingProgramService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.mock;
 
-/**
- * Unit tests for UserTrainingProgramController.
- * Tests unitaires pour UserTrainingProgramController.
- * 
- * This test class verifies the REST endpoints of the UserTrainingProgramController,
- * including request handling, response formatting, and error scenarios.
- * 
- * Cette classe de test vérifie les endpoints REST du UserTrainingProgramController,
- * incluant la gestion des requêtes, le formatage des réponses et les scénarios d'erreur.
- * 
- * @author Muscul IA Team
- * @version 1.0
- * @since 2024-01-01
- */
-@SpringBootTest
-@AutoConfigureMockMvc
-@Import(TestSecurityConfig.class)
-@ActiveProfiles("test")
 @DisplayName("UserTrainingProgramController Tests")
 class UserTrainingProgramControllerTest {
     
-    @Autowired
     private MockMvc mockMvc;
-    
-    @MockBean
     private UserTrainingProgramService userTrainingProgramService;
-    
-    @Autowired
     private ObjectMapper objectMapper;
     
     private UserTrainingProgramDto userTrainingProgramDto;
     
     @BeforeEach
     void setUp() {
+        userTrainingProgramService = mock(UserTrainingProgramService.class);
+        
+        UserTrainingProgramController controller = new UserTrainingProgramController();
+        // Utiliser la réflexion pour injecter les services
+        try {
+            java.lang.reflect.Field userTrainingProgramServiceField = UserTrainingProgramController.class.getDeclaredField("userTrainingProgramService");
+            userTrainingProgramServiceField.setAccessible(true);
+            userTrainingProgramServiceField.set(controller, userTrainingProgramService);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to inject dependencies", e);
+        }
+        
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        objectMapper = new ObjectMapper();
+        
         // Create test DTO
         userTrainingProgramDto = new UserTrainingProgramDto();
         userTrainingProgramDto.setId(1L);
@@ -81,7 +71,7 @@ class UserTrainingProgramControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
         
-        verify(userTrainingProgramService).subscribeUserToProgram(1L, 1L);
+        verify(userTrainingProgramService, times(1)).subscribeUserToProgram(1L, 1L);
     }
     
     @Test
@@ -98,7 +88,7 @@ class UserTrainingProgramControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
         
-        verify(userTrainingProgramService).subscribeUserToProgram(1L, 1L);
+        verify(userTrainingProgramService, times(1)).subscribeUserToProgram(1L, 1L);
     }
     
     @Test
@@ -114,7 +104,7 @@ class UserTrainingProgramControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         
-        verify(userTrainingProgramService).unsubscribeUserFromProgram(1L, 1L);
+        verify(userTrainingProgramService, times(1)).unsubscribeUserFromProgram(1L, 1L);
     }
     
     @Test
@@ -131,7 +121,7 @@ class UserTrainingProgramControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
         
-        verify(userTrainingProgramService).unsubscribeUserFromProgram(1L, 1L);
+        verify(userTrainingProgramService, times(1)).unsubscribeUserFromProgram(1L, 1L);
     }
     
     @Test
@@ -147,7 +137,7 @@ class UserTrainingProgramControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1));
         
-        verify(userTrainingProgramService).getUserPrograms(1L);
+        verify(userTrainingProgramService, times(1)).getUserPrograms(1L);
     }
     
     @Test
@@ -162,7 +152,7 @@ class UserTrainingProgramControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
         
-        verify(userTrainingProgramService).getUserPrograms(1L);
+        verify(userTrainingProgramService, times(1)).getUserPrograms(1L);
     }
     
     @Test
@@ -178,7 +168,7 @@ class UserTrainingProgramControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1));
         
-        verify(userTrainingProgramService).getProgramUsers(1L);
+        verify(userTrainingProgramService, times(1)).getProgramUsers(1L);
     }
     
     @Test
@@ -193,7 +183,7 @@ class UserTrainingProgramControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
         
-        verify(userTrainingProgramService).getProgramUsers(1L);
+        verify(userTrainingProgramService, times(1)).getProgramUsers(1L);
     }
     
     @Test
@@ -211,7 +201,7 @@ class UserTrainingProgramControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
         
-        verify(userTrainingProgramService).getUserProgram(1L, 1L);
+        verify(userTrainingProgramService, times(1)).getUserProgram(1L, 1L);
     }
     
     @Test
@@ -228,7 +218,7 @@ class UserTrainingProgramControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
         
-        verify(userTrainingProgramService).getUserProgram(1L, 1L);
+        verify(userTrainingProgramService, times(1)).getUserProgram(1L, 1L);
     }
     
     @Test
@@ -236,7 +226,7 @@ class UserTrainingProgramControllerTest {
     void shouldReturnBadRequestWhenCheckingUserProgramFails() throws Exception {
         // Given
         when(userTrainingProgramService.getUserProgram(1L, 1L))
-                .thenThrow(new RuntimeException("Error"));
+                .thenThrow(new RuntimeException("Error occurred"));
         
         // When & Then
         mockMvc.perform(get("/api/user-training-programs/check")
@@ -245,6 +235,6 @@ class UserTrainingProgramControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
         
-        verify(userTrainingProgramService).getUserProgram(1L, 1L);
+        verify(userTrainingProgramService, times(1)).getUserProgram(1L, 1L);
     }
 } 

@@ -3,7 +3,6 @@ package com.example.muscul_ia.service.impl;
 import com.example.muscul_ia.dto.CreateTrainingProgramRequest;
 import com.example.muscul_ia.dto.TrainingProgramDto;
 import com.example.muscul_ia.entity.Exercise;
-import com.example.muscul_ia.entity.ProgramExercise;
 import com.example.muscul_ia.entity.TrainingProgram;
 import com.example.muscul_ia.entity.User;
 import com.example.muscul_ia.repository.ExerciseRepository;
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
@@ -24,18 +22,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-/**
- * Unit tests for TrainingProgramServiceImpl.
- * Tests unitaires pour TrainingProgramServiceImpl.
- * 
- * @author Muscul IA Team
- * @version 1.0
- * @since 2024-01-01
- */
 @ExtendWith(MockitoExtension.class)
 @DisplayName("TrainingProgramServiceImpl Tests")
 class TrainingProgramServiceImplTest {
@@ -62,8 +59,6 @@ class TrainingProgramServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        
         user = new User();
         user.setId(1L);
         user.setEmail("test@example.com");
@@ -71,6 +66,7 @@ class TrainingProgramServiceImplTest {
         exercise = new Exercise();
         exercise.setId(1L);
         exercise.setName("Pompes");
+        exercise.setDescription("Exercice de pompes");
         exercise.setCategory("Musculation");
 
         trainingProgram = new TrainingProgram();
@@ -78,14 +74,8 @@ class TrainingProgramServiceImplTest {
         trainingProgram.setName("Programme Test");
         trainingProgram.setDescription("Description du programme");
         trainingProgram.setDifficultyLevel("Débutant");
-        trainingProgram.setDurationWeeks(8);
-        trainingProgram.setSessionsPerWeek(3);
-        trainingProgram.setEstimatedDurationMinutes(45);
         trainingProgram.setCategory("Musculation");
         trainingProgram.setTargetAudience("Débutants");
-        trainingProgram.setEquipmentRequired("Poids du corps");
-        trainingProgram.setIsPublic(false);
-        trainingProgram.setIsActive(true);
         trainingProgram.setCreatedByUser(user);
         trainingProgram.setCreatedAt(LocalDateTime.now());
 
@@ -93,13 +83,8 @@ class TrainingProgramServiceImplTest {
         createRequest.setName("Nouveau Programme");
         createRequest.setDescription("Description du nouveau programme");
         createRequest.setDifficultyLevel("Intermédiaire");
-        createRequest.setDurationWeeks(12);
-        createRequest.setSessionsPerWeek(4);
-        createRequest.setEstimatedDurationMinutes(60);
         createRequest.setCategory("Musculation");
         createRequest.setTargetAudience("Sportifs confirmés");
-        createRequest.setEquipmentRequired("Barre, haltères");
-        createRequest.setIsPublic(true);
     }
 
     @Test
@@ -121,23 +106,6 @@ class TrainingProgramServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should create training program without user successfully")
-    void shouldCreateTrainingProgramWithoutUserSuccessfully() {
-        // Given
-        when(trainingProgramRepository.save(any(TrainingProgram.class))).thenReturn(trainingProgram);
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-
-        // When
-        TrainingProgramDto result = trainingProgramService.createTrainingProgram(createRequest);
-
-        // Then
-        assertNotNull(result);
-        assertEquals(trainingProgram.getName(), result.getName());
-        assertEquals(trainingProgram.getDescription(), result.getDescription());
-        verify(trainingProgramRepository, times(1)).save(any(TrainingProgram.class));
-    }
-
-    @Test
     @DisplayName("Should throw exception when user not found during creation")
     void shouldThrowExceptionWhenUserNotFoundDuringCreation() {
         // Given
@@ -152,11 +120,11 @@ class TrainingProgramServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should get all active programs")
-    void shouldGetAllActivePrograms() {
+    @DisplayName("Should get all programs")
+    void shouldGetAllPrograms() {
         // Given
         List<TrainingProgram> programs = Arrays.asList(trainingProgram);
-        when(trainingProgramRepository.findByIsActiveTrue()).thenReturn(programs);
+        when(trainingProgramRepository.findAll()).thenReturn(programs);
 
         // When
         List<TrainingProgramDto> result = trainingProgramService.getAllActivePrograms();
@@ -165,24 +133,7 @@ class TrainingProgramServiceImplTest {
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(trainingProgram.getName(), result.get(0).getName());
-        verify(trainingProgramRepository, times(1)).findByIsActiveTrue();
-    }
-
-    @Test
-    @DisplayName("Should get all public active programs")
-    void shouldGetAllPublicActivePrograms() {
-        // Given
-        List<TrainingProgram> programs = Arrays.asList(trainingProgram);
-        when(trainingProgramRepository.findByIsPublicTrueAndIsActiveTrue()).thenReturn(programs);
-
-        // When
-        List<TrainingProgramDto> result = trainingProgramService.getAllPublicActivePrograms();
-
-        // Then
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(trainingProgram.getName(), result.get(0).getName());
-        verify(trainingProgramRepository, times(1)).findByIsPublicTrueAndIsActiveTrue();
+        verify(trainingProgramRepository, times(1)).findAll();
     }
 
     @Test
@@ -215,132 +166,20 @@ class TrainingProgramServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should get programs by user")
-    void shouldGetProgramsByUser() {
-        // Given
-        List<TrainingProgram> programs = Arrays.asList(trainingProgram);
-        when(trainingProgramRepository.findByCreatedByUserAndIsActiveTrue(user)).thenReturn(programs);
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-
-        // When
-        List<TrainingProgramDto> result = trainingProgramService.getProgramsByUser(1L);
-
-        // Then
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(trainingProgram.getName(), result.get(0).getName());
-        verify(userRepository, times(1)).findById(1L);
-        verify(trainingProgramRepository, times(1)).findByCreatedByUserAndIsActiveTrue(user);
-    }
-
-    @Test
-    @DisplayName("Should return empty list when user not found")
-    void shouldReturnEmptyListWhenUserNotFound() {
-        // Given
-        when(userRepository.findById(999L)).thenReturn(Optional.empty());
-
-        // When
-        List<TrainingProgramDto> result = trainingProgramService.getProgramsByUser(999L);
-
-        // Then
-        assertNotNull(result);
-        assertTrue(result.isEmpty());
-        verify(userRepository, times(1)).findById(999L);
-        verify(trainingProgramRepository, never()).findByCreatedByUserAndIsActiveTrue(any());
-    }
-
-    @Test
-    @DisplayName("Should update program successfully")
-    void shouldUpdateProgramSuccessfully() {
-        // Given
-        when(trainingProgramRepository.findById(1L)).thenReturn(Optional.of(trainingProgram));
-        when(trainingProgramRepository.save(any(TrainingProgram.class))).thenReturn(trainingProgram);
-
-        // When
-        TrainingProgramDto result = trainingProgramService.updateProgram(1L, createRequest, 1L);
-
-        // Then
-        assertNotNull(result);
-        assertEquals(trainingProgram.getName(), result.getName());
-        verify(trainingProgramRepository, times(1)).findById(1L);
-        verify(trainingProgramRepository, times(1)).save(any(TrainingProgram.class));
-    }
-
-    @Test
-    @DisplayName("Should throw exception when updating program with wrong user")
-    void shouldThrowExceptionWhenUpdatingProgramWithWrongUser() {
-        // Given
-        when(trainingProgramRepository.findById(1L)).thenReturn(Optional.of(trainingProgram));
-
-        // When & Then
-        assertThrows(RuntimeException.class, () -> {
-            trainingProgramService.updateProgram(1L, createRequest, 999L);
-        });
-        verify(trainingProgramRepository, times(1)).findById(1L);
-        verify(trainingProgramRepository, never()).save(any(TrainingProgram.class));
-    }
-
-    @Test
-    @DisplayName("Should delete program successfully")
-    void shouldDeleteProgramSuccessfully() {
-        // Given
-        when(trainingProgramRepository.findById(1L)).thenReturn(Optional.of(trainingProgram));
-        when(trainingProgramRepository.save(any(TrainingProgram.class))).thenReturn(trainingProgram);
-
-        // When
-        trainingProgramService.deleteProgram(1L, 1L);
-
-        // Then
-        verify(trainingProgramRepository, times(1)).findById(1L);
-        verify(trainingProgramRepository, times(1)).save(any(TrainingProgram.class));
-    }
-
-    @Test
-    @DisplayName("Should throw exception when deleting program with wrong user")
-    void shouldThrowExceptionWhenDeletingProgramWithWrongUser() {
-        // Given
-        when(trainingProgramRepository.findById(1L)).thenReturn(Optional.of(trainingProgram));
-
-        // When & Then
-        assertThrows(RuntimeException.class, () -> {
-            trainingProgramService.deleteProgram(1L, 999L);
-        });
-        verify(trainingProgramRepository, times(1)).findById(1L);
-        verify(trainingProgramRepository, never()).save(any(TrainingProgram.class));
-    }
-
-    @Test
     @DisplayName("Should search programs by name")
     void shouldSearchProgramsByName() {
         // Given
         List<TrainingProgram> programs = Arrays.asList(trainingProgram);
-        when(trainingProgramRepository.findByNameContainingIgnoreCaseAndIsActiveTrue("test")).thenReturn(programs);
+        when(trainingProgramRepository.findAll()).thenReturn(programs);
 
         // When
-        List<TrainingProgramDto> result = trainingProgramService.searchProgramsByName("test");
+        List<TrainingProgramDto> result = trainingProgramService.searchProgramsByName("Test");
 
         // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(trainingProgram.getName(), result.get(0).getName());
-        verify(trainingProgramRepository, times(1)).findByNameContainingIgnoreCaseAndIsActiveTrue("test");
-    }
-
-    @Test
-    @DisplayName("Should get public programs by difficulty level")
-    void shouldGetPublicProgramsByDifficultyLevel() {
-        // Given
-        List<TrainingProgram> programs = Arrays.asList(trainingProgram);
-        when(trainingProgramRepository.findByDifficultyLevelAndIsPublicTrueAndIsActiveTrue("Débutant")).thenReturn(programs);
-
-        // When
-        List<TrainingProgramDto> result = trainingProgramService.getPublicProgramsByDifficultyLevel("Débutant");
-
-        // Then
-        assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(trainingProgram.getName(), result.get(0).getName());
-        verify(trainingProgramRepository, times(1)).findByDifficultyLevelAndIsPublicTrueAndIsActiveTrue("Débutant");
+        verify(trainingProgramRepository, times(1)).findAll();
     }
 
     @Test
@@ -355,14 +194,10 @@ class TrainingProgramServiceImplTest {
         assertEquals(trainingProgram.getName(), result.getName());
         assertEquals(trainingProgram.getDescription(), result.getDescription());
         assertEquals(trainingProgram.getDifficultyLevel(), result.getDifficultyLevel());
-        assertEquals(trainingProgram.getDurationWeeks(), result.getDurationWeeks());
-        assertEquals(trainingProgram.getSessionsPerWeek(), result.getSessionsPerWeek());
-        assertEquals(trainingProgram.getEstimatedDurationMinutes(), result.getEstimatedDurationMinutes());
         assertEquals(trainingProgram.getCategory(), result.getCategory());
         assertEquals(trainingProgram.getTargetAudience(), result.getTargetAudience());
-        assertEquals(trainingProgram.getEquipmentRequired(), result.getEquipmentRequired());
-        assertEquals(trainingProgram.getIsPublic(), result.getIsPublic());
-        assertEquals(trainingProgram.getIsActive(), result.getIsActive());
+        assertEquals(trainingProgram.getCreatedByUser().getId(), result.getCreatedByUserId());
+        assertEquals(trainingProgram.getCreatedAt(), result.getCreatedAt());
     }
 
     @Test

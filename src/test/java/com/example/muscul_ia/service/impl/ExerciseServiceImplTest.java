@@ -16,9 +16,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @DisplayName("ExerciseServiceImpl Tests")
 class ExerciseServiceImplTest {
@@ -33,6 +40,10 @@ class ExerciseServiceImplTest {
     private CreateExerciseRequest createRequest;
     private ExerciseDto exerciseDto;
 
+    /**
+     * Set up test data before each test.
+     * Configure les données de test avant chaque test.
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -63,16 +74,17 @@ class ExerciseServiceImplTest {
         exerciseDto.setCategory("Musculation");
     }
 
+    /**
+     * Test successful exercise creation.
+     * Teste la création réussie d'un exercice.
+     */
     @Test
     @DisplayName("Should create exercise successfully")
     void shouldCreateExerciseSuccessfully() {
-        // Given
         when(exerciseRepository.save(any(Exercise.class))).thenReturn(exercise);
 
-        // When
         ExerciseDto result = exerciseService.createExercise(createRequest);
 
-        // Then
         assertNotNull(result);
         assertEquals(exercise.getName(), result.getName());
         assertEquals(exercise.getDescription(), result.getDescription());
@@ -80,66 +92,56 @@ class ExerciseServiceImplTest {
         verify(exerciseRepository, times(1)).save(any(Exercise.class));
     }
 
+    /**
+     * Test successful retrieval of all active exercises.
+     * Teste la récupération réussie de tous les exercices actifs.
+     */
     @Test
     @DisplayName("Should get all active exercises")
     void shouldGetAllActiveExercises() {
-        // Given
         List<Exercise> exercises = Arrays.asList(exercise);
         when(exerciseRepository.findByIsActiveTrue()).thenReturn(exercises);
 
-        // When
         List<ExerciseDto> result = exerciseService.getAllActiveExercises();
 
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(exercise.getName(), result.get(0).getName());
         verify(exerciseRepository, times(1)).findByIsActiveTrue();
     }
 
+    /**
+     * Test successful retrieval of exercise by ID.
+     * Teste la récupération réussie d'un exercice par ID.
+     */
     @Test
     @DisplayName("Should get exercise by id when exists")
     void shouldGetExerciseByIdWhenExists() {
-        // Given
         when(exerciseRepository.findById(1L)).thenReturn(Optional.of(exercise));
 
-        // When
         Optional<ExerciseDto> result = exerciseService.getExerciseById(1L);
 
-        // Then
         assertTrue(result.isPresent());
         assertEquals(exercise.getName(), result.get().getName());
         verify(exerciseRepository, times(1)).findById(1L);
     }
 
+    /**
+     * Test exercise retrieval failure when exercise does not exist.
+     * Teste l'échec de récupération d'un exercice inexistant.
+     */
     @Test
     @DisplayName("Should return empty when exercise not found")
     void shouldReturnEmptyWhenExerciseNotFound() {
-        // Given
         when(exerciseRepository.findById(999L)).thenReturn(Optional.empty());
 
-        // When
         Optional<ExerciseDto> result = exerciseService.getExerciseById(999L);
 
-        // Then
         assertFalse(result.isPresent());
         verify(exerciseRepository, times(1)).findById(999L);
     }
 
-    @Test
-    @DisplayName("Should get exercise entity by id")
-    void shouldGetExerciseEntityById() {
-        // Given
-        when(exerciseRepository.findById(1L)).thenReturn(Optional.of(exercise));
 
-        // When
-        Optional<Exercise> result = exerciseService.getExerciseEntityById(1L);
-
-        // Then
-        assertTrue(result.isPresent());
-        assertEquals(exercise, result.get());
-        verify(exerciseRepository, times(1)).findById(1L);
-    }
 
     @Test
     @DisplayName("Should update exercise successfully")

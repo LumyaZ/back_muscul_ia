@@ -12,15 +12,12 @@ public class ProgramExerciseDto {
     private String exerciseMuscleGroup;
     private String exerciseEquipmentNeeded;
     private String exerciseDifficultyLevel;
-    private Integer orderInProgram;
     private Integer setsCount;
     private Integer repsCount;
-    private Integer durationSeconds;
     private Integer restDurationSeconds;
     private Double weightKg;
     private Double distanceMeters;
     private String notes;
-    private Boolean isOptional;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
@@ -100,14 +97,6 @@ public class ProgramExerciseDto {
         this.exerciseDifficultyLevel = exerciseDifficultyLevel;
     }
     
-    public Integer getOrderInProgram() {
-        return orderInProgram;
-    }
-    
-    public void setOrderInProgram(Integer orderInProgram) {
-        this.orderInProgram = orderInProgram;
-    }
-    
     public Integer getSetsCount() {
         return setsCount;
     }
@@ -122,14 +111,6 @@ public class ProgramExerciseDto {
     
     public void setRepsCount(Integer repsCount) {
         this.repsCount = repsCount;
-    }
-    
-    public Integer getDurationSeconds() {
-        return durationSeconds;
-    }
-    
-    public void setDurationSeconds(Integer durationSeconds) {
-        this.durationSeconds = durationSeconds;
     }
     
     public Integer getRestDurationSeconds() {
@@ -162,14 +143,6 @@ public class ProgramExerciseDto {
     
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-    
-    public Boolean getIsOptional() {
-        return isOptional;
-    }
-    
-    public void setIsOptional(Boolean isOptional) {
-        this.isOptional = isOptional;
     }
     
     public LocalDateTime getCreatedAt() {

@@ -19,8 +19,14 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @DisplayName("ProgramExerciseServiceImpl Tests")
 class ProgramExerciseServiceImplTest {
@@ -63,15 +69,12 @@ class ProgramExerciseServiceImplTest {
         programExercise.setId(1L);
         programExercise.setTrainingProgram(trainingProgram);
         programExercise.setExercise(exercise);
-        programExercise.setOrderInProgram(1);
         programExercise.setSetsCount(3);
         programExercise.setRepsCount(12);
-        programExercise.setDurationSeconds(60);
         programExercise.setRestDurationSeconds(90);
         programExercise.setWeightKg(0.0);
         programExercise.setDistanceMeters(0.0);
         programExercise.setNotes("Exercice de base");
-        programExercise.setIsOptional(false);
         programExercise.setCreatedAt(LocalDateTime.now());
         programExercise.setUpdatedAt(LocalDateTime.now());
 
@@ -103,15 +106,12 @@ class ProgramExerciseServiceImplTest {
         assertEquals(programExercise.getExercise().getMuscleGroup(), dto.getExerciseMuscleGroup());
         assertEquals(programExercise.getExercise().getEquipmentNeeded(), dto.getExerciseEquipmentNeeded());
         assertEquals(programExercise.getExercise().getDifficultyLevel(), dto.getExerciseDifficultyLevel());
-        assertEquals(programExercise.getOrderInProgram(), dto.getOrderInProgram());
         assertEquals(programExercise.getSetsCount(), dto.getSetsCount());
         assertEquals(programExercise.getRepsCount(), dto.getRepsCount());
-        assertEquals(programExercise.getDurationSeconds(), dto.getDurationSeconds());
         assertEquals(programExercise.getRestDurationSeconds(), dto.getRestDurationSeconds());
         assertEquals(programExercise.getWeightKg(), dto.getWeightKg());
         assertEquals(programExercise.getDistanceMeters(), dto.getDistanceMeters());
         assertEquals(programExercise.getNotes(), dto.getNotes());
-        assertEquals(programExercise.getIsOptional(), dto.getIsOptional());
         assertEquals(programExercise.getCreatedAt(), dto.getCreatedAt());
         assertEquals(programExercise.getUpdatedAt(), dto.getUpdatedAt());
 
@@ -184,15 +184,12 @@ class ProgramExerciseServiceImplTest {
         programExerciseWithNulls.setId(2L);
         programExerciseWithNulls.setTrainingProgram(trainingProgram);
         programExerciseWithNulls.setExercise(exercise);
-        programExerciseWithNulls.setOrderInProgram(2);
         programExerciseWithNulls.setSetsCount(null);
         programExerciseWithNulls.setRepsCount(null);
-        programExerciseWithNulls.setDurationSeconds(null);
         programExerciseWithNulls.setRestDurationSeconds(null);
         programExerciseWithNulls.setWeightKg(null);
         programExerciseWithNulls.setDistanceMeters(null);
         programExerciseWithNulls.setNotes(null);
-        programExerciseWithNulls.setIsOptional(null);
         programExerciseWithNulls.setCreatedAt(LocalDateTime.now());
         programExerciseWithNulls.setUpdatedAt(LocalDateTime.now());
 
@@ -211,12 +208,10 @@ class ProgramExerciseServiceImplTest {
         assertEquals(programExerciseWithNulls.getId(), dto.getId());
         assertNull(dto.getSetsCount());
         assertNull(dto.getRepsCount());
-        assertNull(dto.getDurationSeconds());
         assertNull(dto.getRestDurationSeconds());
         assertNull(dto.getWeightKg());
         assertNull(dto.getDistanceMeters());
         assertNull(dto.getNotes());
-        assertNull(dto.getIsOptional());
 
         verify(programExerciseRepository, times(1)).findByTrainingProgramIdWithExercise(programId);
     }

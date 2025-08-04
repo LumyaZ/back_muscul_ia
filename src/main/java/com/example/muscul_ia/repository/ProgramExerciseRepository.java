@@ -9,44 +9,23 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Program exercise repository for managing program-exercise relationship data operations.
+ * Repository d'exercices de programme pour gérer les opérations de données de relation programme-exercice.
+ */
 @Repository
 public interface ProgramExerciseRepository extends JpaRepository<ProgramExercise, Long> {
     
-    // Trouver tous les exercices d'un programme
-    List<ProgramExercise> findByTrainingProgramOrderByOrderInProgramAsc(TrainingProgram trainingProgram);
-    
-    // Trouver tous les exercices d'un programme par ID
-    @Query("SELECT pe FROM ProgramExercise pe WHERE pe.trainingProgram.id = :programId ORDER BY pe.orderInProgram ASC")
-    List<ProgramExercise> findByTrainingProgramIdOrderByOrderInProgramAsc(@Param("programId") Long programId);
-    
-    // Trouver les exercices obligatoires d'un programme
-    List<ProgramExercise> findByTrainingProgramAndIsOptionalFalseOrderByOrderInProgramAsc(TrainingProgram trainingProgram);
-    
-    // Trouver les exercices optionnels d'un programme
-    List<ProgramExercise> findByTrainingProgramAndIsOptionalTrueOrderByOrderInProgramAsc(TrainingProgram trainingProgram);
-    
-    // Trouver les exercices d'un programme par ordre
-    List<ProgramExercise> findByTrainingProgramAndOrderInProgramBetweenOrderByOrderInProgramAsc(
-            TrainingProgram trainingProgram, Integer startOrder, Integer endOrder);
-    
-    // Compter le nombre d'exercices dans un programme
-    long countByTrainingProgram(TrainingProgram trainingProgram);
-    
-    // Compter le nombre d'exercices obligatoires dans un programme
-    long countByTrainingProgramAndIsOptionalFalse(TrainingProgram trainingProgram);
-    
-    // Trouver l'ordre maximum dans un programme
-    @Query("SELECT MAX(pe.orderInProgram) FROM ProgramExercise pe WHERE pe.trainingProgram.id = :programId")
-    Integer findMaxOrderInProgram(@Param("programId") Long programId);
-    
-    // Trouver les exercices d'un programme avec l'exercice joint
-    @Query("SELECT pe FROM ProgramExercise pe JOIN FETCH pe.exercise WHERE pe.trainingProgram.id = :programId ORDER BY pe.orderInProgram ASC")
+    /**
+     * Find exercises by training program ID with exercise details.
+     * Trouver les exercices par ID de programme d'entraînement avec les détails d'exercice.
+     */
+    @Query("SELECT pe FROM ProgramExercise pe JOIN FETCH pe.exercise WHERE pe.trainingProgram.id = :programId ORDER BY pe.createdAt ASC")
     List<ProgramExercise> findByTrainingProgramIdWithExercise(@Param("programId") Long programId);
     
-    // Supprimer tous les exercices d'un programme
+    /**
+     * Delete all exercises for a training program.
+     * Supprimer tous les exercices d'un programme d'entraînement.
+     */
     void deleteByTrainingProgram(TrainingProgram trainingProgram);
-    
-    // Supprimer tous les exercices d'un programme par ID
-    @Query("DELETE FROM ProgramExercise pe WHERE pe.trainingProgram.id = :programId")
-    void deleteByTrainingProgramId(@Param("programId") Long programId);
 } 

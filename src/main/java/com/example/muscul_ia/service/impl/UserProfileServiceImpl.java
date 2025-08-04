@@ -15,11 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 /**
- * Implementation of UserProfileService.
- * Implémentation de UserProfileService.
+ * User profile service implementation for managing user profile business logic.
+ * Implémentation du service de profil utilisateur pour gérer la logique métier de profil utilisateur.
  */
 @Service
 @Transactional
@@ -31,20 +30,18 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * Create a new user profile.
+     * Créer un nouveau profil utilisateur.
+     */
     @Override
     @Transactional
     public UserProfileDto createProfile(User user, CreateUserProfileRequest request) {
-        System.out.println("=== SERVICE: CREATE PROFILE ===");
-        System.out.println("User: " + user.getId() + " - " + user.getEmail());
-        System.out.println("Request: " + request);
         
-        // Check if profile already exists
         if (userProfileRepository.existsByUser(user)) {
-            System.out.println("ERROR: Profile already exists for user " + user.getId());
             throw new RuntimeException("Profile already exists for this user");
         }
 
-        // Create new profile
         UserProfile userProfile = new UserProfile();
         userProfile.setUser(user);
         userProfile.setFirstName(request.getFirstName());
@@ -55,34 +52,26 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfile.setCreatedAt(LocalDateTime.now());
         userProfile.setUpdatedAt(LocalDateTime.now());
 
-        // Save to database
         UserProfile savedProfile = userProfileRepository.save(userProfile);
-        System.out.println("Profile created successfully: " + savedProfile.getId());
-        System.out.println("=========================");
 
-        // Return DTO
         return new UserProfileDto(savedProfile);
     }
 
+    /**
+     * Create a new user profile by email (for new users).
+     * Créer un nouveau profil utilisateur par email (pour les nouveaux utilisateurs).
+     */
     @Override
     @Transactional
     public UserProfileDto createProfileByEmail(CreateUserProfileWithEmailRequest request) {
-        System.out.println("=== SERVICE: CREATE PROFILE BY EMAIL ===");
-        System.out.println("Request: " + request);
         
-        // Find user by email
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + request.getEmail()));
         
-        System.out.println("Found user: " + user.getId() + " - " + user.getEmail());
-
-        // Check if profile already exists
         if (userProfileRepository.existsByUser(user)) {
-            System.out.println("ERROR: Profile already exists for user " + user.getId());
             throw new RuntimeException("Profile already exists for this user");
         }
 
-        // Create new profile
         UserProfile userProfile = new UserProfile();
         userProfile.setUser(user);
         userProfile.setFirstName(request.getFirstName());
@@ -93,33 +82,30 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfile.setCreatedAt(LocalDateTime.now());
         userProfile.setUpdatedAt(LocalDateTime.now());
 
-        // Save to database
         UserProfile savedProfile = userProfileRepository.save(userProfile);
-        System.out.println("Profile created successfully: " + savedProfile.getId());
-        System.out.println("=========================");
 
-        // Return DTO
         return new UserProfileDto(savedProfile);
     }
 
+    /**
+     * Get user profile by user entity.
+     * Obtenir le profil utilisateur par entité utilisateur.
+     */
     @Override
     public UserProfileDto getProfileByUser(User user) {
-        System.out.println("=== SERVICE: GET PROFILE BY USER ===");
-        System.out.println("User: " + user.getId() + " - " + user.getEmail());
         
         UserProfile userProfile = userProfileRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Profile not found for user: " + user.getId()));
         
-        System.out.println("Profile found: " + userProfile.getId());
-        System.out.println("=========================");
-        
         return new UserProfileDto(userProfile);
     }
 
+    /**
+     * Get user profile by user ID.
+     * Obtenir le profil utilisateur par ID utilisateur.
+     */
     @Override
     public UserProfileDto getProfileByUserId(Long userId) {
-        System.out.println("=== SERVICE: GET PROFILE BY USER ID ===");
-        System.out.println("User ID: " + userId);
         
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
@@ -127,23 +113,20 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfile userProfile = userProfileRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Profile not found for user: " + userId));
         
-        System.out.println("Profile found: " + userProfile.getId());
-        System.out.println("=========================");
-        
         return new UserProfileDto(userProfile);
     }
 
+    /**
+     * Update user profile.
+     * Mettre à jour le profil utilisateur.
+     */
     @Override
     @Transactional
     public UserProfileDto updateProfile(User user, UpdateUserProfileRequest request) {
-        System.out.println("=== SERVICE: UPDATE PROFILE ===");
-        System.out.println("User: " + user.getId() + " - " + user.getEmail());
-        System.out.println("Request: " + request);
         
         UserProfile userProfile = userProfileRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Profile not found for user: " + user.getId()));
 
-        // Update fields if provided
         if (request.getFirstName() != null) {
             userProfile.setFirstName(request.getFirstName());
         }
@@ -157,41 +140,36 @@ public class UserProfileServiceImpl implements UserProfileService {
         if (request.getPhoneNumber() != null) {
             userProfile.setPhoneNumber(request.getPhoneNumber());
         }
-        
+
         userProfile.setUpdatedAt(LocalDateTime.now());
 
-        // Save to database
         UserProfile savedProfile = userProfileRepository.save(userProfile);
-        System.out.println("Profile updated successfully: " + savedProfile.getId());
-        System.out.println("=========================");
 
-        // Return DTO
         return new UserProfileDto(savedProfile);
     }
 
+    /**
+     * Delete user profile.
+     * Supprimer le profil utilisateur.
+     */
     @Override
     @Transactional
     public void deleteProfile(User user) {
-        System.out.println("=== SERVICE: DELETE PROFILE ===");
-        System.out.println("User: " + user.getId() + " - " + user.getEmail());
         
         UserProfile userProfile = userProfileRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Profile not found for user: " + user.getId()));
-
+        
         userProfileRepository.delete(userProfile);
-        System.out.println("Profile deleted successfully");
-        System.out.println("=========================");
     }
 
     /**
      * Calculate age from date of birth.
-     * Calcule l'âge à partir de la date de naissance.
+     * Calculer l'âge à partir de la date de naissance.
      */
     private int calculateAge(LocalDate dateOfBirth) {
-        LocalDate today = LocalDate.now();
-        int age = today.getYear() - dateOfBirth.getYear();
-        if (today.getMonthValue() < dateOfBirth.getMonthValue() || 
-            (today.getMonthValue() == dateOfBirth.getMonthValue() && today.getDayOfMonth() < dateOfBirth.getDayOfMonth())) {
+        LocalDate now = LocalDate.now();
+        int age = now.getYear() - dateOfBirth.getYear();
+        if (now.isBefore(dateOfBirth.plusYears(age))) {
             age--;
         }
         return age;

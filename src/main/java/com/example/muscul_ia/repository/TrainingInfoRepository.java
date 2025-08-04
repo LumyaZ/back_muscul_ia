@@ -7,30 +7,28 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Training info repository for managing training information data operations.
+ * Repository d'informations d'entraînement pour gérer les opérations de données d'informations d'entraînement.
+ */
 @Repository
 public interface TrainingInfoRepository extends JpaRepository<TrainingInfo, Long> {
     
     /**
-     * Find training info by user
-     * Trouver les informations d'entraînement par utilisateur
+     * Find training info by user.
+     * Trouver les informations d'entraînement par utilisateur.
      */
     Optional<TrainingInfo> findByUser(User user);
     
     /**
-     * Find training info by user ID
-     * Trouver les informations d'entraînement par ID utilisateur
+     * Find training info by user ID.
+     * Trouver les informations d'entraînement par ID utilisateur.
      */
     Optional<TrainingInfo> findByUserId(Long userId);
     
     /**
-     * Check if training info exists for user
-     * Vérifier si les informations d'entraînement existent pour l'utilisateur
+     * Check if training info exists by user.
+     * Vérifier si les informations d'entraînement existent par utilisateur.
      */
     boolean existsByUser(User user);
-    
-    /**
-     * Check if training info exists for user ID
-     * Vérifier si les informations d'entraînement existent pour l'ID utilisateur
-     */
-    boolean existsByUserId(Long userId);
 } 

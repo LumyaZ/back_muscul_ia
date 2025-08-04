@@ -2,11 +2,8 @@ package com.example.muscul_ia.service.impl;
 
 import com.example.muscul_ia.dto.CreateTrainingProgramRequest;
 import com.example.muscul_ia.dto.TrainingProgramDto;
-import com.example.muscul_ia.entity.Exercise;
-import com.example.muscul_ia.entity.ProgramExercise;
 import com.example.muscul_ia.entity.TrainingProgram;
 import com.example.muscul_ia.entity.User;
-import com.example.muscul_ia.repository.ExerciseRepository;
 import com.example.muscul_ia.repository.ProgramExerciseRepository;
 import com.example.muscul_ia.repository.TrainingProgramRepository;
 import com.example.muscul_ia.repository.UserRepository;
@@ -19,6 +16,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Training program service implementation for managing training program business logic.
+ * Implémentation du service de programmes d'entraînement pour gérer la logique métier de programmes d'entraînement.
+ */
 @Service
 public class TrainingProgramServiceImpl implements TrainingProgramService {
     
@@ -29,77 +30,38 @@ public class TrainingProgramServiceImpl implements TrainingProgramService {
     private ProgramExerciseRepository programExerciseRepository;
     
     @Autowired
-    private ExerciseRepository exerciseRepository;
-    
-    @Autowired
     private UserRepository userRepository;
     
     @Override
     @Transactional
     public TrainingProgramDto createTrainingProgram(CreateTrainingProgramRequest request, Long userId) {
-        // Récupérer l'utilisateur
         Optional<User> userOpt = userRepository.findById(userId);
         if (userOpt.isEmpty()) {
             throw new RuntimeException("User not found with id: " + userId);
         }
         
-        // Créer le programme
         TrainingProgram program = new TrainingProgram();
         program.setName(request.getName());
         program.setDescription(request.getDescription());
         program.setDifficultyLevel(request.getDifficultyLevel());
-        program.setDurationWeeks(request.getDurationWeeks());
-        program.setSessionsPerWeek(request.getSessionsPerWeek());
-        program.setEstimatedDurationMinutes(request.getEstimatedDurationMinutes());
         program.setCategory(request.getCategory());
         program.setTargetAudience(request.getTargetAudience());
-        program.setEquipmentRequired(request.getEquipmentRequired());
-        program.setIsPublic(request.getIsPublic() != null ? request.getIsPublic() : false);
-        program.setIsActive(true);
         program.setCreatedByUser(userOpt.get());
         
         TrainingProgram savedProgram = trainingProgramRepository.save(program);
         
         return convertToDto(savedProgram);
     }
-
-    @Override
-    @Transactional
-    public TrainingProgramDto createTrainingProgram(CreateTrainingProgramRequest request) {
-        // Créer le programme sans utilisateur spécifique (pour les tests ou création anonyme)
-        TrainingProgram program = new TrainingProgram();
-        program.setName(request.getName());
-        program.setDescription(request.getDescription());
-        program.setDifficultyLevel(request.getDifficultyLevel());
-        program.setDurationWeeks(request.getDurationWeeks());
-        program.setSessionsPerWeek(request.getSessionsPerWeek());
-        program.setEstimatedDurationMinutes(request.getEstimatedDurationMinutes());
-        program.setCategory(request.getCategory());
-        program.setTargetAudience(request.getTargetAudience());
-        program.setEquipmentRequired(request.getEquipmentRequired());
-        program.setIsPublic(request.getIsPublic() != null ? request.getIsPublic() : false);
-        program.setIsActive(true);
-        
-        // Pour l'instant, on utilise un utilisateur par défaut (ID 1)
-        // En production, cela devrait être récupéré depuis le contexte de sécurité
-        Optional<User> defaultUser = userRepository.findById(1L);
-        if (defaultUser.isPresent()) {
-            program.setCreatedByUser(defaultUser.get());
-        }
-        
-        TrainingProgram savedProgram = trainingProgramRepository.save(program);
-        return convertToDto(savedProgram);
-    }
     
     @Override
     public List<TrainingProgramDto> getAllActivePrograms() {
-        List<TrainingProgram> programs = trainingProgramRepository.findByIsActiveTrue();
+        List<TrainingProgram> programs = trainingProgramRepository.findAll();
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> getAllPublicActivePrograms() {
-        List<TrainingProgram> programs = trainingProgramRepository.findByIsPublicTrueAndIsActiveTrue();
+        List<TrainingProgram> programs = trainingProgramRepository.findAll();
         return convertToDtoList(programs);
     }
     
@@ -110,15 +72,12 @@ public class TrainingProgramServiceImpl implements TrainingProgramService {
     }
     
     @Override
-    public Optional<TrainingProgram> getProgramEntityById(Long id) {
-        return trainingProgramRepository.findById(id);
-    }
-    
-    @Override
     public List<TrainingProgramDto> getProgramsByUser(Long userId) {
         Optional<User> userOpt = userRepository.findById(userId);
         if (userOpt.isPresent()) {
-            List<TrainingProgram> programs = trainingProgramRepository.findByCreatedByUserAndIsActiveTrue(userOpt.get());
+            List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                    .filter(p -> p.getCreatedByUser().getId().equals(userId))
+                    .collect(Collectors.toList());
             return convertToDtoList(programs);
         }
         return List.of();
@@ -131,28 +90,20 @@ public class TrainingProgramServiceImpl implements TrainingProgramService {
         if (programOpt.isPresent()) {
             TrainingProgram program = programOpt.get();
             
-            // Vérifier que l'utilisateur est le propriétaire du programme
             if (!program.getCreatedByUser().getId().equals(userId)) {
                 throw new RuntimeException("User is not authorized to update this program");
             }
             
-            // Mettre à jour les propriétés du programme
             program.setName(request.getName());
             program.setDescription(request.getDescription());
             program.setDifficultyLevel(request.getDifficultyLevel());
-            program.setDurationWeeks(request.getDurationWeeks());
-            program.setSessionsPerWeek(request.getSessionsPerWeek());
-            program.setEstimatedDurationMinutes(request.getEstimatedDurationMinutes());
             program.setCategory(request.getCategory());
             program.setTargetAudience(request.getTargetAudience());
-            program.setEquipmentRequired(request.getEquipmentRequired());
-            program.setIsPublic(request.getIsPublic() != null ? request.getIsPublic() : program.getIsPublic());
             
             TrainingProgram updatedProgram = trainingProgramRepository.save(program);
-            
             return convertToDto(updatedProgram);
         }
-        throw new RuntimeException("Training program not found with id: " + id);
+        throw new RuntimeException("Program not found with id: " + id);
     }
     
     @Override
@@ -162,115 +113,110 @@ public class TrainingProgramServiceImpl implements TrainingProgramService {
         if (programOpt.isPresent()) {
             TrainingProgram program = programOpt.get();
             
-            // Vérifier que l'utilisateur est le propriétaire du programme
             if (!program.getCreatedByUser().getId().equals(userId)) {
                 throw new RuntimeException("User is not authorized to delete this program");
             }
             
-            // Désactiver le programme
-            program.setIsActive(false);
-            trainingProgramRepository.save(program);
-            
-            // Supprimer les exercices du programme
             programExerciseRepository.deleteByTrainingProgram(program);
+            trainingProgramRepository.delete(program);
         } else {
-            throw new RuntimeException("Training program not found with id: " + id);
+            throw new RuntimeException("Program not found with id: " + id);
         }
     }
     
     @Override
     public List<TrainingProgramDto> searchProgramsByName(String name) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByNameContainingIgnoreCaseAndIsActiveTrue(name);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getName().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> searchPublicProgramsByName(String name) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByNameContainingIgnoreCaseAndIsPublicTrueAndIsActiveTrue(name);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getName().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> getProgramsByDifficultyLevel(String difficultyLevel) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByDifficultyLevelAndIsActiveTrue(difficultyLevel);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getDifficultyLevel().equals(difficultyLevel))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> getPublicProgramsByDifficultyLevel(String difficultyLevel) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByDifficultyLevelAndIsPublicTrueAndIsActiveTrue(difficultyLevel);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getDifficultyLevel().equals(difficultyLevel))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> getProgramsByCategory(String category) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByCategoryAndIsActiveTrue(category);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getCategory().equals(category))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> getPublicProgramsByCategory(String category) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByCategoryAndIsPublicTrueAndIsActiveTrue(category);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getCategory().equals(category))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> getProgramsByTargetAudience(String targetAudience) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByTargetAudienceAndIsActiveTrue(targetAudience);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getTargetAudience().equals(targetAudience))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> getPublicProgramsByTargetAudience(String targetAudience) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByTargetAudienceAndIsPublicTrueAndIsActiveTrue(targetAudience);
-        return convertToDtoList(programs);
-    }
-    
-    @Override
-    public List<TrainingProgramDto> getProgramsByDuration(Integer durationWeeks) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByDurationWeeksAndIsActiveTrue(durationWeeks);
-        return convertToDtoList(programs);
-    }
-    
-    @Override
-    public List<TrainingProgramDto> getPublicProgramsByDuration(Integer durationWeeks) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByDurationWeeksAndIsPublicTrueAndIsActiveTrue(durationWeeks);
-        return convertToDtoList(programs);
-    }
-    
-    @Override
-    public List<TrainingProgramDto> getProgramsBySessionsPerWeek(Integer sessionsPerWeek) {
-        List<TrainingProgram> programs = trainingProgramRepository.findBySessionsPerWeekAndIsActiveTrue(sessionsPerWeek);
-        return convertToDtoList(programs);
-    }
-    
-    @Override
-    public List<TrainingProgramDto> getPublicProgramsBySessionsPerWeek(Integer sessionsPerWeek) {
-        List<TrainingProgram> programs = trainingProgramRepository.findBySessionsPerWeekAndIsPublicTrueAndIsActiveTrue(sessionsPerWeek);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getTargetAudience().equals(targetAudience))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> searchProgramsByDescription(String description) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByDescriptionContainingIgnoreCaseAndIsActiveTrue(description);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getDescription().toLowerCase().contains(description.toLowerCase()))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> searchPublicProgramsByDescription(String description) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByDescriptionContainingIgnoreCaseAndIsPublicTrueAndIsActiveTrue(description);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getDescription().toLowerCase().contains(description.toLowerCase()))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> getProgramsByCategoryAndDifficulty(String category, String difficultyLevel) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByCategoryAndDifficultyLevelAndIsActiveTrue(category, difficultyLevel);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getCategory().equals(category) && p.getDifficultyLevel().equals(difficultyLevel))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
     @Override
     public List<TrainingProgramDto> getPublicProgramsByCategoryAndDifficulty(String category, String difficultyLevel) {
-        List<TrainingProgram> programs = trainingProgramRepository.findByCategoryAndDifficultyLevelAndIsPublicTrueAndIsActiveTrue(category, difficultyLevel);
+        List<TrainingProgram> programs = trainingProgramRepository.findAll().stream()
+                .filter(p -> p.getCategory().equals(category) && p.getDifficultyLevel().equals(difficultyLevel))
+                .collect(Collectors.toList());
         return convertToDtoList(programs);
     }
     
@@ -281,20 +227,11 @@ public class TrainingProgramServiceImpl implements TrainingProgramService {
         dto.setName(program.getName());
         dto.setDescription(program.getDescription());
         dto.setDifficultyLevel(program.getDifficultyLevel());
-        dto.setDurationWeeks(program.getDurationWeeks());
-        dto.setSessionsPerWeek(program.getSessionsPerWeek());
-        dto.setEstimatedDurationMinutes(program.getEstimatedDurationMinutes());
         dto.setCategory(program.getCategory());
         dto.setTargetAudience(program.getTargetAudience());
-        dto.setEquipmentRequired(program.getEquipmentRequired());
-        dto.setImageUrl(program.getImageUrl());
-        dto.setIsPublic(program.getIsPublic());
-        dto.setIsActive(program.getIsActive());
+        dto.setCreatedByUserId(program.getCreatedByUser().getId());
         dto.setCreatedAt(program.getCreatedAt());
         dto.setUpdatedAt(program.getUpdatedAt());
-        if (program.getCreatedByUser() != null) {
-            dto.setCreatedByUserId(program.getCreatedByUser().getId());
-        }
         return dto;
     }
     

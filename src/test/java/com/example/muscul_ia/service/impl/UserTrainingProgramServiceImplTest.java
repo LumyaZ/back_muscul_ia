@@ -18,24 +18,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any; 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-/**
- * Unit tests for UserTrainingProgramServiceImpl.
- * Tests unitaires pour UserTrainingProgramServiceImpl.
- * 
- * This test class verifies the business logic of the UserTrainingProgramService,
- * including subscription management and data retrieval.
- * 
- * Cette classe de test vérifie la logique métier du UserTrainingProgramService,
- * incluant la gestion des abonnements et la récupération de données.
- * 
- * @author Muscul IA Team
- * @version 1.0
- * @since 2024-01-01
- */
+
 @DisplayName("UserTrainingProgramService Implementation Tests")
 class UserTrainingProgramServiceImplTest {
     

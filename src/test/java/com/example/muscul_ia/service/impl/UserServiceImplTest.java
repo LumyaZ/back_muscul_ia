@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -24,9 +23,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit test for UserServiceImpl registration logic.
@@ -160,11 +164,13 @@ class UserServiceImplTest {
     @Test
     void testCreateUserWithProfileSuccess() {
         // Arrange / Préparation
-        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.empty());
+        when(userRepository.findByEmail("test@example.com"))
+            .thenReturn(Optional.empty())  // Premier appel - utilisateur n'existe pas
+            .thenReturn(Optional.of(testUser));  // Deuxième appel - utilisateur existe après création
         when(passwordEncoder.encode("password123")).thenReturn("hashedPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
-        when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
-        when(userProfileService.createProfile(testUser, profileRequest)).thenReturn(new UserProfileDto(testUserProfile));
+        when(userProfileService.createProfile(any(User.class), any(CreateUserProfileRequest.class)))
+            .thenReturn(new UserProfileDto(testUserProfile));
 
         // Act / Action
         CreateUserWithProfileResponse result = userService.createUserWithProfile(createUserWithProfileRequest);
@@ -177,11 +183,10 @@ class UserServiceImplTest {
         assertEquals("John", result.getProfile().getFirstName());
         assertEquals("Doe", result.getProfile().getLastName());
         
-        verify(userRepository).findByEmail("test@example.com");
+        verify(userRepository, times(2)).findByEmail("test@example.com");
         verify(passwordEncoder).encode("password123");
         verify(userRepository).save(any(User.class));
-        verify(userRepository).findById(1L);
-        verify(userProfileService).createProfile(testUser, profileRequest);
+        verify(userProfileService).createProfile(any(User.class), any(CreateUserProfileRequest.class));
     }
 
     @Test
@@ -202,14 +207,13 @@ class UserServiceImplTest {
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.empty());
         when(passwordEncoder.encode("password123")).thenReturn("hashedPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
-        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.empty());
 
         // Act & Assert / Action et Vérification
         assertThrows(RuntimeException.class, () -> userService.createUserWithProfile(createUserWithProfileRequest));
-        verify(userRepository).findByEmail("test@example.com");
+        verify(userRepository, times(2)).findByEmail("test@example.com");
         verify(passwordEncoder).encode("password123");
         verify(userRepository).save(any(User.class));
-        verify(userRepository).findById(1L);
         verify(userProfileService, never()).createProfile(any(), any());
     }
 } 

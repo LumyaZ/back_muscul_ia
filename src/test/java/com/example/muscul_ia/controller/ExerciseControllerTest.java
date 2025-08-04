@@ -1,22 +1,16 @@
 package com.example.muscul_ia.controller;
 
-import com.example.muscul_ia.config.TestSecurityConfig;
 import com.example.muscul_ia.dto.CreateExerciseRequest;
 import com.example.muscul_ia.dto.ExerciseDto;
 import com.example.muscul_ia.service.ExerciseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -25,32 +19,52 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@Import(TestSecurityConfig.class)
-@ActiveProfiles("test")
 @DisplayName("ExerciseController Tests")
 class ExerciseControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
     private ExerciseService exerciseService;
-
-    @Autowired
     private ObjectMapper objectMapper;
 
     private ExerciseDto exerciseDto;
     private CreateExerciseRequest createRequest;
     private List<ExerciseDto> exerciseList;
 
+    /**
+     * Set up test data before each test.
+     * Configure les données de test avant chaque test.
+     */
     @BeforeEach
     void setUp() {
+        exerciseService = mock(ExerciseService.class);
+        
+        ExerciseController controller = new ExerciseController();
+        // Utiliser la réflexion pour injecter le service
+        try {
+            java.lang.reflect.Field exerciseServiceField = ExerciseController.class.getDeclaredField("exerciseService");
+            exerciseServiceField.setAccessible(true);
+            exerciseServiceField.set(controller, exerciseService);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to inject dependencies", e);
+        }
+        
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
         exerciseDto = new ExerciseDto();
         exerciseDto.setId(1L);
         exerciseDto.setName("Pompes");
@@ -73,13 +87,15 @@ class ExerciseControllerTest {
         exerciseList = Arrays.asList(exerciseDto);
     }
 
+    /**
+     * Test successful exercise creation.
+     * Teste la création réussie d'un exercice.
+     */
     @Test
     @DisplayName("Should create exercise successfully")
     void shouldCreateExerciseSuccessfully() throws Exception {
-        // Given
         when(exerciseService.createExercise(any(CreateExerciseRequest.class))).thenReturn(exerciseDto);
 
-        // When & Then
         mockMvc.perform(post("/api/exercises")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createRequest)))
@@ -87,19 +103,25 @@ class ExerciseControllerTest {
                 .andExpect(jsonPath("$.id").value(exerciseDto.getId()))
                 .andExpect(jsonPath("$.name").value(exerciseDto.getName()))
                 .andExpect(jsonPath("$.description").value(exerciseDto.getDescription()))
-                .andExpect(jsonPath("$.category").value(exerciseDto.getCategory()));
+                .andExpect(jsonPath("$.category").value(exerciseDto.getCategory()))
+                .andExpect(jsonPath("$.muscleGroup").value(exerciseDto.getMuscleGroup()))
+                .andExpect(jsonPath("$.equipmentNeeded").value(exerciseDto.getEquipmentNeeded()))
+                .andExpect(jsonPath("$.difficultyLevel").value(exerciseDto.getDifficultyLevel()))
+                .andExpect(jsonPath("$.isActive").value(exerciseDto.getIsActive()));
 
         verify(exerciseService, times(1)).createExercise(any(CreateExerciseRequest.class));
     }
 
+    /**
+     * Test exercise creation failure.
+     * Teste l'échec de la création d'un exercice.
+     */
     @Test
     @DisplayName("Should return bad request when creating exercise fails")
     void shouldReturnBadRequestWhenCreatingExerciseFails() throws Exception {
-        // Given
         when(exerciseService.createExercise(any(CreateExerciseRequest.class)))
-                .thenThrow(new RuntimeException("Creation failed"));
+                .thenThrow(new RuntimeException("Exercise creation failed"));
 
-        // When & Then
         mockMvc.perform(post("/api/exercises")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createRequest)))
@@ -108,78 +130,103 @@ class ExerciseControllerTest {
         verify(exerciseService, times(1)).createExercise(any(CreateExerciseRequest.class));
     }
 
+    /**
+     * Test successful retrieval of all exercises.
+     * Teste la récupération réussie de tous les exercices.
+     */
     @Test
     @DisplayName("Should get all exercises successfully")
     void shouldGetAllExercisesSuccessfully() throws Exception {
-        // Given
         when(exerciseService.getAllActiveExercises()).thenReturn(exerciseList);
 
-        // When & Then
         mockMvc.perform(get("/api/exercises"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
                 .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
-                .andExpect(jsonPath("$[0].category").value(exerciseDto.getCategory()));
+                .andExpect(jsonPath("$[0].description").value(exerciseDto.getDescription()))
+                .andExpect(jsonPath("$[0].category").value(exerciseDto.getCategory()))
+                .andExpect(jsonPath("$[0].muscleGroup").value(exerciseDto.getMuscleGroup()))
+                .andExpect(jsonPath("$[0].equipmentNeeded").value(exerciseDto.getEquipmentNeeded()))
+                .andExpect(jsonPath("$[0].difficultyLevel").value(exerciseDto.getDifficultyLevel()))
+                .andExpect(jsonPath("$[0].isActive").value(exerciseDto.getIsActive()));
 
         verify(exerciseService, times(1)).getAllActiveExercises();
     }
 
+    /**
+     * Test successful retrieval of exercise by ID.
+     * Teste la récupération réussie d'un exercice par ID.
+     */
     @Test
     @DisplayName("Should get exercise by id when exists")
     void shouldGetExerciseByIdWhenExists() throws Exception {
-        // Given
         when(exerciseService.getExerciseById(1L)).thenReturn(Optional.of(exerciseDto));
 
-        // When & Then
         mockMvc.perform(get("/api/exercises/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(exerciseDto.getId()))
                 .andExpect(jsonPath("$.name").value(exerciseDto.getName()))
-                .andExpect(jsonPath("$.category").value(exerciseDto.getCategory()));
+                .andExpect(jsonPath("$.description").value(exerciseDto.getDescription()))
+                .andExpect(jsonPath("$.category").value(exerciseDto.getCategory()))
+                .andExpect(jsonPath("$.muscleGroup").value(exerciseDto.getMuscleGroup()))
+                .andExpect(jsonPath("$.equipmentNeeded").value(exerciseDto.getEquipmentNeeded()))
+                .andExpect(jsonPath("$.difficultyLevel").value(exerciseDto.getDifficultyLevel()))
+                .andExpect(jsonPath("$.isActive").value(exerciseDto.getIsActive()));
 
         verify(exerciseService, times(1)).getExerciseById(1L);
     }
 
+    /**
+     * Test exercise not found by ID.
+     * Teste le cas où l'exercice n'est pas trouvé par ID.
+     */
     @Test
     @DisplayName("Should return not found when exercise does not exist")
     void shouldReturnNotFoundWhenExerciseDoesNotExist() throws Exception {
-        // Given
         when(exerciseService.getExerciseById(999L)).thenReturn(Optional.empty());
 
-        // When & Then
         mockMvc.perform(get("/api/exercises/999"))
                 .andExpect(status().isNotFound());
 
         verify(exerciseService, times(1)).getExerciseById(999L);
     }
 
+    /**
+     * Test successful exercise update.
+     * Teste la mise à jour réussie d'un exercice.
+     */
     @Test
     @DisplayName("Should update exercise successfully")
     void shouldUpdateExerciseSuccessfully() throws Exception {
-        // Given
         when(exerciseService.updateExercise(eq(1L), any(CreateExerciseRequest.class)))
                 .thenReturn(exerciseDto);
 
-        // When & Then
         mockMvc.perform(put("/api/exercises/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createRequest)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(exerciseDto.getId()))
-                .andExpect(jsonPath("$.name").value(exerciseDto.getName()));
+                .andExpect(jsonPath("$.name").value(exerciseDto.getName()))
+                .andExpect(jsonPath("$.description").value(exerciseDto.getDescription()))
+                .andExpect(jsonPath("$.category").value(exerciseDto.getCategory()))
+                .andExpect(jsonPath("$.muscleGroup").value(exerciseDto.getMuscleGroup()))
+                .andExpect(jsonPath("$.equipmentNeeded").value(exerciseDto.getEquipmentNeeded()))
+                .andExpect(jsonPath("$.difficultyLevel").value(exerciseDto.getDifficultyLevel()))
+                .andExpect(jsonPath("$.isActive").value(exerciseDto.getIsActive()));
 
         verify(exerciseService, times(1)).updateExercise(eq(1L), any(CreateExerciseRequest.class));
     }
 
+    /**
+     * Test exercise update when exercise does not exist.
+     * Teste la mise à jour d'un exercice qui n'existe pas.
+     */
     @Test
     @DisplayName("Should return not found when updating non-existent exercise")
     void shouldReturnNotFoundWhenUpdatingNonExistentExercise() throws Exception {
-        // Given
         when(exerciseService.updateExercise(eq(999L), any(CreateExerciseRequest.class)))
                 .thenThrow(new RuntimeException("Exercise not found"));
 
-        // When & Then
         mockMvc.perform(put("/api/exercises/999")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createRequest)))
@@ -188,155 +235,128 @@ class ExerciseControllerTest {
         verify(exerciseService, times(1)).updateExercise(eq(999L), any(CreateExerciseRequest.class));
     }
 
+    /**
+     * Test successful exercise deletion.
+     * Teste la suppression réussie d'un exercice.
+     */
     @Test
     @DisplayName("Should delete exercise successfully")
     void shouldDeleteExerciseSuccessfully() throws Exception {
-        // Given
         doNothing().when(exerciseService).deleteExercise(1L);
 
-        // When & Then
         mockMvc.perform(delete("/api/exercises/1"))
                 .andExpect(status().isNoContent());
 
         verify(exerciseService, times(1)).deleteExercise(1L);
     }
 
+    /**
+     * Test exercise deletion when exercise does not exist.
+     * Teste la suppression d'un exercice qui n'existe pas.
+     */
     @Test
     @DisplayName("Should return not found when deleting non-existent exercise")
     void shouldReturnNotFoundWhenDeletingNonExistentExercise() throws Exception {
-        // Given
         doThrow(new RuntimeException("Exercise not found")).when(exerciseService).deleteExercise(999L);
 
-        // When & Then
         mockMvc.perform(delete("/api/exercises/999"))
                 .andExpect(status().isNotFound());
 
         verify(exerciseService, times(1)).deleteExercise(999L);
     }
 
+    /**
+     * Test successful search exercises by name.
+     * Teste la recherche réussie d'exercices par nom.
+     */
     @Test
     @DisplayName("Should search exercises by name successfully")
     void shouldSearchExercisesByNameSuccessfully() throws Exception {
-        // Given
         when(exerciseService.searchExercisesByName("pompes")).thenReturn(exerciseList);
 
-        // When & Then
         mockMvc.perform(get("/api/exercises/search")
                 .param("name", "pompes"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()));
+                .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
+                .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
+                .andExpect(jsonPath("$[0].description").value(exerciseDto.getDescription()));
 
         verify(exerciseService, times(1)).searchExercisesByName("pompes");
     }
 
+    /**
+     * Test successful retrieval of exercises by category.
+     * Teste la récupération réussie d'exercices par catégorie.
+     */
     @Test
     @DisplayName("Should get exercises by category successfully")
     void shouldGetExercisesByCategorySuccessfully() throws Exception {
-        // Given
         when(exerciseService.getExercisesByCategory("Musculation")).thenReturn(exerciseList);
 
-        // When & Then
-        mockMvc.perform(get("/api/exercises/category/Musculation"))
+        mockMvc.perform(get("/api/exercises/category")
+                .param("category", "Musculation"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
+                .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
                 .andExpect(jsonPath("$[0].category").value(exerciseDto.getCategory()));
 
         verify(exerciseService, times(1)).getExercisesByCategory("Musculation");
     }
 
+    /**
+     * Test successful retrieval of exercises by muscle group.
+     * Teste la récupération réussie d'exercices par groupe musculaire.
+     */
     @Test
     @DisplayName("Should get exercises by muscle group successfully")
     void shouldGetExercisesByMuscleGroupSuccessfully() throws Exception {
-        // Given
         when(exerciseService.getExercisesByMuscleGroup("Pectoraux")).thenReturn(exerciseList);
 
-        // When & Then
-        mockMvc.perform(get("/api/exercises/muscle-group/Pectoraux"))
+        mockMvc.perform(get("/api/exercises/muscle-group")
+                .param("muscleGroup", "Pectoraux"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
+                .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
                 .andExpect(jsonPath("$[0].muscleGroup").value(exerciseDto.getMuscleGroup()));
 
         verify(exerciseService, times(1)).getExercisesByMuscleGroup("Pectoraux");
     }
 
+    /**
+     * Test successful retrieval of exercises by difficulty level.
+     * Teste la récupération réussie d'exercices par niveau de difficulté.
+     */
     @Test
     @DisplayName("Should get exercises by difficulty level successfully")
     void shouldGetExercisesByDifficultyLevelSuccessfully() throws Exception {
-        // Given
         when(exerciseService.getExercisesByDifficultyLevel("Débutant")).thenReturn(exerciseList);
 
-        // When & Then
-        mockMvc.perform(get("/api/exercises/difficulty/Débutant"))
+        mockMvc.perform(get("/api/exercises/difficulty")
+                .param("difficultyLevel", "Débutant"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
+                .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
                 .andExpect(jsonPath("$[0].difficultyLevel").value(exerciseDto.getDifficultyLevel()));
 
         verify(exerciseService, times(1)).getExercisesByDifficultyLevel("Débutant");
     }
 
+    /**
+     * Test successful retrieval of exercises by equipment.
+     * Teste la récupération réussie d'exercices par équipement.
+     */
     @Test
     @DisplayName("Should get exercises by equipment successfully")
     void shouldGetExercisesByEquipmentSuccessfully() throws Exception {
-        // Given
         when(exerciseService.getExercisesByEquipment("Poids du corps")).thenReturn(exerciseList);
 
-        // When & Then
-        mockMvc.perform(get("/api/exercises/equipment/Poids du corps"))
+        mockMvc.perform(get("/api/exercises/equipment")
+                .param("equipment", "Poids du corps"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
+                .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
                 .andExpect(jsonPath("$[0].equipmentNeeded").value(exerciseDto.getEquipmentNeeded()));
 
         verify(exerciseService, times(1)).getExercisesByEquipment("Poids du corps");
-    }
-
-    @Test
-    @DisplayName("Should search exercises by description successfully")
-    void shouldSearchExercisesByDescriptionSuccessfully() throws Exception {
-        // Given
-        when(exerciseService.searchExercisesByDescription("musculation")).thenReturn(exerciseList);
-
-        // When & Then
-        mockMvc.perform(get("/api/exercises/search/description")
-                .param("description", "musculation"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].description").value(exerciseDto.getDescription()));
-
-        verify(exerciseService, times(1)).searchExercisesByDescription("musculation");
-    }
-
-    @Test
-    @DisplayName("Should get exercises by category and difficulty successfully")
-    void shouldGetExercisesByCategoryAndDifficultySuccessfully() throws Exception {
-        // Given
-        when(exerciseService.getExercisesByCategoryAndDifficulty("Musculation", "Débutant"))
-                .thenReturn(exerciseList);
-
-        // When & Then
-        mockMvc.perform(get("/api/exercises/category/Musculation/difficulty/Débutant"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].category").value(exerciseDto.getCategory()))
-                .andExpect(jsonPath("$[0].difficultyLevel").value(exerciseDto.getDifficultyLevel()));
-
-        verify(exerciseService, times(1)).getExercisesByCategoryAndDifficulty("Musculation", "Débutant");
-    }
-
-    @Test
-    @DisplayName("Should get exercises by muscle group and equipment successfully")
-    void shouldGetExercisesByMuscleGroupAndEquipmentSuccessfully() throws Exception {
-        // Given
-        when(exerciseService.getExercisesByMuscleGroupAndEquipment("Pectoraux", "Poids du corps"))
-                .thenReturn(exerciseList);
-
-        // When & Then
-        mockMvc.perform(get("/api/exercises/muscle-group/Pectoraux/equipment/Poids du corps"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].muscleGroup").value(exerciseDto.getMuscleGroup()))
-                .andExpect(jsonPath("$[0].equipmentNeeded").value(exerciseDto.getEquipmentNeeded()));
-
-        verify(exerciseService, times(1)).getExercisesByMuscleGroupAndEquipment("Pectoraux", "Poids du corps");
     }
 } 

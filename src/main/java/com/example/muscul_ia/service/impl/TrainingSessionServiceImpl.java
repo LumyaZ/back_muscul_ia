@@ -20,226 +20,34 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * Implementation of TrainingSessionService.
- * Implémentation du service TrainingSessionService.
- * 
- * This service provides business logic for managing training sessions including
- * CRUD operations, searching, filtering, and data validation.
- * 
- * Ce service fournit la logique métier pour gérer les sessions d'entraînement
- * incluant les opérations CRUD, la recherche, le filtrage et la validation des données.
- * 
- * @author Muscul IA Team
- * @version 1.0
- * @since 2024-01-01
+ * Training session service implementation for managing training session business logic.
+ * Implémentation du service de sessions d'entraînement pour gérer la logique métier de sessions d'entraînement.
  */
 @Service
-@Transactional
 public class TrainingSessionServiceImpl implements TrainingSessionService {
     
-    private final TrainingSessionRepository trainingSessionRepository;
-    private final TrainingProgramRepository trainingProgramRepository;
+    @Autowired
+    private TrainingSessionRepository trainingSessionRepository;
     
     @Autowired
-    public TrainingSessionServiceImpl(TrainingSessionRepository trainingSessionRepository,
-                                   TrainingProgramRepository trainingProgramRepository) {
-        this.trainingSessionRepository = trainingSessionRepository;
-        this.trainingProgramRepository = trainingProgramRepository;
-    }
+    private TrainingProgramRepository trainingProgramRepository;
     
     @Override
     @Transactional
     public TrainingSessionDto createTrainingSession(User user, CreateTrainingSessionRequest request) {
-        System.out.println("=== TRAINING SESSION SERVICE: CREATE ===");
-        System.out.println("User: " + user.getId() + " - " + user.getEmail());
-        System.out.println("Request: " + request);
-        
-        // Create new training session
-        TrainingSession trainingSession = new TrainingSession(user, request.getSessionDate());
-        trainingSession.setName(request.getName());
-        trainingSession.setDescription(request.getDescription());
-        trainingSession.setDurationMinutes(request.getDurationMinutes());
-        trainingSession.setSessionType(request.getSessionType());
-        
-        // Set training program if provided
-        if (request.getTrainingProgramId() != null) {
-            Optional<TrainingProgram> trainingProgram = trainingProgramRepository.findById(request.getTrainingProgramId());
-            if (trainingProgram.isPresent()) {
-                trainingSession.setTrainingProgram(trainingProgram.get());
-            } else {
-                System.out.println("WARNING: Training program with ID " + request.getTrainingProgramId() + " not found");
-            }
-        }
-        
-        TrainingSession savedTrainingSession = trainingSessionRepository.save(trainingSession);
-        System.out.println("Training session created successfully: " + savedTrainingSession.getId());
-        
-        return new TrainingSessionDto(savedTrainingSession);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<TrainingSessionDto> getTrainingSessionById(Long sessionId) {
-        return trainingSessionRepository.findById(sessionId)
-                .map(TrainingSessionDto::new);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> getTrainingSessionsByUser(User user) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserIdWithTrainingProgram(user.getId());
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public Page<TrainingSessionDto> getTrainingSessionsByUser(User user, Pageable pageable) {
-        Page<TrainingSession> sessions = trainingSessionRepository.findByUserIdWithTrainingProgram(user.getId(), pageable);
-        return sessions.map(TrainingSessionDto::new);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> getTrainingSessionsByUserId(Long userId) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserIdWithTrainingProgram(userId);
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public Page<TrainingSessionDto> getTrainingSessionsByUserId(Long userId, Pageable pageable) {
-        Page<TrainingSession> sessions = trainingSessionRepository.findByUserIdWithTrainingProgram(userId, pageable);
-        return sessions.map(TrainingSessionDto::new);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> getTrainingSessionsByUserAndDateRange(User user, LocalDateTime startDate, LocalDateTime endDate) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserIdAndDateRangeWithTrainingProgram(
-                user.getId(), startDate, endDate);
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> getTrainingSessionsByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserIdAndDateRangeWithTrainingProgram(
-                userId, startDate, endDate);
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> getTrainingSessionsByUserAndType(User user, String sessionType) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserAndSessionType(user, sessionType);
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> getTrainingSessionsByUserIdAndType(Long userId, String sessionType) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserIdAndSessionType(userId, sessionType);
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> getTrainingSessionsByUserAndTrainingProgram(User user, Long trainingProgramId) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserAndTrainingProgramId(user, trainingProgramId);
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> getTrainingSessionsByUserIdAndTrainingProgram(Long userId, Long trainingProgramId) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserIdAndTrainingProgramId(userId, trainingProgramId);
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> searchTrainingSessionsByUserAndName(User user, String name) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserAndNameContainingIgnoreCase(user, name);
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<TrainingSessionDto> searchTrainingSessionsByUserIdAndName(Long userId, String name) {
-        List<TrainingSession> sessions = trainingSessionRepository.findByUserIdAndNameContainingIgnoreCase(userId, name);
-        return sessions.stream()
-                .map(TrainingSessionDto::new)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<TrainingSessionDto> getMostRecentTrainingSessionByUser(User user) {
-        return trainingSessionRepository.findFirstByUserOrderBySessionDateDesc(user)
-                .map(TrainingSessionDto::new);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<TrainingSessionDto> getMostRecentTrainingSessionByUserId(Long userId) {
-        return trainingSessionRepository.findFirstByUserIdOrderBySessionDateDesc(userId)
-                .map(TrainingSessionDto::new);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public long countTrainingSessionsByUser(User user) {
-        return trainingSessionRepository.countByUser(user);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public long countTrainingSessionsByUserId(Long userId) {
-        return trainingSessionRepository.countByUserId(userId);
-    }
-    
-    @Override
-    @Transactional
-    public TrainingSessionDto updateTrainingSession(Long sessionId, CreateTrainingSessionRequest request) {
-        System.out.println("=== TRAINING SESSION SERVICE: UPDATE ===");
-        System.out.println("Session ID: " + sessionId);
-        System.out.println("Request: " + request);
-        
-        TrainingSession trainingSession = trainingSessionRepository.findById(sessionId)
-                .orElseThrow(() -> new RuntimeException("Training session not found with ID: " + sessionId));
-        
-        // Update fields
+        TrainingSession trainingSession = new TrainingSession();
+        trainingSession.setUser(user);
         trainingSession.setName(request.getName());
         trainingSession.setDescription(request.getDescription());
         trainingSession.setSessionDate(request.getSessionDate());
         trainingSession.setDurationMinutes(request.getDurationMinutes());
         trainingSession.setSessionType(request.getSessionType());
         
-        // Update training program if provided
         if (request.getTrainingProgramId() != null) {
             Optional<TrainingProgram> trainingProgram = trainingProgramRepository.findById(request.getTrainingProgramId());
             if (trainingProgram.isPresent()) {
                 trainingSession.setTrainingProgram(trainingProgram.get());
             } else {
-                System.out.println("WARNING: Training program with ID " + request.getTrainingProgramId() + " not found");
                 trainingSession.setTrainingProgram(null);
             }
         } else {
@@ -247,23 +55,121 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
         }
         
         TrainingSession savedTrainingSession = trainingSessionRepository.save(trainingSession);
-        System.out.println("Training session updated successfully: " + savedTrainingSession.getId());
-        
         return new TrainingSessionDto(savedTrainingSession);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<TrainingSessionDto> getTrainingSessionById(Long sessionId) {
+        Optional<TrainingSession> trainingSession = trainingSessionRepository.findById(sessionId);
+        return trainingSession.map(TrainingSessionDto::new);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<TrainingSessionDto> getTrainingSessionsByUser(User user) {
+        List<TrainingSession> trainingSessions = trainingSessionRepository.findByUserIdWithTrainingProgram(user.getId());
+        return trainingSessions.stream()
+                .map(TrainingSessionDto::new)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Page<TrainingSessionDto> getTrainingSessionsByUserId(Long userId, Pageable pageable) {
+        Page<TrainingSession> trainingSessions = trainingSessionRepository.findByUserIdWithTrainingProgram(userId, pageable);
+        return trainingSessions.map(TrainingSessionDto::new);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<TrainingSessionDto> getTrainingSessionsByUserAndDateRange(User user, LocalDateTime startDate, LocalDateTime endDate) {
+        List<TrainingSession> trainingSessions = trainingSessionRepository.findByUserIdAndDateRangeWithTrainingProgram(
+                user.getId(), startDate, endDate);
+        return trainingSessions.stream()
+                .map(TrainingSessionDto::new)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<TrainingSessionDto> getTrainingSessionsByUserAndType(User user, String sessionType) {
+        List<TrainingSession> trainingSessions = trainingSessionRepository.findByUserIdAndSessionType(user.getId(), sessionType);
+        return trainingSessions.stream()
+                .map(TrainingSessionDto::new)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<TrainingSessionDto> getTrainingSessionsByUserAndTrainingProgram(User user, Long trainingProgramId) {
+        List<TrainingSession> trainingSessions = trainingSessionRepository.findByUserIdAndTrainingProgramId(user.getId(), trainingProgramId);
+        return trainingSessions.stream()
+                .map(TrainingSessionDto::new)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<TrainingSessionDto> searchTrainingSessionsByUserAndName(User user, String name) {
+        List<TrainingSession> trainingSessions = trainingSessionRepository.findByUserIdAndNameContainingIgnoreCase(user.getId(), name);
+        return trainingSessions.stream()
+                .map(TrainingSessionDto::new)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<TrainingSessionDto> getMostRecentTrainingSessionByUser(User user) {
+        Optional<TrainingSession> trainingSession = trainingSessionRepository.findFirstByUserIdOrderBySessionDateDesc(user.getId());
+        return trainingSession.map(TrainingSessionDto::new);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public long countTrainingSessionsByUser(User user) {
+        return trainingSessionRepository.countByUserId(user.getId());
+    }
+    
+    @Override
+    @Transactional
+    public TrainingSessionDto updateTrainingSession(Long sessionId, CreateTrainingSessionRequest request) {
+        Optional<TrainingSession> trainingSessionOpt = trainingSessionRepository.findById(sessionId);
+        if (trainingSessionOpt.isPresent()) {
+            TrainingSession trainingSession = trainingSessionOpt.get();
+            
+            trainingSession.setName(request.getName());
+            trainingSession.setDescription(request.getDescription());
+            trainingSession.setSessionDate(request.getSessionDate());
+            trainingSession.setDurationMinutes(request.getDurationMinutes());
+            trainingSession.setSessionType(request.getSessionType());
+            
+            if (request.getTrainingProgramId() != null) {
+                Optional<TrainingProgram> trainingProgram = trainingProgramRepository.findById(request.getTrainingProgramId());
+                if (trainingProgram.isPresent()) {
+                    trainingSession.setTrainingProgram(trainingProgram.get());
+                } else {
+                    trainingSession.setTrainingProgram(null);
+                }
+            } else {
+                trainingSession.setTrainingProgram(null);
+            }
+            
+            TrainingSession updatedTrainingSession = trainingSessionRepository.save(trainingSession);
+            return new TrainingSessionDto(updatedTrainingSession);
+        }
+        throw new RuntimeException("Training session not found with id: " + sessionId);
     }
     
     @Override
     @Transactional
     public void deleteTrainingSession(Long sessionId) {
-        System.out.println("=== TRAINING SESSION SERVICE: DELETE ===");
-        System.out.println("Session ID: " + sessionId);
-        
-        if (!trainingSessionRepository.existsById(sessionId)) {
-            throw new RuntimeException("Training session not found with ID: " + sessionId);
+        Optional<TrainingSession> trainingSession = trainingSessionRepository.findById(sessionId);
+        if (trainingSession.isPresent()) {
+            trainingSessionRepository.delete(trainingSession.get());
+        } else {
+            throw new RuntimeException("Training session not found with id: " + sessionId);
         }
-        
-        trainingSessionRepository.deleteById(sessionId);
-        System.out.println("Training session deleted successfully: " + sessionId);
     }
     
     @Override

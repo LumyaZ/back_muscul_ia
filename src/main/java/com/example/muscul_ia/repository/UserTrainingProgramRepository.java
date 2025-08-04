@@ -10,28 +10,15 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Repository interface for UserTrainingProgram entity.
- * Interface repository pour l'entité UserTrainingProgram.
- * 
- * This repository provides data access methods for managing the simple relationship
- * between users and training programs.
- * 
- * Cette interface repository fournit des méthodes d'accès aux données pour
- * gérer la relation simple entre les utilisateurs et les programmes d'entraînement.
- * 
- * @author Muscul IA Team
- * @version 1.0
- * @since 2024-01-01
+ * User training program repository for managing user-training program relationship data operations.
+ * Repository de programmes d'entraînement utilisateur pour gérer les opérations de données de relation utilisateur-programme.
  */
 @Repository
 public interface UserTrainingProgramRepository extends JpaRepository<UserTrainingProgram, Long> {
     
     /**
-     * Find all training programs that a user is subscribed to.
-     * Trouver tous les programmes d'entraînement auxquels un utilisateur est abonné.
-     * 
-     * @param userId - ID of the user
-     * @return List of UserTrainingProgram relationships
+     * Find user training programs by user ID with training program details.
+     * Trouver les programmes d'entraînement utilisateur par ID utilisateur avec les détails du programme d'entraînement.
      */
     @Query("SELECT utp FROM UserTrainingProgram utp " +
            "JOIN FETCH utp.trainingProgram tp " +
@@ -39,11 +26,8 @@ public interface UserTrainingProgramRepository extends JpaRepository<UserTrainin
     List<UserTrainingProgram> findByUserId(@Param("userId") Long userId);
     
     /**
-     * Find all users subscribed to a specific training program.
-     * Trouver tous les utilisateurs abonnés à un programme d'entraînement spécifique.
-     * 
-     * @param trainingProgramId - ID of the training program
-     * @return List of UserTrainingProgram relationships
+     * Find user training programs by training program ID with user details.
+     * Trouver les programmes d'entraînement utilisateur par ID de programme d'entraînement avec les détails utilisateur.
      */
     @Query("SELECT utp FROM UserTrainingProgram utp " +
            "JOIN FETCH utp.user u " +
@@ -51,12 +35,8 @@ public interface UserTrainingProgramRepository extends JpaRepository<UserTrainin
     List<UserTrainingProgram> findByTrainingProgramId(@Param("trainingProgramId") Long trainingProgramId);
     
     /**
-     * Check if a user is subscribed to a specific training program.
-     * Vérifier si un utilisateur est abonné à un programme d'entraînement spécifique.
-     * 
-     * @param userId - ID of the user
-     * @param trainingProgramId - ID of the training program
-     * @return Optional containing the relationship if it exists
+     * Find user training program by user ID and training program ID.
+     * Trouver le programme d'entraînement utilisateur par ID utilisateur et ID de programme d'entraînement.
      */
     @Query("SELECT utp FROM UserTrainingProgram utp " +
            "WHERE utp.user.id = :userId AND utp.trainingProgram.id = :trainingProgramId")

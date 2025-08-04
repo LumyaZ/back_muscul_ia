@@ -16,8 +16,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 /**
- * Security configuration for password encoding.
- * Configuration de sécurité pour l'encodage des mots de passe.
+ * Security configuration for the application with JWT authentication and CORS support.
+ * Configuration de sécurité de l'application avec authentification JWT et support CORS.
  */
 @Configuration
 @EnableWebSecurity
@@ -25,13 +25,21 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
+    /**
+     * Constructor for Security Configuration.
+     * Constructeur pour la configuration de sécurité.
+     * 
+     * @param jwtAuthFilter JWT authentication filter / Filtre d'authentification JWT
+     */
     public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
     }
 
     /**
-     * Bean for password encoding using BCrypt.
-     * Bean pour l'encodage des mots de passe avec BCrypt.
+     * Bean for password encoding using BCrypt algorithm.
+     * Bean pour l'encodage des mots de passe avec l'algorithme BCrypt.
+     * 
+     * @return PasswordEncoder BCrypt password encoder / Encodeur de mot de passe BCrypt
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -39,13 +47,17 @@ public class SecurityConfig {
     }
 
     /**
-     * Security filter chain configuration for HTTP security.
-     * Configuration de la chaîne de filtres de sécurité HTTP.
+     * Security filter chain configuration for HTTP security with JWT authentication.
+     * Configuration de la chaîne de filtres de sécurité HTTP avec authentification JWT.
+     * 
+     * @param http HttpSecurity configuration / Configuration HttpSecurity
+     * @return SecurityFilterChain Configured security filter chain / Chaîne de filtres de sécurité configurée
+     * @throws Exception Configuration exception / Exception de configuration
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors() // Active CORS
+            .cors()
             .and()
             .csrf().disable()
             .authorizeHttpRequests(authz -> authz
@@ -66,19 +78,27 @@ public class SecurityConfig {
     }
 
     /**
-     * CORS configuration to allow requests from Angular frontend.
-     * Configuration CORS pour autoriser les requêtes du front Angular.
+     * CORS configuration to allow requests from Angular frontend and other origins.
+     * Configuration CORS pour autoriser les requêtes du front Angular et d'autres origines.
+     * 
+     * @return CorsConfigurationSource Configured CORS configuration source / Source de configuration CORS configurée
      */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:4200",
+            "http://localhost:3000"
+        ));
+        
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        
         return source;
     }
 } 

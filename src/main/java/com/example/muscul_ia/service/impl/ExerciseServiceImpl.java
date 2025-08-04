@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Exercise service implementation for managing exercise business logic.
+ * Implémentation du service d'exercices pour gérer la logique métier d'exercices.
+ */
 @Service
 public class ExerciseServiceImpl implements ExerciseService {
     
@@ -27,8 +31,6 @@ public class ExerciseServiceImpl implements ExerciseService {
         exercise.setMuscleGroup(request.getMuscleGroup());
         exercise.setEquipmentNeeded(request.getEquipmentNeeded());
         exercise.setDifficultyLevel(request.getDifficultyLevel());
-        exercise.setVideoUrl(request.getVideoUrl());
-        exercise.setImageUrl(request.getImageUrl());
         exercise.setIsActive(true);
         
         Exercise savedExercise = exerciseRepository.save(exercise);
@@ -48,11 +50,6 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
     
     @Override
-    public Optional<Exercise> getExerciseEntityById(Long id) {
-        return exerciseRepository.findById(id);
-    }
-    
-    @Override
     public ExerciseDto updateExercise(Long id, CreateExerciseRequest request) {
         Optional<Exercise> exerciseOpt = exerciseRepository.findById(id);
         if (exerciseOpt.isPresent()) {
@@ -63,8 +60,6 @@ public class ExerciseServiceImpl implements ExerciseService {
             exercise.setMuscleGroup(request.getMuscleGroup());
             exercise.setEquipmentNeeded(request.getEquipmentNeeded());
             exercise.setDifficultyLevel(request.getDifficultyLevel());
-            exercise.setVideoUrl(request.getVideoUrl());
-            exercise.setImageUrl(request.getImageUrl());
             
             Exercise updatedExercise = exerciseRepository.save(exercise);
             return convertToDto(updatedExercise);
@@ -141,9 +136,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         dto.setCategory(exercise.getCategory());
         dto.setMuscleGroup(exercise.getMuscleGroup());
         dto.setEquipmentNeeded(exercise.getEquipmentNeeded());
-        dto.setDifficultyLevel(exercise.getDifficultyLevel());
-        dto.setVideoUrl(exercise.getVideoUrl());
-        dto.setImageUrl(exercise.getImageUrl());
+        dto.setDifficultyLevel(exercise.getDifficultyLevel());  
         dto.setIsActive(exercise.getIsActive());
         dto.setCreatedAt(exercise.getCreatedAt());
         dto.setUpdatedAt(exercise.getUpdatedAt());
