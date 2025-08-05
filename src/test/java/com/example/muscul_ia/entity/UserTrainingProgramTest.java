@@ -6,23 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-/**
- * Unit tests for UserTrainingProgram entity.
- * Tests unitaires pour l'entité UserTrainingProgram.
- * 
- * This test class verifies the behavior of the UserTrainingProgram entity,
- * including its constructors, getters, and setters.
- * 
- * Cette classe de test vérifie le comportement de l'entité UserTrainingProgram,
- * incluant ses constructeurs, getters et setters.
- * 
- * @author Muscul IA Team
- * @version 1.0
- * @since 2024-01-01
- */
+
 @DisplayName("UserTrainingProgram Entity Tests")
 class UserTrainingProgramTest {
     

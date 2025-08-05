@@ -23,10 +23,6 @@ public class TrainingProgram {
     @Column(name = "category", length = 50)
     private String category;
     
-    /**
-     * Target audience for the program (e.g., "Débutants", "Sportifs confirmés").
-     * Audience cible pour le programme (ex: "Débutants", "Sportifs confirmés").
-     */
     @Column(name = "target_audience", length = 100)
     private String targetAudience;
     
