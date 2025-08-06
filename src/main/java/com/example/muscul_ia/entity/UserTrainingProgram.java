@@ -2,6 +2,10 @@ package com.example.muscul_ia.entity;
 
 import jakarta.persistence.*;
 
+/**
+ * Entity class for user training programs.
+ * Entité pour les programmes d'entraînement des utilisateurs.
+ */
 @Entity
 @Table(name = "user_training_programs")
 public class UserTrainingProgram {
@@ -18,6 +22,7 @@ public class UserTrainingProgram {
     @JoinColumn(name = "training_program_id", nullable = false)
     private TrainingProgram trainingProgram;
     
+    // Constructors
     public UserTrainingProgram() {}
     
     public UserTrainingProgram(User user, TrainingProgram trainingProgram) {

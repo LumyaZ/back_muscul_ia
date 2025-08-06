@@ -2,6 +2,10 @@ package com.example.muscul_ia.dto;
 
 import java.time.LocalDateTime;
 
+/**
+ * DTO for program exercises.
+ * DTO pour les exercices de programme.
+ */
 public class ProgramExerciseDto {
     private Long id;
     private Long trainingProgramId;

@@ -1,6 +1,5 @@
 package com.example.muscul_ia.dto;
 
-import com.example.muscul_ia.entity.UserProfile;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 

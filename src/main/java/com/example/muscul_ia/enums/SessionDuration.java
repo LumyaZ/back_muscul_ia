@@ -1,5 +1,9 @@
 package com.example.muscul_ia.enums;
 
+/**
+ * Enum class for session durations.
+ * Enumération pour les durées des sessions.
+ */
 public enum SessionDuration {
     SHORT("Court", "30-45 minutes"),
     MEDIUM("Moyen", "45-60 minutes"),

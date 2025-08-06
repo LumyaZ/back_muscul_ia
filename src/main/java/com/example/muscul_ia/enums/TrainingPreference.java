@@ -1,5 +1,9 @@
 package com.example.muscul_ia.enums;
 
+/**
+ * Enum class for training preferences.
+ * Enumération pour les préférences d'entraînement.
+ */
 public enum TrainingPreference {
     CARDIO("Cardio", "Entraînement cardiovasculaire"),
     STRENGTH_TRAINING("Musculation", "Entraînement de force"),

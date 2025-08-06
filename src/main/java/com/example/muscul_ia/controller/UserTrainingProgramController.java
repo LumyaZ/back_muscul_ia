@@ -35,7 +35,7 @@ public class UserTrainingProgramController {
             @RequestParam Long trainingProgramId,
             Authentication authentication) {
         try {
-            // Vérifier que l'utilisateur authentifié correspond à l'userId
+
             Long authenticatedUserId = userService.getCurrentUser(authentication).getId();
             if (!authenticatedUserId.equals(userId)) {
                 return ResponseEntity.status(403).build();
@@ -58,7 +58,7 @@ public class UserTrainingProgramController {
             @RequestParam Long trainingProgramId,
             Authentication authentication) {
         try {
-            // Vérifier que l'utilisateur authentifié correspond à l'userId
+
             Long authenticatedUserId = userService.getCurrentUser(authentication).getId();
             if (!authenticatedUserId.equals(userId)) {
                 return ResponseEntity.status(403).build();
@@ -80,7 +80,7 @@ public class UserTrainingProgramController {
             @PathVariable Long userId,
             Authentication authentication) {
         try {
-            // Vérifier que l'utilisateur authentifié correspond à l'userId
+
             Long authenticatedUserId = userService.getCurrentUser(authentication).getId();
             if (!authenticatedUserId.equals(userId)) {
                 return ResponseEntity.status(403).build();
@@ -117,7 +117,7 @@ public class UserTrainingProgramController {
             @RequestParam Long trainingProgramId,
             Authentication authentication) {
         try {
-            // Vérifier que l'utilisateur authentifié correspond à l'userId
+                
             Long authenticatedUserId = userService.getCurrentUser(authentication).getId();
             if (!authenticatedUserId.equals(userId)) {
                 return ResponseEntity.status(403).build();

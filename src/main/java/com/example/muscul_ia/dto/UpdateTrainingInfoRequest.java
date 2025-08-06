@@ -3,6 +3,10 @@ package com.example.muscul_ia.dto;
 import com.example.muscul_ia.enums.*;
 import jakarta.validation.constraints.*;
 
+/**
+ * DTO for updating training information.
+ * DTO pour mettre à jour les informations d'entraînement.
+ */ 
 public class UpdateTrainingInfoRequest {
     
     private Gender gender;
@@ -31,6 +35,7 @@ public class UpdateTrainingInfoRequest {
     
     private Equipment equipment;
 
+    // Constructors
     public UpdateTrainingInfoRequest() {}
 
     public UpdateTrainingInfoRequest(Gender gender, Double weight, Double height, Double bodyFatPercentage,

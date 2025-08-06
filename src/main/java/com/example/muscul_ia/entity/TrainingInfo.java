@@ -4,6 +4,10 @@ import com.example.muscul_ia.enums.*;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Entity class for training information.
+ * Entité pour les informations d'entraînement.
+ */
 @Entity
 @Table(name = "training_info")
 public class TrainingInfo {
@@ -59,6 +63,7 @@ public class TrainingInfo {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    // Constructors
     public TrainingInfo() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
@@ -70,6 +75,7 @@ public class TrainingInfo {
         this.updatedAt = LocalDateTime.now();
     }
 
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public User getUser() { return user; }

@@ -29,10 +29,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserProfileService userProfileService;
 
-    /**
-     * Register a new user.
-     * Inscrire un nouvel utilisateur.
-     */
     @Override
     @Transactional
     public UserDto register(RegisterRequest request) {
@@ -54,10 +50,6 @@ public class UserServiceImpl implements UserService {
         return new UserDto(savedUser);
     }
 
-    /**
-     * Login an existing user.
-     * Connecter un utilisateur existant.
-     */
     @Override
     public UserDto login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
@@ -70,10 +62,6 @@ public class UserServiceImpl implements UserService {
         return new UserDto(user);
     }
 
-    /**
-     * Get current authenticated user.
-     * Récupérer l'utilisateur actuellement authentifié.
-     */
     @Override
     public User getCurrentUser(Authentication authentication) {
         
@@ -89,10 +77,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    /**
-     * Create a new user with profile in one request.
-     * Créer un nouvel utilisateur avec profil en une seule requête.
-     */
     @Override
     @Transactional
     public CreateUserWithProfileResponse createUserWithProfile(CreateUserWithProfileRequest request) {

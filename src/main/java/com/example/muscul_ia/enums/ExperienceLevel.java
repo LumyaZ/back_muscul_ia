@@ -1,5 +1,9 @@
 package com.example.muscul_ia.enums;
 
+/**
+ * Enum class for experience levels.
+ * Enumération pour les niveaux d'expérience.
+ */
 public enum ExperienceLevel {
     BEGINNER("Débutant", "0-1 an"),
     INTERMEDIATE("Intermédiaire", "1-3 ans"),

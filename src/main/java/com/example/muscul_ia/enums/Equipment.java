@@ -1,5 +1,9 @@
 package com.example.muscul_ia.enums;
 
+/**
+ * Enum class for equipment types.
+ * Enumération pour les types d'équipement.
+ */
 public enum Equipment {
     NONE("Aucun", "Pas d'équipement"),
     BASIC("Basique", "Poids libres, tapis"),

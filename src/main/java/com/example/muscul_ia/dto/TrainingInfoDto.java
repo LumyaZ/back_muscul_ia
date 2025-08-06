@@ -4,6 +4,10 @@ import com.example.muscul_ia.entity.TrainingInfo;
 import com.example.muscul_ia.enums.*;
 import java.time.LocalDateTime;
 
+/**
+ * DTO for training information.
+ * DTO pour les informations d'entraînement.
+ */
 public class TrainingInfoDto {
     
     private Long id;
@@ -22,6 +26,7 @@ public class TrainingInfoDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    // Constructors
     public TrainingInfoDto() {}
 
     public TrainingInfoDto(TrainingInfo trainingInfo) {

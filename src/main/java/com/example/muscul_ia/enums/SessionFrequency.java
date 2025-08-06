@@ -1,5 +1,9 @@
 package com.example.muscul_ia.enums;
 
+/**
+ * Enum class for session frequencies.
+ * Enumération pour les fréquences des sessions.
+ */
 public enum SessionFrequency {
     ONE_TO_TWO("1-2 fois", "1-2 sessions par semaine"),
     THREE_TO_FOUR("3-4 fois", "3-4 sessions par semaine"),

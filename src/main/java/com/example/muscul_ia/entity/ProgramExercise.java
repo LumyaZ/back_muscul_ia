@@ -3,6 +3,10 @@ package com.example.muscul_ia.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Entity class for program exercises.
+ * Entité pour les exercices de programme.
+ */
 @Entity
 @Table(name = "program_exercises")
 public class ProgramExercise {

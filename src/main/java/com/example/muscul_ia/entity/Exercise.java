@@ -3,6 +3,10 @@ package com.example.muscul_ia.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Entity class for exercises.
+ * Entité pour les exercices.
+ */
 @Entity
 @Table(name = "exercises")
 public class Exercise {
@@ -42,14 +46,7 @@ public class Exercise {
         this.createdAt = LocalDateTime.now();
     }
     
-    /**
-     * Constructor with basic exercise information.
-     * Constructeur avec les informations de base de l'exercice.
-     * 
-     * @param name - Exercise name
-     * @param description - Exercise description
-     * @param category - Exercise category
-     */
+    // Constructor
     public Exercise(String name, String description, String category) {
         this();
         this.name = name;

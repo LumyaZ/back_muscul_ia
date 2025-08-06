@@ -30,10 +30,6 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Autowired
     UserRepository userRepository;
 
-    /**
-     * Create a new user profile.
-     * Créer un nouveau profil utilisateur.
-     */
     @Override
     @Transactional
     public UserProfileDto createProfile(User user, CreateUserProfileRequest request) {
@@ -57,10 +53,6 @@ public class UserProfileServiceImpl implements UserProfileService {
         return new UserProfileDto(savedProfile);
     }
 
-    /**
-     * Create a new user profile by email (for new users).
-     * Créer un nouveau profil utilisateur par email (pour les nouveaux utilisateurs).
-     */
     @Override
     @Transactional
     public UserProfileDto createProfileByEmail(CreateUserProfileWithEmailRequest request) {
@@ -87,10 +79,6 @@ public class UserProfileServiceImpl implements UserProfileService {
         return new UserProfileDto(savedProfile);
     }
 
-    /**
-     * Get user profile by user entity.
-     * Obtenir le profil utilisateur par entité utilisateur.
-     */
     @Override
     public UserProfileDto getProfileByUser(User user) {
         
@@ -100,10 +88,6 @@ public class UserProfileServiceImpl implements UserProfileService {
         return new UserProfileDto(userProfile);
     }
 
-    /**
-     * Get user profile by user ID.
-     * Obtenir le profil utilisateur par ID utilisateur.
-     */
     @Override
     public UserProfileDto getProfileByUserId(Long userId) {
         
@@ -116,10 +100,6 @@ public class UserProfileServiceImpl implements UserProfileService {
         return new UserProfileDto(userProfile);
     }
 
-    /**
-     * Update user profile.
-     * Mettre à jour le profil utilisateur.
-     */
     @Override
     @Transactional
     public UserProfileDto updateProfile(User user, UpdateUserProfileRequest request) {
@@ -148,10 +128,6 @@ public class UserProfileServiceImpl implements UserProfileService {
         return new UserProfileDto(savedProfile);
     }
 
-    /**
-     * Delete user profile.
-     * Supprimer le profil utilisateur.
-     */
     @Override
     @Transactional
     public void deleteProfile(User user) {
@@ -162,10 +138,6 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfileRepository.delete(userProfile);
     }
 
-    /**
-     * Calculate age from date of birth.
-     * Calculer l'âge à partir de la date de naissance.
-     */
     private int calculateAge(LocalDate dateOfBirth) {
         LocalDate now = LocalDate.now();
         int age = now.getYear() - dateOfBirth.getYear();

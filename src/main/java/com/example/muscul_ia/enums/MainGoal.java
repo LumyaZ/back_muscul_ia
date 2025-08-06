@@ -1,5 +1,9 @@
 package com.example.muscul_ia.enums;
 
+/**
+ * Enum class for main goals.
+ * Enumération pour les objectifs principaux.
+ */
 public enum MainGoal {
     WEIGHT_LOSS("Perte de poids", "Réduire la masse graisseuse"),
     MUSCLE_GAIN("Prise de masse", "Augmenter la masse musculaire"),

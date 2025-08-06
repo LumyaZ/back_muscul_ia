@@ -116,7 +116,7 @@ public class TrainingSessionController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication) {
-        // Security check: user can only access their own sessions
+
         User currentUser = userService.getCurrentUser(authentication);
         if (!currentUser.getId().equals(userId)) {
             return ResponseEntity.status(403).build();
@@ -264,7 +264,7 @@ public class TrainingSessionController {
             @PathVariable Long sessionId,
             @Valid @RequestBody CreateTrainingSessionRequest request,
             Authentication authentication) {
-        // Security check: verify the session belongs to the current user
+
         User currentUser = userService.getCurrentUser(authentication);
         Optional<TrainingSessionDto> existingSession = trainingSessionService.getTrainingSessionById(sessionId);
         
@@ -295,7 +295,7 @@ public class TrainingSessionController {
     public ResponseEntity<Void> deleteTrainingSession(
             @PathVariable Long sessionId,
             Authentication authentication) {
-        // Security check: verify the session belongs to the current user
+                
         User currentUser = userService.getCurrentUser(authentication);
         Optional<TrainingSessionDto> existingSession = trainingSessionService.getTrainingSessionById(sessionId);
         

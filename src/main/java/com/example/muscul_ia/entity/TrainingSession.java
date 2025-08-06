@@ -3,6 +3,10 @@ package com.example.muscul_ia.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Entity class for training sessions.
+ * Entité pour les sessions d'entraînement.
+ */
 @Entity
 @Table(name = "training_sessions")
 public class TrainingSession {
@@ -40,6 +44,7 @@ public class TrainingSession {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // Constructors
     public TrainingSession() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();

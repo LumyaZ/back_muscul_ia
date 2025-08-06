@@ -35,7 +35,6 @@ public class ProgramExerciseController {
             @PathVariable Long programId,
             Authentication authentication) {
         try {
-            // Vérifier que l'utilisateur est authentifié
             userService.getCurrentUser(authentication);
             
             List<ProgramExerciseDto> exercises = programExerciseService.getExercisesByProgramId(programId);
@@ -54,7 +53,6 @@ public class ProgramExerciseController {
             @PathVariable Long id,
             Authentication authentication) {
         try {
-            // Vérifier que l'utilisateur est authentifié
             userService.getCurrentUser(authentication);
             
             return programExerciseService.getProgramExerciseById(id)

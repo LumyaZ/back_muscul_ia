@@ -3,6 +3,10 @@ package com.example.muscul_ia.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Entity class for training programs.
+ * Entité pour les programmes d'entraînement.
+ */
 @Entity
 @Table(name = "training_programs")
 public class TrainingProgram {
@@ -36,6 +40,7 @@ public class TrainingProgram {
     @JoinColumn(name = "created_by_user_id")
     private User createdByUser;
     
+    // Constructors
     public TrainingProgram() {
         this.createdAt = LocalDateTime.now();
     }
@@ -47,7 +52,7 @@ public class TrainingProgram {
         this.difficultyLevel = difficultyLevel;
     }
     
-    // Getters et Setters
+    // Getters and Setters
 
     public Long getId() {
         return id;

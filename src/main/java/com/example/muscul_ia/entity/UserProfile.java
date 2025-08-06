@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-
-
+/**
+ * Entity class for user profiles.
+ * Entité pour les profils utilisateur.
+ */
 @Entity
 @Table(name = "user_profile")
 public class UserProfile {
@@ -39,6 +41,7 @@ public class UserProfile {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    // Constructors
     public UserProfile() {
         this.createdAt = LocalDateTime.now();
     }

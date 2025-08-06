@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
+/**
+ * Custom user details service for Spring Security.
+ * Service utilisateur personnalisé pour Spring Security.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

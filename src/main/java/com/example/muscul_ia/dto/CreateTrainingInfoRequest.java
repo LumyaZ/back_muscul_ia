@@ -40,6 +40,7 @@ public class CreateTrainingInfoRequest {
     @NotNull(message = "L'équipement disponible est obligatoire")
     private Equipment equipment;
 
+    // Constructors
     public CreateTrainingInfoRequest() {}
 
     public CreateTrainingInfoRequest(Gender gender, Double weight, Double height, Double bodyFatPercentage,

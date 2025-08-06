@@ -3,6 +3,10 @@ package com.example.muscul_ia.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Entity class for users.
+ * Entité pour les utilisateurs.
+ */
 @Entity
 public class User {
     
@@ -22,6 +26,7 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserProfile userProfile;
 
+    // Constructors
     public User() {
         this.creationDate = LocalDateTime.now();
     }

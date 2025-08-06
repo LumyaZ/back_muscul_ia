@@ -81,10 +81,6 @@ public class UserTrainingProgramServiceImpl implements UserTrainingProgramServic
                 .orElse(null);
     }
     
-    /**
-     * Convert UserTrainingProgram entity to DTO.
-     * Convertir l'entité UserTrainingProgram en DTO.
-     */
     private UserTrainingProgramDto convertToDto(UserTrainingProgram userTrainingProgram) {
         UserDto userDto = new UserDto();
         userDto.setId(userTrainingProgram.getUser().getId());
