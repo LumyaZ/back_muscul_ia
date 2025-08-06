@@ -16,6 +16,16 @@ src/main/java/com/example/muscul_ia/
 ├── service/         # Services métier
 │   └── impl/        # Implémentations des services
 └── MusculIaApplication.java
+
+docs/                # Documentation
+├── MONITORING.md    # Guide de monitoring
+└── QUALITY.md       # Guide de qualité du code
+
+config/              # Configuration
+└── checkstyle.xml   # Règles Checkstyle
+
+scripts/             # Scripts utilitaires
+└── quality-check.sh # Vérification qualité
 ```
 
 ### Technologies utilisées
@@ -99,14 +109,18 @@ Inscription d'un nouvel utilisateur.
 **Response :**
 ```json
 {
-  "id": 1,
-  "email": "user@example.com",
-  "creationDate": "2024-01-01T10:00:00"
+  "success": true,
+  "message": "Utilisateur créé avec succès",
+  "user": {
+    "id": 1,
+    "email": "user@example.com",
+    "creationDate": "2024-01-01T00:00:00Z"
+  }
 }
 ```
 
 #### POST /api/auth/login
-Connexion d'un utilisateur existant.
+Connexion utilisateur.
 
 **Request Body :**
 ```json
@@ -119,221 +133,82 @@ Connexion d'un utilisateur existant.
 **Response :**
 ```json
 {
-  "id": 1,
-  "email": "user@example.com",
-  "creationDate": "2024-01-01T10:00:00"
+  "success": true,
+  "message": "Connexion réussie",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": 1,
+    "email": "user@example.com"
+  }
 }
 ```
 
-### Endpoints de gestion des profils utilisateur
+## 🧪 Tests et Qualité
 
-#### POST /api/profiles
-Créer un profil utilisateur.
-
-**Request Body :**
-```json
-{
-  "firstName": "John",
-  "lastName": "Doe",
-  "dateOfBirth": "1990-01-01",
-  "phoneNumber": "+33123456789"
-}
-```
-
-**Response :**
-```json
-{
-  "id": 1,
-  "userId": 1,
-  "firstName": "John",
-  "lastName": "Doe",
-  "fullName": "John Doe",
-  "dateOfBirth": "1990-01-01",
-  "age": 34,
-  "phoneNumber": "+33123456789",
-  "createdAt": "2024-01-01T10:00:00",
-  "updatedAt": null
-}
-```
-
-#### GET /api/profiles/me
-Obtenir son propre profil.
-
-#### GET /api/profiles/{userId}
-Obtenir un profil par ID utilisateur.
-
-
-
-#### PUT /api/profiles/me
-Mettre à jour son propre profil.
-
-#### DELETE /api/profiles/me
-Supprimer son propre profil.
-
-## 🗄️ Modèle de données
-
-### Entité User
-```java
-@Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(nullable = false, unique = true)
-    private String email;
-    
-    @Column(nullable = false)
-    private String password;
-    
-    @Column(nullable = false)
-    private LocalDateTime creationDate;
-    
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private UserProfile userProfile;
-}
-```
-
-### Entité UserProfile
-```java
-@Entity
-@Table(name = "user_profile")
-public class UserProfile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, unique = true)
-    private User user;
-    
-    @Column(name = "first_name", length = 50)
-    private String firstName;
-    
-    @Column(name = "last_name", length = 50)
-    private String lastName;
-    
-    @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
-    
-    @Column(name = "age")
-    private Integer age;
-    
-    @Column(name = "phone_number", length = 20)
-    private String phoneNumber;
-    
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-    
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-}
-```
-
-## 🧪 Tests
-
-### Lancement des tests
+### Vérification de la qualité
 ```bash
-# Tous les tests
-./mvnw test
+# Vérification complète
+./scripts/quality-check.sh
 
-# Tests avec rapport de couverture
+# Ou commandes individuelles
+./mvnw checkstyle:check
+./mvnw spotbugs:check
 ./mvnw test jacoco:report
 ```
 
-### Tests disponibles
-- **UserServiceImplTest** : Tests de la logique métier d'authentification
-  - Inscription avec validation des mots de passe
-  - Connexion avec vérification des identifiants
-  - Gestion des erreurs (email existant, mots de passe différents)
-- **UserProfileServiceImplTest** : Tests de la logique métier des profils utilisateur
-  - Création de profil avec validation
-  - Récupération de profil par utilisateur et par ID
-  - Mise à jour de profil
-  - Suppression de profil
-  - Gestion des erreurs (profil déjà existant, utilisateur inexistant)
-  - Vérification de l'existence d'un profil
-  - Récupération de tous les profils
+### Rapports disponibles
+- **Couverture de code :** `target/site/jacoco/index.html`
+- **SpotBugs :** `target/spotbugs/spotbugsXml.xml`
+- **Checkstyle :** Vérifié dans la console
 
-## 🔧 Configuration
+### Seuils de qualité
+- **Couverture de code :** ≥ 80%
+- **Checkstyle :** 0 erreurs
+- **SpotBugs :** 0 bugs critiques
+- **Tests :** 100% de succès
 
-### Variables d'environnement
-```properties
-# Base de données
-spring.datasource.url=jdbc:mysql://localhost:3306/muscul_ia_db
-spring.datasource.username=root
-spring.datasource.password=your_password
+## 📊 Monitoring
 
-# JPA/Hibernate
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+### Endpoints de monitoring
+- **Health Check :** `http://localhost:8080/actuator/health`
+- **Métriques :** `http://localhost:8080/actuator/metrics`
+- **Prometheus :** `http://localhost:8080/actuator/prometheus`
 
-# Flyway (migrations)
-spring.flyway.enabled=true
-spring.flyway.locations=classpath:db/migration
+### Métriques disponibles
+- Temps de réponse des endpoints
+- Nombre de requêtes par seconde
+- Utilisation mémoire et CPU
+- Connexions base de données
+- Erreurs HTTP
 
-# Logs
-logging.level.com.example.muscul_ia=DEBUG
-```
+## 📖 Documentation
 
-## 📝 Logs et monitoring
+- **Guide de qualité :** `docs/QUALITY.md`
+- **Guide de monitoring :** `docs/MONITORING.md`
+- **API Documentation :** `http://localhost:8080/swagger-ui.html`
 
-### Niveaux de logs
-- **DEBUG** : Détails des requêtes SQL et opérations JPA
-- **INFO** : Démarrage de l'application, connexions
-- **WARN** : Avertissements de sécurité, configurations
-- **ERROR** : Erreurs d'authentification, exceptions
+## 🐳 Docker
 
-### Logs importants à surveiller
-- Tentatives de connexion échouées
-- Erreurs de validation des données
-- Problèmes de connexion à la base de données
-- Opérations sur les profils utilisateur
-
-## 🚀 Déploiement
-
-### Build pour production
+### Construction de l'image
 ```bash
-./mvnw clean package -DskipTests
+docker build -t muscul-ia-backend .
 ```
 
-### Variables d'environnement de production
-```properties
-spring.profiles.active=prod
-spring.datasource.url=${DATABASE_URL}
-spring.datasource.username=${DATABASE_USERNAME}
-spring.datasource.password=${DATABASE_PASSWORD}
+### Lancement avec Docker
+```bash
+docker run -p 8080:8080 muscul-ia-backend
 ```
 
-## 🔄 Évolutions futures
+## 🤝 Contribution
 
-### Fonctionnalités prévues
-- [x] Gestion des profils utilisateur
-- [ ] API pour les programmes d'entraînement
-- [ ] Système de JWT pour l'authentification
-- [ ] Gestion des rôles et permissions
-- [ ] API pour les exercices et séries
-- [ ] Calcul automatique du BMI et recommandations
-- [ ] Historique des modifications de profil
+1. Fork le projet
+2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)
+3. Commit les changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrir une Pull Request
 
-### Améliorations techniques
-- [ ] Cache Redis pour les sessions
-- [ ] Rate limiting pour les API
-- [ ] Monitoring avec Micrometer
-- [ ] Tests d'intégration
-- [ ] Documentation OpenAPI complète
-- [ ] Validation avancée des données de profil
-
-## 📞 Support
-
-Pour toute question ou problème :
-- Vérifier les logs de l'application
-- Consulter la documentation Swagger : `http://localhost:8080/swagger-ui.html`
-- Vérifier la configuration de la base de données
-- Consulter la documentation API des profils : `USER_PROFILE_API.md`
-
----
-
-**Version :** 1.1.0  
-**Dernière mise à jour :** Janvier 2024
+### Standards de code
+- Suivre les conventions Checkstyle
+- Maintenir une couverture de code ≥ 80%
+- Documenter les nouvelles fonctionnalités
+- Ajouter des tests pour les nouvelles fonctionnalités

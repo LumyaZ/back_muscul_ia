@@ -10,7 +10,7 @@ Vérifie la conformité du code aux standards de codage Java.
 ./mvnw checkstyle:check
 ```
 
-**Configuration :** `checkstyle.xml`
+**Configuration :** `config/checkstyle.xml`
 - Longueur de ligne max : 120 caractères
 - Longueur de méthode max : 150 lignes
 - Nombre de paramètres max : 7
@@ -75,7 +75,7 @@ logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} -
 
 ### Vérification complète
 ```bash
-./quality-check.sh
+./scripts/quality-check.sh
 ```
 
 Ce script exécute :
@@ -101,67 +101,41 @@ Ce script exécute :
 ./mvnw dependency:analyze
 ```
 
-## 🎯 Objectifs de Qualité
+## 📋 Standards de Code
 
-### Couverture de Code
-- **Minimum :** 80% de lignes couvertes
-- **Objectif :** 90% de lignes couvertes
-- **Branches :** 70% minimum
+### Conventions de nommage
+- **Classes :** PascalCase (ex: `UserService`)
+- **Méthodes :** camelCase (ex: `getUserById`)
+- **Variables :** camelCase (ex: `userName`)
+- **Constantes :** UPPER_SNAKE_CASE (ex: `MAX_RETRY_COUNT`)
 
-### Standards de Code
-- **Checkstyle :** 0 erreur, max 10 warnings
-- **SpotBugs :** 0 bug critique ou élevé
-- **Compilation :** 0 erreur de compilation
-
-### Performance
-- **Temps de réponse API :** < 500ms
-- **Temps de démarrage :** < 30s
-- **Utilisation mémoire :** < 512MB
-
-## 📊 Rapports et Dashboards
-
-### Rapports générés
-- **JaCoCo :** `target/site/jacoco/index.html`
-- **SpotBugs :** `target/spotbugs/spotbugsXml.xml`
-- **Maven :** `target/site/project-reports.html`
-
-### Intégration CI/CD
-```yaml
-# Exemple GitHub Actions
-- name: Quality Check
-  run: |
-    ./mvnw checkstyle:check
-    ./mvnw spotbugs:check
-    ./mvnw test jacoco:report
+### Structure des packages
+```
+com.example.muscul_ia/
+├── config/          # Configuration
+├── controller/      # Contrôleurs REST
+├── service/         # Logique métier
+├── repository/      # Accès aux données
+├── entity/          # Entités JPA
+├── dto/             # Objets de transfert
+└── enums/           # Énumérations
 ```
 
-## 🚨 Alertes et Monitoring
-
-### Métriques critiques
-- **Erreurs 5xx :** > 1% des requêtes
-- **Temps de réponse :** > 1s
-- **Couverture de code :** < 80%
-- **Mémoire utilisée :** > 80%
-
-### Actions automatiques
-- Notification Slack/Email en cas d'alerte
-- Arrêt automatique si couverture < 70%
-- Rollback si performance dégradée
-
-## 📚 Ressources
-
 ### Documentation
-- [Checkstyle](https://checkstyle.org/)
-- [SpotBugs](https://spotbugs.github.io/)
-- [JaCoCo](https://www.jacoco.org/jacoco/)
-- [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html)
+- **JavaDoc** pour toutes les méthodes publiques
+- **README** à jour avec les instructions d'installation
+- **Commentaires** pour la logique complexe
 
-### Bonnes pratiques
-- Exécuter les vérifications avant chaque commit
-- Maintenir la couverture de code > 80%
-- Réviser les rapports SpotBugs régulièrement
-- Monitorer les métriques en production
+## 🚀 Intégration Continue
 
----
+### GitHub Actions
+- Tests automatiques à chaque push
+- Vérification de la qualité du code
+- Déploiement automatique en staging
+- Génération des rapports de couverture
 
-**Dernière mise à jour :** Janvier 2024 
+### Seuils de qualité
+- **Couverture de code :** ≥ 80%
+- **Checkstyle :** 0 erreurs
+- **SpotBugs :** 0 bugs critiques
+- **Tests :** 100% de succès 
