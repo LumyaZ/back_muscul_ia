@@ -47,7 +47,7 @@ class TrainingProgramControllerTest {
         trainingProgramService = mock(TrainingProgramService.class);
         
         TrainingProgramController controller = new TrainingProgramController();
-        // Utiliser la réflexion pour injecter les services
+        
         try {
             java.lang.reflect.Field trainingProgramServiceField = TrainingProgramController.class.getDeclaredField("trainingProgramService");
             trainingProgramServiceField.setAccessible(true);
@@ -88,11 +88,11 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should create training program successfully")
     void shouldCreateTrainingProgramSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.createTrainingProgram(any(CreateTrainingProgramRequest.class), eq(1L)))
                 .thenReturn(trainingProgramDto);
 
-        // When & Then
+        
         mockMvc.perform(post("/api/training-programs")
                 .param("userId", "1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -108,11 +108,11 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should return bad request when creating program fails")
     void shouldReturnBadRequestWhenCreatingProgramFails() throws Exception {
-        // Given
+        
         when(trainingProgramService.createTrainingProgram(any(CreateTrainingProgramRequest.class), eq(1L)))
                 .thenThrow(new RuntimeException("Creation failed"));
 
-        // When & Then
+        
         mockMvc.perform(post("/api/training-programs")
                 .param("userId", "1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -125,10 +125,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get all programs successfully")
     void shouldGetAllProgramsSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getAllActivePrograms()).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()))
@@ -141,10 +141,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get public programs successfully")
     void shouldGetPublicProgramsSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getAllPublicActivePrograms()).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/public"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()))
@@ -156,10 +156,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get program by id when exists")
     void shouldGetProgramByIdWhenExists() throws Exception {
-        // Given
+        
         when(trainingProgramService.getProgramById(1L)).thenReturn(Optional.of(trainingProgramDto));
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(trainingProgramDto.getId()))
@@ -172,10 +172,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should return not found when program does not exist")
     void shouldReturnNotFoundWhenProgramDoesNotExist() throws Exception {
-        // Given
+        
         when(trainingProgramService.getProgramById(999L)).thenReturn(Optional.empty());
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/999"))
                 .andExpect(status().isNotFound());
 
@@ -185,10 +185,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get programs by user successfully")
     void shouldGetProgramsByUserSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getProgramsByUser(1L)).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/user/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()))
@@ -200,11 +200,11 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should update program successfully")
     void shouldUpdateProgramSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.updateProgram(eq(1L), any(CreateTrainingProgramRequest.class), eq(1L)))
                 .thenReturn(trainingProgramDto);
 
-        // When & Then
+        
         mockMvc.perform(put("/api/training-programs/1")
                 .param("userId", "1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -219,11 +219,11 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should return not found when updating non-existent program")
     void shouldReturnNotFoundWhenUpdatingNonExistentProgram() throws Exception {
-        // Given
+        
         when(trainingProgramService.updateProgram(eq(999L), any(CreateTrainingProgramRequest.class), eq(1L)))
                 .thenThrow(new RuntimeException("Program not found"));
 
-        // When & Then
+        
         mockMvc.perform(put("/api/training-programs/999")
                 .param("userId", "1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -236,10 +236,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should delete program successfully")
     void shouldDeleteProgramSuccessfully() throws Exception {
-        // Given
+        
         doNothing().when(trainingProgramService).deleteProgram(1L, 1L);
 
-        // When & Then
+        
         mockMvc.perform(delete("/api/training-programs/1")
                 .param("userId", "1"))
                 .andExpect(status().isNoContent());
@@ -250,10 +250,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should return not found when deleting non-existent program")
     void shouldReturnNotFoundWhenDeletingNonExistentProgram() throws Exception {
-        // Given
+        
         doNothing().when(trainingProgramService).deleteProgram(999L, 1L);
 
-        // When & Then
+        
         mockMvc.perform(delete("/api/training-programs/999")
                 .param("userId", "1"))
                 .andExpect(status().isNoContent());
@@ -264,10 +264,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should search programs by name successfully")
     void shouldSearchProgramsByNameSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.searchProgramsByName("test")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/search")
                 .param("name", "test"))
                 .andExpect(status().isOk())
@@ -280,10 +280,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should search public programs by name successfully")
     void shouldSearchPublicProgramsByNameSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.searchPublicProgramsByName("test")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/public/search")
                 .param("name", "test"))
                 .andExpect(status().isOk())
@@ -296,10 +296,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get programs by difficulty level successfully")
     void shouldGetProgramsByDifficultyLevelSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getProgramsByDifficultyLevel("Débutant")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/difficulty")
                 .param("level", "Débutant"))
                 .andExpect(status().isOk())
@@ -311,10 +311,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get public programs by difficulty level successfully")
     void shouldGetPublicProgramsByDifficultyLevelSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getPublicProgramsByDifficultyLevel("Débutant")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/public/difficulty")
                 .param("level", "Débutant"))
                 .andExpect(status().isOk())
@@ -326,10 +326,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get programs by category successfully")
     void shouldGetProgramsByCategorySuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getProgramsByCategory("Musculation")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/category")
                 .param("category", "Musculation"))
                 .andExpect(status().isOk())
@@ -341,10 +341,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get public programs by category successfully")
     void shouldGetPublicProgramsByCategorySuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getPublicProgramsByCategory("Musculation")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/public/category")
                 .param("category", "Musculation"))
                 .andExpect(status().isOk())
@@ -356,10 +356,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get programs by target audience successfully")
     void shouldGetProgramsByTargetAudienceSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getProgramsByTargetAudience("Débutants")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/audience")
                 .param("audience", "Débutants"))
                 .andExpect(status().isOk())
@@ -371,10 +371,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get public programs by target audience successfully")
     void shouldGetPublicProgramsByTargetAudienceSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getPublicProgramsByTargetAudience("Débutants")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/public/audience")
                 .param("audience", "Débutants"))
                 .andExpect(status().isOk())
@@ -386,10 +386,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should search programs by description successfully")
     void shouldSearchProgramsByDescriptionSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.searchProgramsByDescription("musculation")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/search/description")
                 .param("description", "musculation"))
                 .andExpect(status().isOk())
@@ -401,10 +401,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should search public programs by description successfully")
     void shouldSearchPublicProgramsByDescriptionSuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.searchPublicProgramsByDescription("musculation")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/public/search/description")
                 .param("description", "musculation"))
                 .andExpect(status().isOk())
@@ -416,10 +416,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get programs by category and difficulty successfully")
     void shouldGetProgramsByCategoryAndDifficultySuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getProgramsByCategoryAndDifficulty("Musculation", "Débutant")).thenReturn(programList);
 
-        // When & Then
+        
         mockMvc.perform(get("/api/training-programs/filter")
                 .param("category", "Musculation")
                 .param("difficulty", "Débutant"))
@@ -432,10 +432,10 @@ class TrainingProgramControllerTest {
     @Test
     @DisplayName("Should get public programs by category and difficulty successfully")
     void shouldGetPublicProgramsByCategoryAndDifficultySuccessfully() throws Exception {
-        // Given
+        
         when(trainingProgramService.getPublicProgramsByCategoryAndDifficulty("Musculation", "Débutant")).thenReturn(programList);
 
-        // When & Then
+    
         mockMvc.perform(get("/api/training-programs/public/filter")
                 .param("category", "Musculation")
                 .param("difficulty", "Débutant"))

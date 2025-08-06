@@ -42,7 +42,6 @@ class ProgramExerciseControllerTest {
         programExerciseService = mock(ProgramExerciseService.class);
         
         ProgramExerciseController controller = new ProgramExerciseController();
-        // Utiliser la réflexion pour injecter le service
         try {
             java.lang.reflect.Field programExerciseServiceField = ProgramExerciseController.class.getDeclaredField("programExerciseService");
             programExerciseServiceField.setAccessible(true);
@@ -80,11 +79,9 @@ class ProgramExerciseControllerTest {
     @Test
     @DisplayName("Should get exercises by program id successfully")
     void shouldGetExercisesByProgramIdSuccessfully() throws Exception {
-        // Given
         Long programId = 1L;
         when(programExerciseService.getExercisesByProgramId(programId)).thenReturn(exerciseList);
 
-        // When & Then
         mockMvc.perform(get("/api/program-exercises/program/{programId}", programId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(programExerciseDto.getId()))
@@ -109,11 +106,9 @@ class ProgramExerciseControllerTest {
     @Test
     @DisplayName("Should return empty list when no exercises found for program")
     void shouldReturnEmptyListWhenNoExercisesFoundForProgram() throws Exception {
-        // Given
         Long programId = 999L;
         when(programExerciseService.getExercisesByProgramId(programId)).thenReturn(Arrays.asList());
 
-        // When & Then
         mockMvc.perform(get("/api/program-exercises/program/{programId}", programId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
@@ -125,11 +120,9 @@ class ProgramExerciseControllerTest {
     @Test
     @DisplayName("Should get program exercise by id when exists")
     void shouldGetProgramExerciseByIdWhenExists() throws Exception {
-        // Given
         Long exerciseId = 1L;
         when(programExerciseService.getProgramExerciseById(exerciseId)).thenReturn(Optional.of(programExerciseDto));
 
-        // When & Then
         mockMvc.perform(get("/api/program-exercises/{id}", exerciseId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(programExerciseDto.getId()))
@@ -154,11 +147,9 @@ class ProgramExerciseControllerTest {
     @Test
     @DisplayName("Should return not found when program exercise does not exist")
     void shouldReturnNotFoundWhenProgramExerciseDoesNotExist() throws Exception {
-        // Given
         Long exerciseId = 999L;
         when(programExerciseService.getProgramExerciseById(exerciseId)).thenReturn(Optional.empty());
 
-        // When & Then
         mockMvc.perform(get("/api/program-exercises/{id}", exerciseId))
                 .andExpect(status().isNotFound());
 
@@ -168,7 +159,6 @@ class ProgramExerciseControllerTest {
     @Test
     @DisplayName("Should add exercise to program successfully")
     void shouldAddExerciseToProgramSuccessfully() throws Exception {
-        // Given
         Long programId = 1L;
         CreateProgramExerciseRequest request = new CreateProgramExerciseRequest();
         request.setExerciseId(1L);
@@ -182,7 +172,6 @@ class ProgramExerciseControllerTest {
         when(programExerciseService.addExerciseToProgram(eq(programId), any(CreateProgramExerciseRequest.class)))
                 .thenReturn(programExerciseDto);
 
-        // When & Then
         mockMvc.perform(post("/api/program-exercises/program/{programId}", programId)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(request)))
@@ -209,7 +198,6 @@ class ProgramExerciseControllerTest {
     @Test
     @DisplayName("Should return bad request when adding exercise to program fails")
     void shouldReturnBadRequestWhenAddingExerciseToProgramFails() throws Exception {
-        // Given
         Long programId = 1L;
         CreateProgramExerciseRequest request = new CreateProgramExerciseRequest();
         request.setExerciseId(1L);
@@ -223,7 +211,6 @@ class ProgramExerciseControllerTest {
         when(programExerciseService.addExerciseToProgram(eq(programId), any(CreateProgramExerciseRequest.class)))
                 .thenThrow(new RuntimeException("Failed to add exercise to program"));
 
-        // When & Then
         mockMvc.perform(post("/api/program-exercises/program/{programId}", programId)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(request)))

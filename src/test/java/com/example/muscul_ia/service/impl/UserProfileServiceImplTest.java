@@ -29,10 +29,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Unit tests for UserProfileServiceImpl.
- * Tests unitaires pour UserProfileServiceImpl.
- */
+
 @ExtendWith(MockitoExtension.class)
 class UserProfileServiceImplTest {
 

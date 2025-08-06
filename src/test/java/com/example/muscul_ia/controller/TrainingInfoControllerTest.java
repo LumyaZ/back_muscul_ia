@@ -59,7 +59,6 @@ class TrainingInfoControllerTest {
         authentication = mock(Authentication.class);
         
         TrainingInfoController controller = new TrainingInfoController();
-        // Utiliser la réflexion pour injecter les services
         try {
             java.lang.reflect.Field trainingInfoServiceField = TrainingInfoController.class.getDeclaredField("trainingInfoService");
             trainingInfoServiceField.setAccessible(true);

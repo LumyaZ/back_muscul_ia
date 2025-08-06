@@ -39,7 +39,6 @@ class UserTrainingProgramControllerTest {
         userTrainingProgramService = mock(UserTrainingProgramService.class);
         
         UserTrainingProgramController controller = new UserTrainingProgramController();
-        // Utiliser la réflexion pour injecter les services
         try {
             java.lang.reflect.Field userTrainingProgramServiceField = UserTrainingProgramController.class.getDeclaredField("userTrainingProgramService");
             userTrainingProgramServiceField.setAccessible(true);
@@ -51,7 +50,6 @@ class UserTrainingProgramControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
         objectMapper = new ObjectMapper();
         
-        // Create test DTO
         userTrainingProgramDto = new UserTrainingProgramDto();
         userTrainingProgramDto.setId(1L);
     }
@@ -59,11 +57,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should subscribe user to program successfully")
     void shouldSubscribeUserToProgramSuccessfully() throws Exception {
-        // Given
         when(userTrainingProgramService.subscribeUserToProgram(1L, 1L))
                 .thenReturn(userTrainingProgramDto);
         
-        // When & Then
         mockMvc.perform(post("/api/user-training-programs/subscribe")
                         .param("userId", "1")
                         .param("trainingProgramId", "1")
@@ -77,11 +73,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should return bad request when subscription fails")
     void shouldReturnBadRequestWhenSubscriptionFails() throws Exception {
-        // Given
         when(userTrainingProgramService.subscribeUserToProgram(1L, 1L))
                 .thenThrow(new RuntimeException("User not found"));
         
-        // When & Then
         mockMvc.perform(post("/api/user-training-programs/subscribe")
                         .param("userId", "1")
                         .param("trainingProgramId", "1")
@@ -94,10 +88,8 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should unsubscribe user from program successfully")
     void shouldUnsubscribeUserFromProgramSuccessfully() throws Exception {
-        // Given
         doNothing().when(userTrainingProgramService).unsubscribeUserFromProgram(1L, 1L);
         
-        // When & Then
         mockMvc.perform(delete("/api/user-training-programs/unsubscribe")
                         .param("userId", "1")
                         .param("trainingProgramId", "1")
@@ -110,11 +102,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should return bad request when unsubscription fails")
     void shouldReturnBadRequestWhenUnsubscriptionFails() throws Exception {
-        // Given
         doThrow(new RuntimeException("User not found"))
                 .when(userTrainingProgramService).unsubscribeUserFromProgram(1L, 1L);
         
-        // When & Then
         mockMvc.perform(delete("/api/user-training-programs/unsubscribe")
                         .param("userId", "1")
                         .param("trainingProgramId", "1")
@@ -127,11 +117,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should get user programs successfully")
     void shouldGetUserProgramsSuccessfully() throws Exception {
-        // Given
         List<UserTrainingProgramDto> programs = Arrays.asList(userTrainingProgramDto);
         when(userTrainingProgramService.getUserPrograms(1L)).thenReturn(programs);
         
-        // When & Then
         mockMvc.perform(get("/api/user-training-programs/user/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -143,11 +131,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should return bad request when getting user programs fails")
     void shouldReturnBadRequestWhenGettingUserProgramsFails() throws Exception {
-        // Given
         when(userTrainingProgramService.getUserPrograms(1L))
                 .thenThrow(new RuntimeException("User not found"));
         
-        // When & Then
         mockMvc.perform(get("/api/user-training-programs/user/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -158,11 +144,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should get program users successfully")
     void shouldGetProgramUsersSuccessfully() throws Exception {
-        // Given
         List<UserTrainingProgramDto> users = Arrays.asList(userTrainingProgramDto);
         when(userTrainingProgramService.getProgramUsers(1L)).thenReturn(users);
         
-        // When & Then
         mockMvc.perform(get("/api/user-training-programs/program/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -174,11 +158,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should return bad request when getting program users fails")
     void shouldReturnBadRequestWhenGettingProgramUsersFails() throws Exception {
-        // Given
         when(userTrainingProgramService.getProgramUsers(1L))
                 .thenThrow(new RuntimeException("Program not found"));
         
-        // When & Then
         mockMvc.perform(get("/api/user-training-programs/program/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -189,11 +171,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should check user program when exists")
     void shouldCheckUserProgramWhenExists() throws Exception {
-        // Given
         when(userTrainingProgramService.getUserProgram(1L, 1L))
                 .thenReturn(userTrainingProgramDto);
         
-        // When & Then
         mockMvc.perform(get("/api/user-training-programs/check")
                         .param("userId", "1")
                         .param("trainingProgramId", "1")
@@ -207,11 +187,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should return not found when user program not exists")
     void shouldReturnNotFoundWhenUserProgramNotExists() throws Exception {
-        // Given
         when(userTrainingProgramService.getUserProgram(1L, 1L))
                 .thenReturn(null);
         
-        // When & Then
         mockMvc.perform(get("/api/user-training-programs/check")
                         .param("userId", "1")
                         .param("trainingProgramId", "1")
@@ -224,11 +202,9 @@ class UserTrainingProgramControllerTest {
     @Test
     @DisplayName("Should return bad request when checking user program fails")
     void shouldReturnBadRequestWhenCheckingUserProgramFails() throws Exception {
-        // Given
         when(userTrainingProgramService.getUserProgram(1L, 1L))
                 .thenThrow(new RuntimeException("Error occurred"));
-        
-        // When & Then
+                                
         mockMvc.perform(get("/api/user-training-programs/check")
                         .param("userId", "1")
                         .param("trainingProgramId", "1")

@@ -32,10 +32,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Unit test for UserServiceImpl registration logic.
- * Test unitaire pour la logique d'inscription de UserServiceImpl.
- */
+
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
@@ -93,7 +90,6 @@ class UserServiceImplTest {
 
     @Test
     void testRegisterCreatesUserWithHashedPassword() {
-        // Arrange / Préparation
         when(passwordEncoder.encode("password")).thenReturn("hashedPassword");
         when(userRepository.save(any(User.class))).thenAnswer(i -> i.getArguments()[0]);
 
@@ -102,10 +98,8 @@ class UserServiceImplTest {
         request.setPassword("password");
         request.setConfirmPassword("password");
 
-        // Act / Action
         UserDto result = userService.register(request);
 
-        // Assert / Vérification
         assertNotNull(result);
         assertEquals("testuser@email.com", result.getEmail());
         verify(passwordEncoder).encode("password");
@@ -114,7 +108,6 @@ class UserServiceImplTest {
 
     @Test
     void testLoginWithCorrectCredentials() {
-        // Arrange / Préparation
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(testUser));
         when(passwordEncoder.matches("password123", "hashedPassword")).thenReturn(true);
 
@@ -122,10 +115,8 @@ class UserServiceImplTest {
         request.setEmail("test@example.com");
         request.setPassword("password123");
 
-        // Act / Action
         UserDto result = userService.login(request);
 
-        // Assert / Vérification
         assertNotNull(result);
         assertEquals("test@example.com", result.getEmail());
         verify(userRepository).findByEmail("test@example.com");
@@ -134,7 +125,6 @@ class UserServiceImplTest {
 
     @Test
     void testRegisterWithExistingEmailThrowsException() {
-        // Arrange / Préparation
         when(userRepository.findByEmail("existing@email.com")).thenReturn(Optional.of(testUser));
 
         RegisterRequest request = new RegisterRequest();
@@ -142,7 +132,6 @@ class UserServiceImplTest {
         request.setPassword("password");
         request.setConfirmPassword("password");
 
-        // Act & Assert / Action et Vérification
         assertThrows(RuntimeException.class, () -> userService.register(request));
         verify(userRepository).findByEmail("existing@email.com");
         verify(userRepository, never()).save(any(User.class));
@@ -150,32 +139,27 @@ class UserServiceImplTest {
 
     @Test
     void testRegisterWithNonMatchingPasswordsThrowsException() {
-        // Arrange / Préparation
         RegisterRequest request = new RegisterRequest();
         request.setEmail("test@email.com");
         request.setPassword("password");
         request.setConfirmPassword("differentPassword");
 
-        // Act & Assert / Action et Vérification
         assertThrows(RuntimeException.class, () -> userService.register(request));
         verify(userRepository, never()).save(any(User.class));
     }
 
     @Test
     void testCreateUserWithProfileSuccess() {
-        // Arrange / Préparation
         when(userRepository.findByEmail("test@example.com"))
-            .thenReturn(Optional.empty())  // Premier appel - utilisateur n'existe pas
-            .thenReturn(Optional.of(testUser));  // Deuxième appel - utilisateur existe après création
+            .thenReturn(Optional.empty())  
+            .thenReturn(Optional.of(testUser));  
         when(passwordEncoder.encode("password123")).thenReturn("hashedPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
         when(userProfileService.createProfile(any(User.class), any(CreateUserProfileRequest.class)))
             .thenReturn(new UserProfileDto(testUserProfile));
 
-        // Act / Action
         CreateUserWithProfileResponse result = userService.createUserWithProfile(createUserWithProfileRequest);
 
-        // Assert / Vérification
         assertNotNull(result);
         assertNotNull(result.getUser());
         assertNotNull(result.getProfile());
@@ -191,10 +175,8 @@ class UserServiceImplTest {
 
     @Test
     void testCreateUserWithProfileUserAlreadyExists() {
-        // Arrange / Préparation
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(testUser));
 
-        // Act & Assert / Action et Vérification
         assertThrows(RuntimeException.class, () -> userService.createUserWithProfile(createUserWithProfileRequest));
         verify(userRepository).findByEmail("test@example.com");
         verify(userRepository, never()).save(any(User.class));
@@ -203,13 +185,11 @@ class UserServiceImplTest {
 
     @Test
     void testCreateUserWithProfileUserNotFoundAfterCreation() {
-        // Arrange / Préparation
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.empty());
         when(passwordEncoder.encode("password123")).thenReturn("hashedPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.empty());
 
-        // Act & Assert / Action et Vérification
         assertThrows(RuntimeException.class, () -> userService.createUserWithProfile(createUserWithProfileRequest));
         verify(userRepository, times(2)).findByEmail("test@example.com");
         verify(passwordEncoder).encode("password123");

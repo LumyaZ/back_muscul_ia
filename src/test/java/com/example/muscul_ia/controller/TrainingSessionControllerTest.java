@@ -41,7 +41,6 @@ class TrainingSessionControllerTest {
         objectMapper.registerModule(new JavaTimeModule());
 
         TrainingSessionController controller = new TrainingSessionController();
-        // Utiliser la réflexion pour injecter les services
         try {
             java.lang.reflect.Field trainingSessionServiceField = TrainingSessionController.class.getDeclaredField("trainingSessionService");
             trainingSessionServiceField.setAccessible(true);
@@ -59,7 +58,6 @@ class TrainingSessionControllerTest {
     @Test
     @DisplayName("Should create training session successfully")
     void createTrainingSession_Success() throws Exception {
-        // Arrange
         CreateTrainingSessionRequest request = new CreateTrainingSessionRequest();
         request.setName("Test Session");
         request.setDescription("Test Description");
@@ -76,7 +74,6 @@ class TrainingSessionControllerTest {
         when(trainingSessionService.createTrainingSession(any(User.class), any(CreateTrainingSessionRequest.class)))
             .thenReturn(response);
 
-        // Act & Assert
         mockMvc.perform(post("/api/training-sessions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
@@ -88,14 +85,12 @@ class TrainingSessionControllerTest {
     @Test
     @DisplayName("Should get training session by ID successfully")
     void getTrainingSessionById_Success() throws Exception {
-        // Arrange
         TrainingSessionDto response = new TrainingSessionDto();
         response.setId(1L);
         response.setName("Test Session");
 
         when(trainingSessionService.getTrainingSessionById(1L)).thenReturn(java.util.Optional.of(response));
 
-        // Act & Assert
         mockMvc.perform(get("/api/training-sessions/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
@@ -105,7 +100,6 @@ class TrainingSessionControllerTest {
     @Test
     @DisplayName("Should get user training sessions successfully")
     void getUserTrainingSessions_Success() throws Exception {
-        // Arrange
         TrainingSessionDto session1 = new TrainingSessionDto();
         session1.setId(1L);
         session1.setName("Session 1");
@@ -124,7 +118,6 @@ class TrainingSessionControllerTest {
 
         when(trainingSessionService.getTrainingSessionsByUser(any(User.class))).thenReturn(sessions);
 
-        // Act & Assert
         mockMvc.perform(get("/api/training-sessions"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
@@ -136,7 +129,6 @@ class TrainingSessionControllerTest {
     @Test
     @DisplayName("Should update training session successfully")
     void updateTrainingSession_Success() throws Exception {
-        // Arrange
         CreateTrainingSessionRequest request = new CreateTrainingSessionRequest();
         request.setName("Updated Session");
         request.setDescription("Updated Description");
@@ -150,7 +142,6 @@ class TrainingSessionControllerTest {
 
         when(trainingSessionService.updateTrainingSession(1L, request)).thenReturn(response);
 
-        // Act & Assert
         mockMvc.perform(put("/api/training-sessions/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
@@ -162,10 +153,6 @@ class TrainingSessionControllerTest {
     @Test
     @DisplayName("Should delete training session successfully")
     void deleteTrainingSession_Success() throws Exception {
-        // Arrange
-        // La méthode deleteTrainingSession retourne void, on ne peut pas la mocker avec when/thenReturn
-
-        // Act & Assert
         mockMvc.perform(delete("/api/training-sessions/1"))
                 .andExpect(status().isNoContent());
     }
@@ -173,7 +160,6 @@ class TrainingSessionControllerTest {
     @Test
     @DisplayName("Should search training sessions by name successfully")
     void searchTrainingSessionsByName_Success() throws Exception {
-        // Arrange
         TrainingSessionDto session = new TrainingSessionDto();
         session.setId(1L);
         session.setName("Search Session");
@@ -186,7 +172,6 @@ class TrainingSessionControllerTest {
         when(trainingSessionService.searchTrainingSessionsByUserAndName(any(User.class), anyString()))
             .thenReturn(sessions);
 
-        // Act & Assert
         mockMvc.perform(get("/api/training-sessions/search")
                 .param("name", "Search"))
                 .andExpect(status().isOk())
@@ -197,10 +182,8 @@ class TrainingSessionControllerTest {
     @Test
     @DisplayName("Should get training sessions count successfully")
     void getTrainingSessionsCount_Success() throws Exception {
-        // Arrange
         when(trainingSessionService.countTrainingSessionsByUser(any(User.class))).thenReturn(5L);
 
-        // Act & Assert
         mockMvc.perform(get("/api/training-sessions/count"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("5"));
@@ -208,8 +191,7 @@ class TrainingSessionControllerTest {
 
     @Test
     @DisplayName("Should get user training sessions with pagination successfully")
-    void getUserTrainingSessionsWithPagination_Success() throws Exception {
-        // Arrange
+    void getUserTrainingSessionsWithPagination_Success() throws Exception { 
         TrainingSessionDto session1 = new TrainingSessionDto();
         session1.setId(1L);
         session1.setName("Session 1");
@@ -224,7 +206,7 @@ class TrainingSessionControllerTest {
         session2.setSessionType("CARDIO");
         session2.setDurationMinutes(45);
         
-        List<TrainingSessionDto> sessions = Arrays.asList(session1, session2);
+        Arrays.asList(session1, session2);
 
        
         mockMvc.perform(get("/api/training-sessions/user/paginated")

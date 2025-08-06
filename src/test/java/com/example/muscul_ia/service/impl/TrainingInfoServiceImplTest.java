@@ -11,7 +11,7 @@ import com.example.muscul_ia.enums.Gender;
 import com.example.muscul_ia.enums.MainGoal;
 import com.example.muscul_ia.enums.SessionDuration;
 import com.example.muscul_ia.enums.SessionFrequency;
-import com.example.muscul_ia.enums.TrainingPreference;
+import com.example.muscul_ia.enums.TrainingPreference;  
 import com.example.muscul_ia.repository.TrainingInfoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -87,14 +87,11 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testCreateTrainingInfoSuccess() {
-        // Arrange
         when(trainingInfoRepository.existsByUser(testUser)).thenReturn(false);
         when(trainingInfoRepository.save(any(TrainingInfo.class))).thenReturn(testTrainingInfo);
 
-        // Act
         TrainingInfoDto result = trainingInfoService.createTrainingInfo(testUser, createRequest);
 
-        // Assert
         assertNotNull(result);
         assertEquals(testTrainingInfo.getId(), result.getId());
         assertEquals(testTrainingInfo.getGender(), result.getGender());
@@ -107,10 +104,8 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testCreateTrainingInfoAlreadyExists() {
-        // Arrange
         when(trainingInfoRepository.existsByUser(testUser)).thenReturn(true);
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             trainingInfoService.createTrainingInfo(testUser, createRequest);
         });
@@ -122,13 +117,10 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testGetTrainingInfoByUserSuccess() {
-        // Arrange
         when(trainingInfoRepository.findByUser(testUser)).thenReturn(Optional.of(testTrainingInfo));
 
-        // Act
         TrainingInfoDto result = trainingInfoService.getTrainingInfoByUser(testUser);
 
-        // Assert
         assertNotNull(result);
         assertEquals(testTrainingInfo.getId(), result.getId());
         assertEquals(testTrainingInfo.getUser().getId(), result.getUserId());
@@ -139,10 +131,8 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testGetTrainingInfoByUserNotFound() {
-        // Arrange
         when(trainingInfoRepository.findByUser(testUser)).thenReturn(Optional.empty());
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             trainingInfoService.getTrainingInfoByUser(testUser);
         });
@@ -153,13 +143,10 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testGetTrainingInfoByUserIdSuccess() {
-        // Arrange
         when(trainingInfoRepository.findByUserId(1L)).thenReturn(Optional.of(testTrainingInfo));
 
-        // Act
         TrainingInfoDto result = trainingInfoService.getTrainingInfoByUserId(1L);
 
-        // Assert
         assertNotNull(result);
         assertEquals(testTrainingInfo.getId(), result.getId());
         assertEquals(testTrainingInfo.getUser().getId(), result.getUserId());
@@ -169,10 +156,8 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testGetTrainingInfoByUserIdNotFound() {
-        // Arrange
         when(trainingInfoRepository.findByUserId(1L)).thenReturn(Optional.empty());
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             trainingInfoService.getTrainingInfoByUserId(1L);
         });
@@ -183,14 +168,11 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testUpdateTrainingInfoSuccess() {
-        // Arrange
         when(trainingInfoRepository.findByUser(testUser)).thenReturn(Optional.of(testTrainingInfo));
         when(trainingInfoRepository.save(any(TrainingInfo.class))).thenReturn(testTrainingInfo);
 
-        // Act
         TrainingInfoDto result = trainingInfoService.updateTrainingInfo(testUser, updateRequest);
 
-        // Assert
         assertNotNull(result);
         assertEquals(testTrainingInfo.getId(), result.getId());
 
@@ -200,10 +182,8 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testUpdateTrainingInfoNotFound() {
-        // Arrange
         when(trainingInfoRepository.findByUser(testUser)).thenReturn(Optional.empty());
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             trainingInfoService.updateTrainingInfo(testUser, updateRequest);
         });
@@ -215,24 +195,19 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testDeleteTrainingInfoSuccess() {
-        // Arrange
         when(trainingInfoRepository.findByUser(testUser)).thenReturn(Optional.of(testTrainingInfo));
         doNothing().when(trainingInfoRepository).delete(testTrainingInfo);
 
-        // Act
         trainingInfoService.deleteTrainingInfo(testUser);
 
-        // Assert
         verify(trainingInfoRepository).findByUser(testUser);
         verify(trainingInfoRepository).delete(testTrainingInfo);
     }
 
     @Test
     void testDeleteTrainingInfoNotFound() {
-        // Arrange
         when(trainingInfoRepository.findByUser(testUser)).thenReturn(Optional.empty());
 
-        // Act & Assert
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             trainingInfoService.deleteTrainingInfo(testUser);
         });
@@ -244,13 +219,10 @@ class TrainingInfoServiceImplTest {
 
     @Test
     void testExistsByUser() {
-        // Arrange
         when(trainingInfoRepository.existsByUser(testUser)).thenReturn(true);
 
-        // Act
         boolean result = trainingInfoService.existsByUser(testUser);
 
-        // Assert
         assertTrue(result);
         verify(trainingInfoRepository).existsByUser(testUser);
     }

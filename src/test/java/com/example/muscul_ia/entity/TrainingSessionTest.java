@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TrainingSessionTest {
 
     private TrainingSession trainingSession;
-    private User user;
+    private User user;  
     private TrainingProgram trainingProgram;
 
     @BeforeEach

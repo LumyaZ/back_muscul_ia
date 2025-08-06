@@ -52,7 +52,6 @@ class ExerciseControllerTest {
         exerciseService = mock(ExerciseService.class);
         
         ExerciseController controller = new ExerciseController();
-        // Utiliser la réflexion pour injecter le service
         try {
             java.lang.reflect.Field exerciseServiceField = ExerciseController.class.getDeclaredField("exerciseService");
             exerciseServiceField.setAccessible(true);

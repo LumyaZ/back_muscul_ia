@@ -50,20 +50,17 @@ class UserTrainingProgramServiceImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         
-        // Create test user
         user = new User();
         user.setId(1L);
         user.setEmail("test@example.com");
         user.setPassword("password123");
         
-        // Create test training program
         trainingProgram = new TrainingProgram();
         trainingProgram.setId(1L);
         trainingProgram.setName("Test Program");
         trainingProgram.setDescription("Test Description");
         trainingProgram.setDifficultyLevel("Débutant");
         
-        // Create test user training program
         userTrainingProgram = new UserTrainingProgram(user, trainingProgram);
         userTrainingProgram.setId(1L);
     }
@@ -71,7 +68,6 @@ class UserTrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should subscribe user to program successfully")
     void shouldSubscribeUserToProgramSuccessfully() {
-        // Given
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(trainingProgramRepository.findById(1L)).thenReturn(Optional.of(trainingProgram));
         when(userTrainingProgramRepository.findByUserIdAndTrainingProgramId(1L, 1L))
@@ -79,10 +75,8 @@ class UserTrainingProgramServiceImplTest {
         when(userTrainingProgramRepository.save(any(UserTrainingProgram.class)))
                 .thenReturn(userTrainingProgram);
         
-        // When
         UserTrainingProgramDto result = userTrainingProgramService.subscribeUserToProgram(1L, 1L);
         
-        // Then
         assertNotNull(result);
         assertEquals(1L, result.getId());
         assertEquals(user.getId(), result.getUser().getId());
@@ -94,10 +88,8 @@ class UserTrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should throw exception when user not found")
     void shouldThrowExceptionWhenUserNotFound() {
-        // Given
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
         
-        // When & Then
         assertThrows(RuntimeException.class, () -> {
             userTrainingProgramService.subscribeUserToProgram(1L, 1L);
         });
@@ -106,11 +98,9 @@ class UserTrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should throw exception when training program not found")
     void shouldThrowExceptionWhenTrainingProgramNotFound() {
-        // Given
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(trainingProgramRepository.findById(1L)).thenReturn(Optional.empty());
         
-        // When & Then
         assertThrows(RuntimeException.class, () -> {
             userTrainingProgramService.subscribeUserToProgram(1L, 1L);
         });
@@ -119,13 +109,11 @@ class UserTrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should throw exception when user already subscribed")
     void shouldThrowExceptionWhenUserAlreadySubscribed() {
-        // Given
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(trainingProgramRepository.findById(1L)).thenReturn(Optional.of(trainingProgram));
         when(userTrainingProgramRepository.findByUserIdAndTrainingProgramId(1L, 1L))
                 .thenReturn(Optional.of(userTrainingProgram));
         
-        // When & Then
         assertThrows(RuntimeException.class, () -> {
             userTrainingProgramService.subscribeUserToProgram(1L, 1L);
         });
@@ -134,28 +122,22 @@ class UserTrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should unsubscribe user from program successfully")
     void shouldUnsubscribeUserFromProgramSuccessfully() {
-        // Given
         when(userTrainingProgramRepository.findByUserIdAndTrainingProgramId(1L, 1L))
                 .thenReturn(Optional.of(userTrainingProgram));
         
-        // When
         userTrainingProgramService.unsubscribeUserFromProgram(1L, 1L);
         
-        // Then
         verify(userTrainingProgramRepository).delete(userTrainingProgram);
     }
     
     @Test
     @DisplayName("Should get user programs successfully")
     void shouldGetUserProgramsSuccessfully() {
-        // Given
         List<UserTrainingProgram> userPrograms = Arrays.asList(userTrainingProgram);
         when(userTrainingProgramRepository.findByUserId(1L)).thenReturn(userPrograms);
         
-        // When
         List<UserTrainingProgramDto> result = userTrainingProgramService.getUserPrograms(1L);
         
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(1L, result.get(0).getId());
@@ -164,14 +146,11 @@ class UserTrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should get program users successfully")
     void shouldGetProgramUsersSuccessfully() {
-        // Given
         List<UserTrainingProgram> programUsers = Arrays.asList(userTrainingProgram);
         when(userTrainingProgramRepository.findByTrainingProgramId(1L)).thenReturn(programUsers);
         
-        // When
         List<UserTrainingProgramDto> result = userTrainingProgramService.getProgramUsers(1L);
         
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(1L, result.get(0).getId());
@@ -180,14 +159,11 @@ class UserTrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should get user program when exists")
     void shouldGetUserProgramWhenExists() {
-        // Given
         when(userTrainingProgramRepository.findByUserIdAndTrainingProgramId(1L, 1L))
                 .thenReturn(Optional.of(userTrainingProgram));
         
-        // When
         UserTrainingProgramDto result = userTrainingProgramService.getUserProgram(1L, 1L);
         
-        // Then
         assertNotNull(result);
         assertEquals(1L, result.getId());
     }
@@ -195,14 +171,11 @@ class UserTrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should return null when user program not exists")
     void shouldReturnNullWhenUserProgramNotExists() {
-        // Given
         when(userTrainingProgramRepository.findByUserIdAndTrainingProgramId(1L, 1L))
                 .thenReturn(Optional.empty());
         
-        // When
         UserTrainingProgramDto result = userTrainingProgramService.getUserProgram(1L, 1L);
         
-        // Then
         assertNull(result);
     }
 } 

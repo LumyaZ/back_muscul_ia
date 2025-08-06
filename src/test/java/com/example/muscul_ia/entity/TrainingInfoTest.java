@@ -103,8 +103,7 @@ class TrainingInfoTest {
         info3.setTrainingPreference(TrainingPreference.CARDIO);
         info3.setEquipment(Equipment.GYM_ACCESS);
 
-        // Avec les méthodes equals/hashCode par défaut, les objets ne sont égaux que s'ils sont la même instance
-        assertNotEquals(info1, info2); // Différentes instances
+        assertNotEquals(info1, info2); 
         assertNotEquals(info1, info3);
         assertNotEquals(info1, null);
         assertNotEquals(info1, new Object());
@@ -136,8 +135,6 @@ class TrainingInfoTest {
         info2.setTrainingPreference(TrainingPreference.STRENGTH_TRAINING);
         info2.setEquipment(Equipment.BASIC);
 
-        // Avec hashCode par défaut, les hashCodes peuvent être différents même pour des objets identiques
-        // On teste juste que les méthodes ne lèvent pas d'exception
         assertNotNull(info1.hashCode());
         assertNotNull(info2.hashCode());
     }
@@ -150,8 +147,6 @@ class TrainingInfoTest {
         trainingInfo.setHeight(180.0);
 
         String toString = trainingInfo.toString();
-        // Avec toString par défaut, on teste juste que la méthode ne lève pas d'exception
-        // et retourne une chaîne non null
         assertNotNull(toString);
         assertTrue(!toString.isEmpty());
     }
@@ -193,42 +188,38 @@ class TrainingInfoTest {
 
     @Test
     void testWeightValidation() {
-        // Test avec des valeurs valides
         trainingInfo.setWeight(70.0);
         assertEquals(70.0, trainingInfo.getWeight());
 
         trainingInfo.setWeight(100.0);
         assertEquals(100.0, trainingInfo.getWeight());
 
-        // Test avec des valeurs invalides (doivent être rejetées et conserver la valeur précédente)
         trainingInfo.setWeight(-10.0);
-        assertEquals(100.0, trainingInfo.getWeight()); // Conserve la valeur précédente
+        assertEquals(100.0, trainingInfo.getWeight()); 
 
         trainingInfo.setWeight(0.0);
-        assertEquals(100.0, trainingInfo.getWeight()); // Conserve la valeur précédente
+        assertEquals(100.0, trainingInfo.getWeight()); 
 
         trainingInfo.setWeight(600.0);
-        assertEquals(100.0, trainingInfo.getWeight()); // Conserve la valeur précédente
+        assertEquals(100.0, trainingInfo.getWeight()); 
     }
 
     @Test
     void testHeightValidation() {
-        // Test avec des valeurs valides
         trainingInfo.setHeight(170.0);
         assertEquals(170.0, trainingInfo.getHeight());
 
         trainingInfo.setHeight(180.0);
         assertEquals(180.0, trainingInfo.getHeight());
 
-        // Test avec des valeurs invalides (doivent être rejetées et conserver la valeur précédente)
         trainingInfo.setHeight(-10.0);
-        assertEquals(180.0, trainingInfo.getHeight()); // Conserve la valeur précédente
+        assertEquals(180.0, trainingInfo.getHeight()); 
 
         trainingInfo.setHeight(0.0);
-        assertEquals(180.0, trainingInfo.getHeight()); // Conserve la valeur précédente
+        assertEquals(180.0, trainingInfo.getHeight()); 
 
         trainingInfo.setHeight(400.0);
-        assertEquals(180.0, trainingInfo.getHeight()); // Conserve la valeur précédente
+        assertEquals(180.0, trainingInfo.getHeight()); 
     }
 
     @Test

@@ -48,7 +48,6 @@ class UserProfileControllerTest {
         authentication = mock(Authentication.class);
         
         UserProfileController controller = new UserProfileController();
-        // Utiliser la réflexion pour injecter les services
         try {
             java.lang.reflect.Field userProfileServiceField = UserProfileController.class.getDeclaredField("userProfileService");
             userProfileServiceField.setAccessible(true);

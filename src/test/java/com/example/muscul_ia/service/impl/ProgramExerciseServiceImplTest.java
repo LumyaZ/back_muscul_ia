@@ -84,15 +84,12 @@ class ProgramExerciseServiceImplTest {
     @Test
     @DisplayName("Should get exercises by program id successfully")
     void shouldGetExercisesByProgramIdSuccessfully() {
-        // Given
         Long programId = 1L;
         when(programExerciseRepository.findByTrainingProgramIdWithExercise(programId))
                 .thenReturn(programExerciseList);
 
-        // When
         List<ProgramExerciseDto> result = programExerciseService.getExercisesByProgramId(programId);
 
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         
@@ -121,15 +118,12 @@ class ProgramExerciseServiceImplTest {
     @Test
     @DisplayName("Should return empty list when no exercises found for program")
     void shouldReturnEmptyListWhenNoExercisesFoundForProgram() {
-        // Given
         Long programId = 999L;
         when(programExerciseRepository.findByTrainingProgramIdWithExercise(programId))
                 .thenReturn(Arrays.asList());
 
-        // When
         List<ProgramExerciseDto> result = programExerciseService.getExercisesByProgramId(programId);
 
-        // Then
         assertNotNull(result);
         assertTrue(result.isEmpty());
 
@@ -139,15 +133,12 @@ class ProgramExerciseServiceImplTest {
     @Test
     @DisplayName("Should get program exercise by id when exists")
     void shouldGetProgramExerciseByIdWhenExists() {
-        // Given
         Long exerciseId = 1L;
         when(programExerciseRepository.findById(exerciseId))
                 .thenReturn(Optional.of(programExercise));
 
-        // When
         Optional<ProgramExerciseDto> result = programExerciseService.getProgramExerciseById(exerciseId);
 
-        // Then
         assertTrue(result.isPresent());
         
         ProgramExerciseDto dto = result.get();
@@ -162,15 +153,12 @@ class ProgramExerciseServiceImplTest {
     @Test
     @DisplayName("Should return empty when program exercise does not exist")
     void shouldReturnEmptyWhenProgramExerciseDoesNotExist() {
-        // Given
         Long exerciseId = 999L;
         when(programExerciseRepository.findById(exerciseId))
                 .thenReturn(Optional.empty());
 
-        // When
         Optional<ProgramExerciseDto> result = programExerciseService.getProgramExerciseById(exerciseId);
 
-        // Then
         assertFalse(result.isPresent());
 
         verify(programExerciseRepository, times(1)).findById(exerciseId);
@@ -179,7 +167,6 @@ class ProgramExerciseServiceImplTest {
     @Test
     @DisplayName("Should handle null values in program exercise gracefully")
     void shouldHandleNullValuesInProgramExerciseGracefully() {
-        // Given
         ProgramExercise programExerciseWithNulls = new ProgramExercise();
         programExerciseWithNulls.setId(2L);
         programExerciseWithNulls.setTrainingProgram(trainingProgram);
@@ -197,10 +184,8 @@ class ProgramExerciseServiceImplTest {
         when(programExerciseRepository.findByTrainingProgramIdWithExercise(programId))
                 .thenReturn(Arrays.asList(programExerciseWithNulls));
 
-        // When
         List<ProgramExerciseDto> result = programExerciseService.getExercisesByProgramId(programId);
 
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         
@@ -219,12 +204,10 @@ class ProgramExerciseServiceImplTest {
     @Test
     @DisplayName("Should handle repository exception gracefully")
     void shouldHandleRepositoryExceptionGracefully() {
-        // Given
         Long programId = 1L;
         when(programExerciseRepository.findByTrainingProgramIdWithExercise(programId))
                 .thenThrow(new RuntimeException("Database error"));
-
-        // When & Then
+            
         assertThrows(RuntimeException.class, () -> {
             programExerciseService.getExercisesByProgramId(programId);
         });

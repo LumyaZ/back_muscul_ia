@@ -146,14 +146,11 @@ class ExerciseServiceImplTest {
     @Test
     @DisplayName("Should update exercise successfully")
     void shouldUpdateExerciseSuccessfully() {
-        // Given
         when(exerciseRepository.findById(1L)).thenReturn(Optional.of(exercise));
         when(exerciseRepository.save(any(Exercise.class))).thenReturn(exercise);
 
-        // When
         ExerciseDto result = exerciseService.updateExercise(1L, createRequest);
 
-        // Then
         assertNotNull(result);
         assertEquals(exercise.getName(), result.getName());
         verify(exerciseRepository, times(1)).findById(1L);
@@ -163,10 +160,8 @@ class ExerciseServiceImplTest {
     @Test
     @DisplayName("Should throw exception when updating non-existent exercise")
     void shouldThrowExceptionWhenUpdatingNonExistentExercise() {
-        // Given
         when(exerciseRepository.findById(999L)).thenReturn(Optional.empty());
 
-        // When & Then
         assertThrows(RuntimeException.class, () -> {
             exerciseService.updateExercise(999L, createRequest);
         });
@@ -177,14 +172,11 @@ class ExerciseServiceImplTest {
     @Test
     @DisplayName("Should delete exercise successfully")
     void shouldDeleteExerciseSuccessfully() {
-        // Given
         when(exerciseRepository.findById(1L)).thenReturn(Optional.of(exercise));
         when(exerciseRepository.save(any(Exercise.class))).thenReturn(exercise);
 
-        // When
         exerciseService.deleteExercise(1L);
 
-        // Then
         verify(exerciseRepository, times(1)).findById(1L);
         verify(exerciseRepository, times(1)).save(any(Exercise.class));
         assertFalse(exercise.getIsActive());
@@ -193,10 +185,8 @@ class ExerciseServiceImplTest {
     @Test
     @DisplayName("Should throw exception when deleting non-existent exercise")
     void shouldThrowExceptionWhenDeletingNonExistentExercise() {
-        // Given
         when(exerciseRepository.findById(999L)).thenReturn(Optional.empty());
 
-        // When & Then
         assertThrows(RuntimeException.class, () -> {
             exerciseService.deleteExercise(999L);
         });
@@ -207,14 +197,11 @@ class ExerciseServiceImplTest {
     @Test
     @DisplayName("Should search exercises by name")
     void shouldSearchExercisesByName() {
-        // Given
         List<Exercise> exercises = Arrays.asList(exercise);
         when(exerciseRepository.findByNameContainingIgnoreCaseAndIsActiveTrue("pompes")).thenReturn(exercises);
 
-        // When
         List<ExerciseDto> result = exerciseService.searchExercisesByName("pompes");
 
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(exercise.getName(), result.get(0).getName());
@@ -224,14 +211,11 @@ class ExerciseServiceImplTest {
     @Test
     @DisplayName("Should get exercises by category")
     void shouldGetExercisesByCategory() {
-        // Given
         List<Exercise> exercises = Arrays.asList(exercise);
         when(exerciseRepository.findByCategoryAndIsActiveTrue("Musculation")).thenReturn(exercises);
 
-        // When
         List<ExerciseDto> result = exerciseService.getExercisesByCategory("Musculation");
 
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(exercise.getCategory(), result.get(0).getCategory());
@@ -241,10 +225,8 @@ class ExerciseServiceImplTest {
     @Test
     @DisplayName("Should convert exercise to dto correctly")
     void shouldConvertExerciseToDtoCorrectly() {
-        // When
         ExerciseDto result = exerciseService.convertToDto(exercise);
 
-        // Then
         assertNotNull(result);
         assertEquals(exercise.getId(), result.getId());
         assertEquals(exercise.getName(), result.getName());
@@ -260,13 +242,10 @@ class ExerciseServiceImplTest {
     @Test
     @DisplayName("Should convert exercise list to dto list correctly")
     void shouldConvertExerciseListToDtoListCorrectly() {
-        // Given
         List<Exercise> exercises = Arrays.asList(exercise);
 
-        // When
         List<ExerciseDto> result = exerciseService.convertToDtoList(exercises);
 
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(exercise.getName(), result.get(0).getName());

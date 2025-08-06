@@ -46,7 +46,6 @@ class AuthControllerTest {
         jwtService = mock(JwtService.class);
         
         AuthController controller = new AuthController();
-        // Utiliser la réflexion pour injecter les services
         try {
             java.lang.reflect.Field userServiceField = AuthController.class.getDeclaredField("userService");
             userServiceField.setAccessible(true);

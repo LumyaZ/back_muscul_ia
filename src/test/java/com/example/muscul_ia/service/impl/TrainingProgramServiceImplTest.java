@@ -12,7 +12,7 @@ import com.example.muscul_ia.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.ExtendWith;  
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -90,14 +90,11 @@ class TrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should create training program successfully")
     void shouldCreateTrainingProgramSuccessfully() {
-        // Given
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(trainingProgramRepository.save(any(TrainingProgram.class))).thenReturn(trainingProgram);
 
-        // When
         TrainingProgramDto result = trainingProgramService.createTrainingProgram(createRequest, 1L);
 
-        // Then
         assertNotNull(result);
         assertEquals(trainingProgram.getName(), result.getName());
         assertEquals(trainingProgram.getDescription(), result.getDescription());
@@ -108,10 +105,8 @@ class TrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should throw exception when user not found during creation")
     void shouldThrowExceptionWhenUserNotFoundDuringCreation() {
-        // Given
         when(userRepository.findById(999L)).thenReturn(Optional.empty());
 
-        // When & Then
         assertThrows(RuntimeException.class, () -> {
             trainingProgramService.createTrainingProgram(createRequest, 999L);
         });
@@ -122,14 +117,11 @@ class TrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should get all programs")
     void shouldGetAllPrograms() {
-        // Given
         List<TrainingProgram> programs = Arrays.asList(trainingProgram);
         when(trainingProgramRepository.findAll()).thenReturn(programs);
 
-        // When
         List<TrainingProgramDto> result = trainingProgramService.getAllActivePrograms();
 
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(trainingProgram.getName(), result.get(0).getName());
@@ -139,13 +131,10 @@ class TrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should get program by id when exists")
     void shouldGetProgramByIdWhenExists() {
-        // Given
         when(trainingProgramRepository.findById(1L)).thenReturn(Optional.of(trainingProgram));
 
-        // When
         Optional<TrainingProgramDto> result = trainingProgramService.getProgramById(1L);
 
-        // Then
         assertTrue(result.isPresent());
         assertEquals(trainingProgram.getName(), result.get().getName());
         verify(trainingProgramRepository, times(1)).findById(1L);
@@ -154,13 +143,10 @@ class TrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should return empty when program not found")
     void shouldReturnEmptyWhenProgramNotFound() {
-        // Given
         when(trainingProgramRepository.findById(999L)).thenReturn(Optional.empty());
 
-        // When
         Optional<TrainingProgramDto> result = trainingProgramService.getProgramById(999L);
 
-        // Then
         assertFalse(result.isPresent());
         verify(trainingProgramRepository, times(1)).findById(999L);
     }
@@ -168,14 +154,11 @@ class TrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should search programs by name")
     void shouldSearchProgramsByName() {
-        // Given
         List<TrainingProgram> programs = Arrays.asList(trainingProgram);
         when(trainingProgramRepository.findAll()).thenReturn(programs);
 
-        // When
         List<TrainingProgramDto> result = trainingProgramService.searchProgramsByName("Test");
 
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(trainingProgram.getName(), result.get(0).getName());
@@ -185,10 +168,8 @@ class TrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should convert training program to dto correctly")
     void shouldConvertTrainingProgramToDtoCorrectly() {
-        // When
         TrainingProgramDto result = trainingProgramService.convertToDto(trainingProgram);
 
-        // Then
         assertNotNull(result);
         assertEquals(trainingProgram.getId(), result.getId());
         assertEquals(trainingProgram.getName(), result.getName());
@@ -203,13 +184,10 @@ class TrainingProgramServiceImplTest {
     @Test
     @DisplayName("Should convert training program list to dto list correctly")
     void shouldConvertTrainingProgramListToDtoListCorrectly() {
-        // Given
         List<TrainingProgram> programs = Arrays.asList(trainingProgram);
-
-        // When
+        
         List<TrainingProgramDto> result = trainingProgramService.convertToDtoList(programs);
 
-        // Then
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(trainingProgram.getName(), result.get(0).getName());

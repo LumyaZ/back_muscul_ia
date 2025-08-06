@@ -34,10 +34,8 @@ class ProgramExerciseTest {
     @Test
     @DisplayName("Should create program exercise with default values")
     void shouldCreateProgramExerciseWithDefaultValues() {
-        // Given & When
         ProgramExercise newProgramExercise = new ProgramExercise();
 
-        // Then
         assertNotNull(newProgramExercise);
         assertNotNull(newProgramExercise.getCreatedAt());
         assertNull(newProgramExercise.getUpdatedAt());
@@ -46,10 +44,8 @@ class ProgramExerciseTest {
     @Test
     @DisplayName("Should create program exercise with parameters")
     void shouldCreateProgramExerciseWithParameters() {
-        // When
         ProgramExercise newProgramExercise = new ProgramExercise(trainingProgram, exercise);
 
-        // Then
         assertEquals(trainingProgram, newProgramExercise.getTrainingProgram());
         assertEquals(exercise, newProgramExercise.getExercise());
         assertNotNull(newProgramExercise.getCreatedAt());
@@ -58,7 +54,6 @@ class ProgramExerciseTest {
     @Test
     @DisplayName("Should set and get all properties correctly")
     void shouldSetAndGetAllPropertiesCorrectly() {
-        // Given
         Long id = 1L;
         Integer setsCount = 3;
         Integer repsCount = 12;
@@ -69,7 +64,6 @@ class ProgramExerciseTest {
         LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime updatedAt = LocalDateTime.now();
 
-        // When
         programExercise.setId(id);
         programExercise.setTrainingProgram(trainingProgram);
         programExercise.setExercise(exercise);
@@ -82,7 +76,6 @@ class ProgramExerciseTest {
         programExercise.setCreatedAt(createdAt);
         programExercise.setUpdatedAt(updatedAt);
 
-        // Then
         assertEquals(id, programExercise.getId());
         assertEquals(trainingProgram, programExercise.getTrainingProgram());
         assertEquals(exercise, programExercise.getExercise());
@@ -99,7 +92,6 @@ class ProgramExerciseTest {
     @Test
     @DisplayName("Should handle null values correctly")
     void shouldHandleNullValuesCorrectly() {
-        // When
         programExercise.setSetsCount(null);
         programExercise.setRepsCount(null);
         programExercise.setRestDurationSeconds(null);
@@ -108,7 +100,6 @@ class ProgramExerciseTest {
         programExercise.setNotes(null);
         programExercise.setUpdatedAt(null);
 
-        // Then
         assertNull(programExercise.getSetsCount());
         assertNull(programExercise.getRepsCount());
         assertNull(programExercise.getRestDurationSeconds());
@@ -121,15 +112,11 @@ class ProgramExerciseTest {
     @Test
     @DisplayName("Should update timestamp on update")
     void shouldUpdateTimestampOnUpdate() {
-        // Given
         LocalDateTime originalCreatedAt = programExercise.getCreatedAt();
         
-        // When
         programExercise.setNotes("Updated notes");
-        // Simulate @PreUpdate
         programExercise.onUpdate();
 
-        // Then
         assertEquals(originalCreatedAt, programExercise.getCreatedAt());
         assertNotNull(programExercise.getUpdatedAt());
         assertTrue(programExercise.getUpdatedAt().isAfter(originalCreatedAt) || 
@@ -139,7 +126,6 @@ class ProgramExerciseTest {
     @Test
     @DisplayName("Should handle relationships correctly")
     void shouldHandleRelationshipsCorrectly() {
-        // Given
         TrainingProgram newProgram = new TrainingProgram();
         newProgram.setId(2L);
         newProgram.setName("New Program");
@@ -148,11 +134,9 @@ class ProgramExerciseTest {
         newExercise.setId(2L);
         newExercise.setName("New Exercise");
 
-        // When
         programExercise.setTrainingProgram(newProgram);
         programExercise.setExercise(newExercise);
 
-        // Then
         assertEquals(newProgram, programExercise.getTrainingProgram());
         assertEquals(newExercise, programExercise.getExercise());
         assertEquals(2L, programExercise.getTrainingProgram().getId());

@@ -18,40 +18,33 @@ class UserTrainingProgramTest {
     
     @BeforeEach
     void setUp() {
-        // Create test user
         user = new User();
         user.setId(1L);
         user.setEmail("test@example.com");
         user.setPassword("password123");
         
-        // Create test training program
         trainingProgram = new TrainingProgram();
         trainingProgram.setId(1L);
         trainingProgram.setName("Test Program");
         trainingProgram.setDescription("Test Description");
         trainingProgram.setDifficultyLevel("Débutant");
         
-        // Create test user training program
         userTrainingProgram = new UserTrainingProgram();
     }
     
     @Test
     @DisplayName("Should create UserTrainingProgram with default constructor")
     void shouldCreateUserTrainingProgramWithDefaultConstructor() {
-        // Given & When
         UserTrainingProgram utp = new UserTrainingProgram();
         
-        // Then
         assertNotNull(utp);
     }
     
     @Test
     @DisplayName("Should create UserTrainingProgram with user and training program")
     void shouldCreateUserTrainingProgramWithUserAndTrainingProgram() {
-        // Given & When
         UserTrainingProgram utp = new UserTrainingProgram(user, trainingProgram);
         
-        // Then
         assertNotNull(utp);
         assertEquals(user, utp.getUser());
         assertEquals(trainingProgram, utp.getTrainingProgram());
@@ -60,44 +53,35 @@ class UserTrainingProgramTest {
     @Test
     @DisplayName("Should set and get ID correctly")
     void shouldSetAndGetIdCorrectly() {
-        // Given
         Long expectedId = 1L;
         
-        // When
         userTrainingProgram.setId(expectedId);
         
-        // Then
         assertEquals(expectedId, userTrainingProgram.getId());
     }
     
     @Test
     @DisplayName("Should set and get user correctly")
     void shouldSetAndGetUserCorrectly() {
-        // Given & When
         userTrainingProgram.setUser(user);
         
-        // Then
         assertEquals(user, userTrainingProgram.getUser());
     }
     
     @Test
     @DisplayName("Should set and get training program correctly")
     void shouldSetAndGetTrainingProgramCorrectly() {
-        // Given & When
         userTrainingProgram.setTrainingProgram(trainingProgram);
         
-        // Then
         assertEquals(trainingProgram, userTrainingProgram.getTrainingProgram());
     }
     
     @Test
     @DisplayName("Should handle null values correctly")
     void shouldHandleNullValuesCorrectly() {
-        // Given & When
         userTrainingProgram.setUser(null);
         userTrainingProgram.setTrainingProgram(null);
         
-        // Then
         assertNull(userTrainingProgram.getUser());
         assertNull(userTrainingProgram.getTrainingProgram());
     }
@@ -105,10 +89,8 @@ class UserTrainingProgramTest {
     @Test
     @DisplayName("Should create relationship with constructor")
     void shouldCreateRelationshipWithConstructor() {
-        // Given & When
         UserTrainingProgram utp = new UserTrainingProgram(user, trainingProgram);
         
-        // Then
         assertNotNull(utp);
         assertEquals(user, utp.getUser());
         assertEquals(trainingProgram, utp.getTrainingProgram());

@@ -24,10 +24,8 @@ class ExerciseTest {
     @Test
     @DisplayName("Should create exercise with default values")
     void shouldCreateExerciseWithDefaultValues() {
-        // Given & When
         Exercise newExercise = new Exercise();
 
-        // Then
         assertNotNull(newExercise);
         assertTrue(newExercise.getIsActive());
         assertNotNull(newExercise.getCreatedAt());
@@ -37,15 +35,12 @@ class ExerciseTest {
     @Test
     @DisplayName("Should create exercise with parameters")
     void shouldCreateExerciseWithParameters() {
-        // Given
         String name = "Pompes";
         String description = "Exercice de musculation pour les pectoraux";
         String category = "Musculation";
 
-        // When
         Exercise newExercise = new Exercise(name, description, category);
 
-        // Then
         assertEquals(name, newExercise.getName());
         assertEquals(description, newExercise.getDescription());
         assertEquals(category, newExercise.getCategory());
@@ -56,7 +51,6 @@ class ExerciseTest {
     @Test
     @DisplayName("Should set and get all properties correctly")
     void shouldSetAndGetAllPropertiesCorrectly() {
-        // Given
         Long id = 1L;
         String name = "Squats";
         String description = "Exercice pour les jambes";
@@ -68,7 +62,6 @@ class ExerciseTest {
         LocalDateTime createdAt = LocalDateTime.now();
         LocalDateTime updatedAt = LocalDateTime.now();
 
-        // When
         exercise.setId(id);
         exercise.setName(name);
         exercise.setDescription(description);
@@ -81,7 +74,6 @@ class ExerciseTest {
         exercise.setCreatedAt(createdAt);
         exercise.setUpdatedAt(updatedAt);
 
-        // Then
         assertEquals(id, exercise.getId());
         assertEquals(name, exercise.getName());
         assertEquals(description, exercise.getDescription());
@@ -98,7 +90,6 @@ class ExerciseTest {
     @Test
     @DisplayName("Should handle null values correctly")
     void shouldHandleNullValuesCorrectly() {
-        // When
         exercise.setDescription(null);
         exercise.setMuscleGroup(null);
         exercise.setEquipmentNeeded(null);
@@ -106,7 +97,6 @@ class ExerciseTest {
 
         exercise.setUpdatedAt(null);
 
-        // Then
         assertNull(exercise.getDescription());
         assertNull(exercise.getMuscleGroup());
         assertNull(exercise.getEquipmentNeeded());
@@ -118,15 +108,11 @@ class ExerciseTest {
     @Test
     @DisplayName("Should update timestamp on update")
     void shouldUpdateTimestampOnUpdate() {
-        // Given
         LocalDateTime originalCreatedAt = exercise.getCreatedAt();
         
-        // When
         exercise.setName("Updated Name");
-        // Simulate @PreUpdate
         exercise.onUpdate();
 
-        // Then
         assertEquals(originalCreatedAt, exercise.getCreatedAt());
         assertNotNull(exercise.getUpdatedAt());
         assertTrue(exercise.getUpdatedAt().isAfter(originalCreatedAt) || 
