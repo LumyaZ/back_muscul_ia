@@ -1,6 +1,10 @@
 package com.example.muscul_ia.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
@@ -9,6 +13,10 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "exercises")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class Exercise {
     
     @Id
@@ -42,99 +50,15 @@ public class Exercise {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    public Exercise() {
+    // Constructor
+    public Exercise(String name, String description, String category) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
         this.createdAt = LocalDateTime.now();
     }
     
-    // Constructor
-    public Exercise(String name, String description, String category) {
-        this();
-        this.name = name;
-        this.description = description;
-        this.category = category;
-    }
-    
-    // Getters et Setters
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public String getDescription() {
-        return description;
-    }
-    
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public String getCategory() {
-        return category;
-    }
-    
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    
 
-    public String getMuscleGroup() {
-        return muscleGroup;
-    }
-    
-    public void setMuscleGroup(String muscleGroup) {
-        this.muscleGroup = muscleGroup;
-    }
-    
-    public String getEquipmentNeeded() {
-        return equipmentNeeded;
-    }
-    
-    public void setEquipmentNeeded(String equipmentNeeded) {
-        this.equipmentNeeded = equipmentNeeded;
-    }
-    
-    public String getDifficultyLevel() {
-        return difficultyLevel;
-    }
-    
-    public void setDifficultyLevel(String difficultyLevel) {
-        this.difficultyLevel = difficultyLevel;
-    }
-    
-    public Boolean getIsActive() {
-        return isActive;
-    }
-    
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-    
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-    
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
     
     @PreUpdate
     protected void onUpdate() {

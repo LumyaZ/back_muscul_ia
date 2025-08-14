@@ -1,0 +1,13 @@
+{
+  "age": 25,
+  "gender": "male",
+  "weight": 75.0,
+  "height": 180.0,
+  "experience_level": "beginner",
+  "main_goal": "muscle_gain",
+  "session_frequency": "3",
+  "session_duration": "45",
+  "equipment": "dumbbells",
+  "training_preference": "strength",
+  "body_fat_percentage": 15.0
+}

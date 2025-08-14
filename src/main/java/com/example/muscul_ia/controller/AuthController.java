@@ -8,13 +8,12 @@ import com.example.muscul_ia.dto.CreateUserWithProfileResponse;
 import com.example.muscul_ia.service.UserService;
 import com.example.muscul_ia.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +24,14 @@ import java.util.Map;
 
 /**
  * Authentication controller for login and registration endpoints.
- * Contrôleur d'authentification pour les endpoints de connexion et d'inscription.
  */
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "Authentication", description = "Endpoints d'authentification pour l'application Muscul IA")
+@Tag(name = "Authentication", description = "Authentication endpoints for Muscul IA application")
 @CrossOrigin(origins = "*")
 public class AuthController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    
     @Autowired
     private UserService userService;
     
@@ -40,155 +40,105 @@ public class AuthController {
 
     /**
      * Register a new user.
-     * Inscrire un nouvel utilisateur.
+     * 
+     * @param request - Registration data
+     * @return ResponseEntity - Response with user and JWT token
      */
     @PostMapping("/register")
-    @Operation(
-        summary = "Inscription",
-        description = "Créer un nouveau compte utilisateur"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "201",
-            description = "Inscription réussie",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = Map.class),
-                examples = @ExampleObject(
-                    name = "Succès",
-                    value = "{\"user\": {\"id\": 1, \"email\": \"user@example.com\", \"creationDate\": \"2024-01-01T10:00:00\"}, \"token\": \"jwt_token_here\"}"
-                )
-            )
-        ),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Données invalides ou email déjà existant",
-            content = @Content(
-                mediaType = "application/json",
-                examples = @ExampleObject(
-                    name = "Erreur",
-                    value = "{\"error\": \"Email already exists\"}"
-                )
-            )
-        )
+    @Operation(summary = "Register new user")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "User created successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid data or email already exists")
     })
-    /**
-     * Register a new user.
-     * Inscrire un nouvel utilisateur.
-     * 
-     * @param request - Données d'inscription
-     * @return ResponseEntity - Réponse avec utilisateur et token JWT
-     */
     public ResponseEntity<Map<String, Object>> register(@Valid @RequestBody RegisterRequest request) {
-        try {
-            UserDto createdUser = userService.register(request);
-            String token = jwtService.generateToken(createdUser.getEmail());
+        logger.info("Registration attempt for: {}", request.getEmail());
+        
+        // Password validation
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            logger.error("Registration failed for {}: Passwords do not match", request.getEmail());
             
-            Map<String, Object> response = new HashMap<>();
-            response.put("user", createdUser);
-            response.put("token", token);
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Passwords do not match");
+            errorResponse.put("message", "Registration failed");
             
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (RuntimeException e) {
-            throw e;
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
+        
+        UserDto createdUser = userService.register(request);
+        String token = jwtService.generateToken(createdUser.getEmail());
+        
+        logger.info("Registration successful for: {}", request.getEmail());
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("user", createdUser);
+        response.put("token", token);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     /**
      * Create a new user with profile in one request.
-     * Créer un nouvel utilisateur avec profil en une seule requête.
+     * 
+     * @param request - User and profile data
+     * @return ResponseEntity - Response with user, profile and JWT token
      */
     @PostMapping("/create-user-with-profile")
-    @Operation(
-        summary = "Création utilisateur avec profil",
-        description = "Créer un utilisateur et son profil en une seule opération"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "201",
-            description = "Utilisateur et profil créés avec succès",
-            content = @Content(
-                schema = @Schema(implementation = CreateUserWithProfileResponse.class)
-            )
-        ),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Données invalides"
-        ),
-        @ApiResponse(
-            responseCode = "409",
-            description = "Email déjà utilisé"
-        )
+    @Operation(summary = "Create user with profile")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "User and profile created successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid data"),
+        @ApiResponse(responseCode = "409", description = "Email already exists")
     })
-    /**
-     * Create a new user with profile in one request.
-     * Créer un nouvel utilisateur avec profil en une seule requête.
-     * 
-     * @param request - Données utilisateur et profil
-     * @return ResponseEntity - Réponse avec utilisateur, profil et token JWT
-     */
     public ResponseEntity<Map<String, Object>> createUserWithProfile(@Valid @RequestBody CreateUserWithProfileRequest request) {
-        try {
-            CreateUserWithProfileResponse response = userService.createUserWithProfile(request);
-            String token = jwtService.generateToken(response.getUser().getEmail());
-            
-            Map<String, Object> responseMap = new HashMap<>();
-            responseMap.put("user", response.getUser());
-            responseMap.put("profile", response.getProfile());
-            responseMap.put("token", token);
-            
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseMap);
-        } catch (RuntimeException e) {
-            throw e;
-        }
+        logger.info("User creation with profile attempt for: {}", request.getUserData().getEmail());
+        
+        CreateUserWithProfileResponse response = userService.createUserWithProfile(request);
+        String token = jwtService.generateToken(response.getUser().getEmail());
+        
+        logger.info("User creation with profile successful for: {}", request.getUserData().getEmail());
+        
+        Map<String, Object> responseMap = new HashMap<>();
+        responseMap.put("user", response.getUser());
+        responseMap.put("profile", response.getProfile());
+        responseMap.put("token", token);
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseMap);
     }
 
     /**
      * Login an existing user.
-     * Connecter un utilisateur existant.
+     * 
+     * @param request - Login credentials
+     * @return ResponseEntity - Response with user and JWT token
      */
     @PostMapping("/login")
-    @Operation(
-        summary = "Connexion",
-        description = "Se connecter avec email et mot de passe"
-    )
-    @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "Connexion réussie",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = Map.class),
-                examples = @ExampleObject(
-                    name = "Succès",
-                    value = "{\"user\": {\"id\": 1, \"email\": \"user@example.com\"}, \"token\": \"jwt_token_here\"}"
-                )
-            )
-        ),
-        @ApiResponse(
-            responseCode = "401",
-            description = "Identifiants invalides"
-        )
+    @Operation(summary = "User login")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Login successful"),
+        @ApiResponse(responseCode = "401", description = "Invalid credentials")
     })
-    /**
-     * Login an existing user.
-     * Connecter un utilisateur existant.
-     * 
-     * @param request - Données de connexion
-     * @return ResponseEntity - Réponse avec utilisateur et token JWT
-     */
     public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody LoginRequest request) {
+        logger.info("Login attempt for: {}", request.getEmail());
+        
         try {
             UserDto loggedInUser = userService.login(request);
             String token = jwtService.generateToken(loggedInUser.getEmail());
+            
+            logger.info("Login successful for: {}", request.getEmail());
             
             Map<String, Object> response = new HashMap<>();
             response.put("user", loggedInUser);
             response.put("token", token);
             
             return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            throw e;
+        } catch (Exception e) {
+            logger.error("Login failed for {}: {}", request.getEmail(), e.getMessage());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            errorResponse.put("message", "Login failed");
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 } 

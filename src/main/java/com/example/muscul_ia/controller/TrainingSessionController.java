@@ -6,12 +6,12 @@ import com.example.muscul_ia.entity.User;
 import com.example.muscul_ia.service.TrainingSessionService;
 import com.example.muscul_ia.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,13 +27,14 @@ import java.util.Optional;
 
 /**
  * Training session controller for managing training sessions.
- * Contrôleur de sessions d'entraînement pour gérer les sessions d'entraînement.
  */
 @RestController
 @RequestMapping("/api/training-sessions")
-@Tag(name = "Training Sessions", description = "Endpoints for managing training sessions")
+@Tag(name = "Training Sessions", description = "Training session management endpoints")
 @CrossOrigin(origins = "*")
 public class TrainingSessionController {
+    
+    private static final Logger logger = LoggerFactory.getLogger(TrainingSessionController.class);
     
     @Autowired
     private TrainingSessionService trainingSessionService;
@@ -43,71 +44,75 @@ public class TrainingSessionController {
     
     /**
      * Create a new training session for the current user.
-     * Créer une nouvelle session d'entraînement pour l'utilisateur actuel.
      */
     @PostMapping
-    @Operation(summary = "Create training session", description = "Create a new training session for the current user")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Training session created successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
+    @Operation(summary = "Create training session")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Training session created successfully"),
         @ApiResponse(responseCode = "400", description = "Invalid request data"),
         @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     public ResponseEntity<TrainingSessionDto> createTrainingSession(
             @Valid @RequestBody CreateTrainingSessionRequest request,
             Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        TrainingSessionDto createdSession = trainingSessionService.createTrainingSession(user, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdSession);
+        try {
+            User user = userService.getCurrentUser(authentication);
+            logger.info("Creating training session for user: {}", user.getEmail());
+            TrainingSessionDto createdSession = trainingSessionService.createTrainingSession(user, request);
+            logger.info("Training session created successfully: {}", createdSession.getId());
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdSession);
+        } catch (Exception e) {
+            logger.error("Failed to create training session: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
     
     /**
      * Get a training session by ID.
-     * Récupérer une session d'entraînement par ID.
      */
     @GetMapping("/{sessionId}")
-    @Operation(summary = "Get training session by ID", description = "Get a specific training session by its ID")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Training session retrieved successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
+    @Operation(summary = "Get training session by ID")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Training session found"),
         @ApiResponse(responseCode = "404", description = "Training session not found")
     })
     public ResponseEntity<TrainingSessionDto> getTrainingSessionById(@PathVariable Long sessionId) {
-        Optional<TrainingSessionDto> session = trainingSessionService.getTrainingSessionById(sessionId);
-        
-        if (session.isPresent()) {
-            return ResponseEntity.ok(session.get());
-        } else {
-            return ResponseEntity.notFound().build();
+        logger.info("Retrieving training session by ID: {}", sessionId);
+        try {
+            Optional<TrainingSessionDto> session = trainingSessionService.getTrainingSessionById(sessionId);
+            return session.map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            logger.error("Failed to retrieve training session {}: {}", sessionId, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
     
     /**
      * Get all training sessions for the current user.
-     * Récupérer toutes les sessions d'entraînement pour l'utilisateur actuel.
      */
     @GetMapping
-    @Operation(summary = "Get user's training sessions", description = "Get all training sessions for the current user")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
-        @ApiResponse(responseCode = "401", description = "Unauthorized")
-    })
+    @Operation(summary = "Get user's training sessions")
+    @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully")
     public ResponseEntity<List<TrainingSessionDto>> getUserTrainingSessions(Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        List<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUser(user);
-        return ResponseEntity.ok(sessions);
+        try {
+            User user = userService.getCurrentUser(authentication);
+            logger.info("Retrieving training sessions for user: {}", user.getEmail());
+            List<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUser(user);
+            return ResponseEntity.ok(sessions);
+        } catch (Exception e) {
+            logger.error("Failed to retrieve training sessions: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     /**
      * Get all training sessions for a specific user with pagination.
-     * Récupérer toutes les sessions d'entraînement pour un utilisateur spécifique avec pagination.
      */
     @GetMapping("/user/{userId}")
-    @Operation(summary = "Get user's training sessions with pagination", description = "Get all training sessions for a specific user with pagination")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
+    @Operation(summary = "Get user's training sessions with pagination")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully"),
         @ApiResponse(responseCode = "401", description = "Unauthorized"),
         @ApiResponse(responseCode = "403", description = "Forbidden - User can only access their own sessions")
     })
@@ -116,26 +121,30 @@ public class TrainingSessionController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Authentication authentication) {
-
-        User currentUser = userService.getCurrentUser(authentication);
-        if (!currentUser.getId().equals(userId)) {
-            return ResponseEntity.status(403).build();
+        try {
+            User currentUser = userService.getCurrentUser(authentication);
+            if (!currentUser.getId().equals(userId)) {
+                logger.warn("User {} attempted to access sessions of user {}", currentUser.getId(), userId);
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+            
+            logger.info("Retrieving training sessions for user: {} with pagination (page: {}, size: {})", userId, page, size);
+            Pageable pageable = PageRequest.of(page, size);
+            Page<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUserId(userId, pageable);
+            return ResponseEntity.ok(sessions);
+        } catch (Exception e) {
+            logger.error("Failed to retrieve training sessions with pagination: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        
-        Pageable pageable = PageRequest.of(page, size);
-        Page<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUserId(userId, pageable);
-        return ResponseEntity.ok(sessions);
     }
     
     /**
      * Get training sessions by date range for the current user.
-     * Récupérer les sessions d'entraînement par plage de dates pour l'utilisateur actuel.
      */
     @GetMapping("/date-range")
-    @Operation(summary = "Get training sessions by date range", description = "Get training sessions for the current user within a date range")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
+    @Operation(summary = "Get training sessions by date range")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully"),
         @ApiResponse(responseCode = "400", description = "Invalid date format"),
         @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
@@ -143,150 +152,183 @@ public class TrainingSessionController {
             @RequestParam String startDate,
             @RequestParam String endDate,
             Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        LocalDateTime start = LocalDateTime.parse(startDate);
-        LocalDateTime end = LocalDateTime.parse(endDate);
-        
-        List<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUserAndDateRange(user, start, end);
-        return ResponseEntity.ok(sessions);
+        try {
+            User user = userService.getCurrentUser(authentication);
+            logger.info("Retrieving training sessions for user: {} by date range: {} to {}", user.getEmail(), startDate, endDate);
+            LocalDateTime start = LocalDateTime.parse(startDate);
+            LocalDateTime end = LocalDateTime.parse(endDate);
+            
+            List<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUserAndDateRange(user, start, end);
+            return ResponseEntity.ok(sessions);
+        } catch (Exception e) {
+            logger.error("Failed to retrieve training sessions by date range: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
     
     /**
      * Get training sessions by type for the current user.
-     * Récupérer les sessions d'entraînement par type pour l'utilisateur actuel.
      */
     @GetMapping("/type/{sessionType}")
-    @Operation(summary = "Get training sessions by type", description = "Get training sessions for the current user by session type")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
+    @Operation(summary = "Get training sessions by type")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully"),
         @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     public ResponseEntity<List<TrainingSessionDto>> getTrainingSessionsByType(
             @PathVariable String sessionType,
             Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        List<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUserAndType(user, sessionType);
-        return ResponseEntity.ok(sessions);
+        try {
+            User user = userService.getCurrentUser(authentication);
+            logger.info("Retrieving training sessions for user: {} by type: {}", user.getEmail(), sessionType);
+            List<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUserAndType(user, sessionType);
+            return ResponseEntity.ok(sessions);
+        } catch (Exception e) {
+            logger.error("Failed to retrieve training sessions by type: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     /**
      * Get training sessions by training program for the current user.
-     * Récupérer les sessions d'entraînement par programme d'entraînement pour l'utilisateur actuel.
      */
     @GetMapping("/program/{trainingProgramId}")
-    @Operation(summary = "Get training sessions by program", description = "Get training sessions for the current user by training program")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
+    @Operation(summary = "Get training sessions by program")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully"),
         @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     public ResponseEntity<List<TrainingSessionDto>> getTrainingSessionsByProgram(
             @PathVariable Long trainingProgramId,
             Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        List<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUserAndTrainingProgram(user, trainingProgramId);
-        return ResponseEntity.ok(sessions);
+        try {
+            User user = userService.getCurrentUser(authentication);
+            logger.info("Retrieving training sessions for user: {} by program: {}", user.getEmail(), trainingProgramId);
+            List<TrainingSessionDto> sessions = trainingSessionService.getTrainingSessionsByUserAndTrainingProgram(user, trainingProgramId);
+            return ResponseEntity.ok(sessions);
+        } catch (Exception e) {
+            logger.error("Failed to retrieve training sessions by program: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     /**
      * Search training sessions by name for the current user.
-     * Rechercher les sessions d'entraînement par nom pour l'utilisateur actuel.
      */
     @GetMapping("/search")
-    @Operation(summary = "Search training sessions by name", description = "Search training sessions for the current user by name")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
+    @Operation(summary = "Search training sessions by name")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Training sessions retrieved successfully"),
         @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     public ResponseEntity<List<TrainingSessionDto>> searchTrainingSessionsByName(
             @RequestParam String name,
             Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        List<TrainingSessionDto> sessions = trainingSessionService.searchTrainingSessionsByUserAndName(user, name);
-        return ResponseEntity.ok(sessions);
+        try {
+            User user = userService.getCurrentUser(authentication);
+            logger.info("Searching training sessions for user: {} by name: {}", user.getEmail(), name);
+            List<TrainingSessionDto> sessions = trainingSessionService.searchTrainingSessionsByUserAndName(user, name);
+            return ResponseEntity.ok(sessions);
+        } catch (Exception e) {
+            logger.error("Failed to search training sessions: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     /**
      * Get the most recent training session for the current user.
-     * Récupérer la session d'entraînement la plus récente pour l'utilisateur actuel.
      */
     @GetMapping("/recent")
-    @Operation(summary = "Get most recent training session", description = "Get the most recent training session for the current user")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Most recent training session retrieved successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
+    @Operation(summary = "Get most recent training session")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Most recent training session retrieved successfully"),
         @ApiResponse(responseCode = "404", description = "No training sessions found"),
         @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     public ResponseEntity<TrainingSessionDto> getMostRecentTrainingSession(Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        Optional<TrainingSessionDto> session = trainingSessionService.getMostRecentTrainingSessionByUser(user);
-        
-        if (session.isPresent()) {
-            return ResponseEntity.ok(session.get());
-        } else {
-            return ResponseEntity.notFound().build();
+        try {
+            User user = userService.getCurrentUser(authentication);
+            logger.info("Retrieving most recent training session for user: {}", user.getEmail());
+            Optional<TrainingSessionDto> session = trainingSessionService.getMostRecentTrainingSessionByUser(user);
+            
+            return session.map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            logger.error("Failed to retrieve most recent training session: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
     
     /**
      * Get the count of training sessions for the current user.
-     * Récupérer le nombre de sessions d'entraînement pour l'utilisateur actuel.
      */
     @GetMapping("/count")
-    @Operation(summary = "Get training sessions count", description = "Get the total number of training sessions for the current user")
-    @ApiResponses(value = {
+    @Operation(summary = "Get training sessions count")
+    @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Count retrieved successfully"),
         @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
     public ResponseEntity<Long> getTrainingSessionsCount(Authentication authentication) {
-        User user = userService.getCurrentUser(authentication);
-        long count = trainingSessionService.countTrainingSessionsByUser(user);
-        return ResponseEntity.ok(count);
+        try {
+            User user = userService.getCurrentUser(authentication);
+            logger.info("Retrieving training sessions count for user: {}", user.getEmail());
+            long count = trainingSessionService.countTrainingSessionsByUser(user);
+            return ResponseEntity.ok(count);
+        } catch (Exception e) {
+            logger.error("Failed to retrieve training sessions count: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     /**
      * Update a training session.
-     * Mettre à jour une session d'entraînement.
      */
     @PutMapping("/{sessionId}")
-    @Operation(summary = "Update training session", description = "Update an existing training session")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Training session updated successfully",
-            content = @Content(schema = @Schema(implementation = TrainingSessionDto.class))),
+    @Operation(summary = "Update training session")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Training session updated successfully"),
         @ApiResponse(responseCode = "400", description = "Invalid request data"),
         @ApiResponse(responseCode = "404", description = "Training session not found"),
-        @ApiResponse(responseCode = "401", description = "Unauthorized")
+        @ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @ApiResponse(responseCode = "403", description = "Forbidden - User can only update their own sessions")
     })
     public ResponseEntity<TrainingSessionDto> updateTrainingSession(
             @PathVariable Long sessionId,
             @Valid @RequestBody CreateTrainingSessionRequest request,
             Authentication authentication) {
-
-        User currentUser = userService.getCurrentUser(authentication);
-        Optional<TrainingSessionDto> existingSession = trainingSessionService.getTrainingSessionById(sessionId);
-        
-        if (existingSession.isEmpty()) {
+        try {
+            User currentUser = userService.getCurrentUser(authentication);
+            logger.info("Updating training session: {} for user: {}", sessionId, currentUser.getEmail());
+            
+            Optional<TrainingSessionDto> existingSession = trainingSessionService.getTrainingSessionById(sessionId);
+            if (existingSession.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            if (!existingSession.get().getUserId().equals(currentUser.getId())) {
+                logger.warn("User {} attempted to update session {} owned by user {}", 
+                    currentUser.getId(), sessionId, existingSession.get().getUserId());
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+            
+            TrainingSessionDto updatedSession = trainingSessionService.updateTrainingSession(sessionId, request);
+            logger.info("Training session updated successfully: {}", sessionId);
+            return ResponseEntity.ok(updatedSession);
+        } catch (RuntimeException e) {
+            logger.error("Failed to update training session {}: {}", sessionId, e.getMessage());
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            logger.error("Failed to update training session: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        
-        if (!existingSession.get().getUserId().equals(currentUser.getId())) {
-            return ResponseEntity.status(403).build();
-        }
-        
-        TrainingSessionDto updatedSession = trainingSessionService.updateTrainingSession(sessionId, request);
-        return ResponseEntity.ok(updatedSession);
     }
     
     /**
      * Delete a training session.
-     * Supprimer une session d'entraînement.
      */
     @DeleteMapping("/{sessionId}")
-    @Operation(summary = "Delete training session", description = "Delete an existing training session")
-    @ApiResponses(value = {
+    @Operation(summary = "Delete training session")
+    @ApiResponses({
         @ApiResponse(responseCode = "204", description = "Training session deleted successfully"),
         @ApiResponse(responseCode = "404", description = "Training session not found"),
         @ApiResponse(responseCode = "401", description = "Unauthorized"),
@@ -295,19 +337,30 @@ public class TrainingSessionController {
     public ResponseEntity<Void> deleteTrainingSession(
             @PathVariable Long sessionId,
             Authentication authentication) {
-                
-        User currentUser = userService.getCurrentUser(authentication);
-        Optional<TrainingSessionDto> existingSession = trainingSessionService.getTrainingSessionById(sessionId);
-        
-        if (existingSession.isEmpty()) {
+        try {
+            User currentUser = userService.getCurrentUser(authentication);
+            logger.info("Deleting training session: {} for user: {}", sessionId, currentUser.getEmail());
+            
+            Optional<TrainingSessionDto> existingSession = trainingSessionService.getTrainingSessionById(sessionId);
+            if (existingSession.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            if (!existingSession.get().getUserId().equals(currentUser.getId())) {
+                logger.warn("User {} attempted to delete session {} owned by user {}", 
+                    currentUser.getId(), sessionId, existingSession.get().getUserId());
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+            
+            trainingSessionService.deleteTrainingSession(sessionId);
+            logger.info("Training session deleted successfully: {}", sessionId);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            logger.error("Failed to delete training session {}: {}", sessionId, e.getMessage());
             return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            logger.error("Failed to delete training session: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        
-        if (!existingSession.get().getUserId().equals(currentUser.getId())) {
-            return ResponseEntity.status(403).build();
-        }
-        
-        trainingSessionService.deleteTrainingSession(sessionId);
-        return ResponseEntity.noContent().build();
     }
 } 

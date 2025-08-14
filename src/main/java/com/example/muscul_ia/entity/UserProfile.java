@@ -1,6 +1,10 @@
 package com.example.muscul_ia.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -10,6 +14,10 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "user_profile")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class UserProfile {
     
     @Id
@@ -42,13 +50,9 @@ public class UserProfile {
     private LocalDateTime updatedAt;
 
     // Constructors
-    public UserProfile() {
-        this.createdAt = LocalDateTime.now();
-    }
-
     public UserProfile(User user) {
-        this();
         this.user = user;
+        this.createdAt = LocalDateTime.now();
     }
 
     // Getters and setters
@@ -132,9 +136,9 @@ public class UserProfile {
             if (now.isBefore(this.dateOfBirth.plusYears(this.age))) {
                 this.age--;
             }
-            // Validation de l'âge
+
             if (this.age < 0 || this.age > 150) {
-                this.age = null; // Âge invalide
+                this.age = null; 
             }
         }
     }

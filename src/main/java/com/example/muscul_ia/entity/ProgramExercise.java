@@ -1,6 +1,10 @@
 package com.example.muscul_ia.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
@@ -9,6 +13,10 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "program_exercises")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class ProgramExercise {
     
     @Id
@@ -47,105 +55,14 @@ public class ProgramExercise {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    // Constructeurs
-    public ProgramExercise() {
+    // Constructeur
+    public ProgramExercise(TrainingProgram trainingProgram, Exercise exercise) {
+        this.trainingProgram = trainingProgram;
+        this.exercise = exercise;
         this.createdAt = LocalDateTime.now();
     }
     
-    public ProgramExercise(TrainingProgram trainingProgram, Exercise exercise) {
-        this();
-        this.trainingProgram = trainingProgram;
-        this.exercise = exercise;
-    }
-    
-    // Getters et Setters
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    public TrainingProgram getTrainingProgram() {
-        return trainingProgram;
-    }
-    
-    public void setTrainingProgram(TrainingProgram trainingProgram) {
-        this.trainingProgram = trainingProgram;
-    }
-    
-    public Exercise getExercise() {
-        return exercise;
-    }
-    
-    public void setExercise(Exercise exercise) {
-        this.exercise = exercise;
-    }
-    
-    public Integer getSetsCount() {
-        return setsCount;
-    }
-    
-    public void setSetsCount(Integer setsCount) {
-        this.setsCount = setsCount;
-    }
-    
-    public Integer getRepsCount() {
-        return repsCount;
-    }
-    
-    public void setRepsCount(Integer repsCount) {
-        this.repsCount = repsCount;
-    }
-    
-    public Integer getRestDurationSeconds() {
-        return restDurationSeconds;
-    }
-    
-    public void setRestDurationSeconds(Integer restDurationSeconds) {
-        this.restDurationSeconds = restDurationSeconds;
-    }
-    
-    public Double getWeightKg() {
-        return weightKg;
-    }
-    
-    public void setWeightKg(Double weightKg) {
-        this.weightKg = weightKg;
-    }
-    
-    public Double getDistanceMeters() {
-        return distanceMeters;
-    }
-    
-    public void setDistanceMeters(Double distanceMeters) {
-        this.distanceMeters = distanceMeters;
-    }
-    
-    public String getNotes() {
-        return notes;
-    }
-    
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-    
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-    
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+
     
     @PreUpdate
     protected void onUpdate() {

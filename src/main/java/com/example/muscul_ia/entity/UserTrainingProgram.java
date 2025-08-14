@@ -1,6 +1,10 @@
 package com.example.muscul_ia.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 /**
  * Entity class for user training programs.
@@ -8,6 +12,10 @@ import jakarta.persistence.*;
  */
 @Entity
 @Table(name = "user_training_programs")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class UserTrainingProgram {
     
     @Id
@@ -22,36 +30,11 @@ public class UserTrainingProgram {
     @JoinColumn(name = "training_program_id", nullable = false)
     private TrainingProgram trainingProgram;
     
-    // Constructors
-    public UserTrainingProgram() {}
-    
+    // Constructor
     public UserTrainingProgram(User user, TrainingProgram trainingProgram) {
         this.user = user;
         this.trainingProgram = trainingProgram;
     }
     
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    public User getUser() {
-        return user;
-    }
-    
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
-    public TrainingProgram getTrainingProgram() {
-        return trainingProgram;
-    }
-            
-    public void setTrainingProgram(TrainingProgram trainingProgram) {
-        this.trainingProgram = trainingProgram;
-    }
+
 } 

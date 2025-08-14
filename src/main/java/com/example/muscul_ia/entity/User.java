@@ -1,6 +1,10 @@
 package com.example.muscul_ia.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
@@ -8,6 +12,10 @@ import java.time.LocalDateTime;
  * Entité pour les utilisateurs.
  */
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class User {
     
     @Id
@@ -26,55 +34,9 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserProfile userProfile;
 
-    // Constructors
-    public User() {
+    // Initialisation automatique de creationDate
+    @PrePersist
+    protected void onCreate() {
         this.creationDate = LocalDateTime.now();
-    }
-
-    public User(String email, String password) {
-        this();
-        this.email = email;
-        this.password = password;
-    }
-
-    // Getters and setters
-    public Long getId() { 
-        return id; 
-    }
-    
-    public void setId(Long id) { 
-        this.id = id; 
-    }
-    
-    public String getEmail() { 
-        return email; 
-    }
-    
-    public void setEmail(String email) { 
-        this.email = email; 
-    }
-    
-    public String getPassword() { 
-        return password; 
-    }
-    
-    public void setPassword(String password) { 
-        this.password = password; 
-    }
-    
-    public LocalDateTime getCreationDate() { 
-        return creationDate; 
-    }
-    
-    public void setCreationDate(LocalDateTime creationDate) { 
-        this.creationDate = creationDate; 
-    }
-    
-    public UserProfile getUserProfile() { 
-        return userProfile; 
-    }
-    
-    public void setUserProfile(UserProfile userProfile) { 
-        this.userProfile = userProfile; 
     }
 } 

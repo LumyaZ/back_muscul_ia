@@ -25,7 +25,13 @@ config/              # Configuration
 └── checkstyle.xml   # Règles Checkstyle
 
 scripts/             # Scripts utilitaires
-└── quality-check.sh # Vérification qualité
+├── quality-check.sh # Vérification qualité
+├── check-logs.sh    # Analyse des logs
+├── monitoring-setup.sh # Configuration monitoring
+├── diagnose-services.py # Diagnostic des services
+├── test_ai_endpoints.py # Tests des endpoints IA
+├── test_ai_request.json # Données de test IA
+└── test-ollama-direct.py # Test direct Ollama
 ```
 
 ### Technologies utilisées
@@ -89,6 +95,92 @@ L'application sera accessible sur : `http://localhost:8080`
 - CSRF désactivé pour l'API REST
 - Formulaire de login Spring désactivé
 - Authentification HTTP Basic pour les endpoints protégés
+
+## 🧪 Tests et Qualité
+
+### Tests unitaires (C2.2.2)
+```bash
+# Tous les tests / All tests
+mvn test
+
+# Tests spécifiques / Specific tests
+mvn test -Dtest=AuthControllerTest
+
+# Tests avec couverture / Tests with coverage
+mvn test jacoco:report
+# Ouvrir: target/site/jacoco/index.html
+```
+
+### Tests d'intégration (C2.2.4)
+```bash
+# Tests d'intégration / Integration tests
+mvn test -Dtest=*IntegrationTest
+
+# Tests de validation / Validation tests
+mvn test -Dtest=*ValidationTest
+```
+
+### Qualité du code / Code Quality
+```bash
+# Vérification complète / Complete verification
+./scripts/quality-check.sh
+
+# Checkstyle / Style check
+mvn checkstyle:check
+
+# SpotBugs / Bug detection
+mvn spotbugs:check
+
+# Couverture de code / Code coverage
+mvn jacoco:report
+# Ouvrir: target/site/jacoco/index.html
+```
+
+### Monitoring (C4.1.2)
+- **Health Check** : http://localhost:8080/actuator/health
+- **Métriques** : http://localhost:8080/actuator/prometheus
+- **Prometheus** : http://localhost:9090
+- **Grafana** : http://localhost:3000
+
+### Logging (C4.2.1)
+```bash
+# Analyse des logs / Log analysis
+./scripts/check-logs.sh
+
+# Logs en temps réel / Real-time logs
+tail -f logs/muscul-ia.log
+
+# Documentation / Documentation
+# Voir docs/TESTING.md et docs/LOGGING.md
+```
+
+## 🛠️ Scripts utilitaires
+
+### Scripts de diagnostic et test
+- **`diagnose-services.py`** - Diagnostic complet de l'écosystème Muscul IA
+- **`test_ai_endpoints.py`** - Tests des endpoints du service IA
+- **`test_ai_request.json`** - Données de test pour les requêtes IA
+- **`test-ollama-direct.py`** - Test direct de la connexion Ollama
+
+### Scripts de maintenance
+- **`check-logs.sh`** - Analyse des logs et détection d'anomalies
+- **`quality-check.sh`** - Vérification de la qualité du code
+- **`monitoring-setup.sh`** - Configuration du monitoring Prometheus
+
+### Utilisation des scripts
+```bash
+# Diagnostic des services
+python scripts/diagnose-services.py
+
+# Analyse des logs
+bash scripts/check-logs.sh
+
+# Tests des endpoints IA
+python scripts/test_ai_endpoints.py
+
+# Vérification qualité
+bash scripts/quality-check.sh
+```
 
 ## 📚 API Documentation
 

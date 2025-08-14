@@ -2,6 +2,10 @@ package com.example.muscul_ia.entity;
 
 import com.example.muscul_ia.enums.*;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
@@ -10,6 +14,10 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "training_info")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(of = {"id"})
 public class TrainingInfo {
 
     @Id
@@ -63,55 +71,14 @@ public class TrainingInfo {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    // Constructors
-    public TrainingInfo() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-
+    // Constructor
     public TrainingInfo(User user) {
         this.user = user;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
-    public Gender getGender() { return gender; }
-    public void setGender(Gender gender) { this.gender = gender; }
-    public Double getWeight() { return weight; }
-    public void setWeight(Double weight) { 
-        if (weight != null && weight > 0 && weight < 500) {
-            this.weight = weight;
-        }
-    }
-    public Double getHeight() { return height; }
-    public void setHeight(Double height) { 
-        if (height != null && height > 0 && height < 300) {
-            this.height = height;
-        }
-    }
-    public Double getBodyFatPercentage() { return bodyFatPercentage; }
-    public void setBodyFatPercentage(Double bodyFatPercentage) { this.bodyFatPercentage = bodyFatPercentage; }
-    public ExperienceLevel getExperienceLevel() { return experienceLevel; }
-    public void setExperienceLevel(ExperienceLevel experienceLevel) { this.experienceLevel = experienceLevel; }
-    public SessionFrequency getSessionFrequency() { return sessionFrequency; }
-    public void setSessionFrequency(SessionFrequency sessionFrequency) { this.sessionFrequency = sessionFrequency; }
-    public SessionDuration getSessionDuration() { return sessionDuration; }
-    public void setSessionDuration(SessionDuration sessionDuration) { this.sessionDuration = sessionDuration; }
-    public MainGoal getMainGoal() { return mainGoal; }
-    public void setMainGoal(MainGoal mainGoal) { this.mainGoal = mainGoal; }
-    public TrainingPreference getTrainingPreference() { return trainingPreference; }
-    public void setTrainingPreference(TrainingPreference trainingPreference) { this.trainingPreference = trainingPreference; }
-    public Equipment getEquipment() { return equipment; }
-    public void setEquipment(Equipment equipment) { this.equipment = equipment; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
 
     public void updateTimestamp() {
         this.updatedAt = LocalDateTime.now();
