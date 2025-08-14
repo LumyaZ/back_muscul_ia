@@ -6,6 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import java.time.Duration;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Configuration for RestTemplate used for external API calls.
@@ -13,21 +14,29 @@ import java.time.Duration;
  */
 @Configuration
 public class RestTemplateConfig {
-    
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder
-                .setConnectTimeout(Duration.ofSeconds(30))
-                .setReadTimeout(Duration.ofSeconds(60))
-                .build();
-    }
-    
-    @Bean
-    public RestTemplate aiRestTemplate() {
-        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(30000); // 30 secondes
-        factory.setReadTimeout(300000);   // 5 minutes (300 secondes)
-        
-        return new RestTemplate(factory);
-    }
+	@Value("${http.client.connect-timeout-ms:30000}")
+	private int connectTimeoutMs;
+	
+	@Value("${http.client.read-timeout-ms:60000}")
+	private int readTimeoutMs;
+	
+	@Value("${ai.service.timeout:300000}")
+	private int aiServiceTimeoutMs;
+	
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder
+				.setConnectTimeout(Duration.ofMillis(connectTimeoutMs))
+				.setReadTimeout(Duration.ofMillis(readTimeoutMs))
+				.build();
+	}
+	
+	@Bean
+	public RestTemplate aiRestTemplate() {
+		SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+		factory.setConnectTimeout(connectTimeoutMs);
+		factory.setReadTimeout(aiServiceTimeoutMs);
+		
+		return new RestTemplate(factory);
+	}
 } 

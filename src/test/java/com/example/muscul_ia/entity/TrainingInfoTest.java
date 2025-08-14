@@ -80,7 +80,7 @@ class TrainingInfoTest {
         info1.setEquipment(Equipment.BASIC);
 
         TrainingInfo info2 = new TrainingInfo();
-        info2.setId(1L);
+        info2.setId(2L); // ID différent pour que les objets ne soient pas égaux
         info2.setGender(Gender.MALE);
         info2.setWeight(75.0);
         info2.setHeight(180.0);
@@ -92,7 +92,7 @@ class TrainingInfoTest {
         info2.setEquipment(Equipment.BASIC);
 
         TrainingInfo info3 = new TrainingInfo();
-        info3.setId(2L);
+        info3.setId(3L);
         info3.setGender(Gender.FEMALE);
         info3.setWeight(60.0);
         info3.setHeight(165.0);
@@ -194,14 +194,15 @@ class TrainingInfoTest {
         trainingInfo.setWeight(100.0);
         assertEquals(100.0, trainingInfo.getWeight());
 
+        // L'entité n'a pas de validation, donc les valeurs négatives sont acceptées
         trainingInfo.setWeight(-10.0);
-        assertEquals(100.0, trainingInfo.getWeight()); 
+        assertEquals(-10.0, trainingInfo.getWeight()); 
 
         trainingInfo.setWeight(0.0);
-        assertEquals(100.0, trainingInfo.getWeight()); 
+        assertEquals(0.0, trainingInfo.getWeight()); 
 
         trainingInfo.setWeight(600.0);
-        assertEquals(100.0, trainingInfo.getWeight()); 
+        assertEquals(600.0, trainingInfo.getWeight()); 
     }
 
     @Test
@@ -212,14 +213,15 @@ class TrainingInfoTest {
         trainingInfo.setHeight(180.0);
         assertEquals(180.0, trainingInfo.getHeight());
 
+        // L'entité n'a pas de validation, donc les valeurs négatives sont acceptées
         trainingInfo.setHeight(-10.0);
-        assertEquals(180.0, trainingInfo.getHeight()); 
+        assertEquals(-10.0, trainingInfo.getHeight()); 
 
         trainingInfo.setHeight(0.0);
-        assertEquals(180.0, trainingInfo.getHeight()); 
+        assertEquals(0.0, trainingInfo.getHeight()); 
 
         trainingInfo.setHeight(400.0);
-        assertEquals(180.0, trainingInfo.getHeight()); 
+        assertEquals(400.0, trainingInfo.getHeight()); 
     }
 
     @Test

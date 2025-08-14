@@ -17,7 +17,6 @@ import java.util.Map;
 
 /**
  * Controller for AI-powered training program generation.
- * Contrôleur pour la génération de programmes d'entraînement avec l'IA.
  */
 @RestController
 @RequestMapping("/api/ai-training")
@@ -30,19 +29,18 @@ public class AITrainingController {
     
     /**
      * Generate a personalized training program using AI.
-     * Générer un programme d'entraînement personnalisé avec l'IA.
      */
     @PostMapping("/generate")
-    @Operation(summary = "Générer un programme avec l'IA", 
-               description = "Génère un programme d'entraînement personnalisé basé sur le profil utilisateur")
+    @Operation(summary = "Generate program with AI", 
+               description = "Generates a personalized training program based on user profile")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Programme généré avec succès"),
-        @ApiResponse(responseCode = "400", description = "Données invalides"),
-        @ApiResponse(responseCode = "404", description = "Profil utilisateur non trouvé"),
-        @ApiResponse(responseCode = "500", description = "Erreur du service IA")
+        @ApiResponse(responseCode = "200", description = "Program generated successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid data"),
+        @ApiResponse(responseCode = "404", description = "User profile not found"),
+        @ApiResponse(responseCode = "500", description = "AI service error")
     })
     public ResponseEntity<TrainingProgramDto> generateProgramWithAI(
-            @Parameter(description = "ID de l'utilisateur") @RequestParam Long userId) {
+            @Parameter(description = "User ID") @RequestParam Long userId) {
         try {
             TrainingProgramDto program = externalAIService.generateProgramWithAI(userId);
             return ResponseEntity.ok(program);
@@ -54,27 +52,26 @@ public class AITrainingController {
     
     /**
      * Test the connection with the AI service.
-     * Tester la connexion avec le service IA.
      */
     @PostMapping("/test-connection")
-    @Operation(summary = "Tester la connexion IA", 
-               description = "Teste la connexion avec le service IA externe")
+    @Operation(summary = "Test AI connection", 
+               description = "Tests the connection with the external AI service")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Connexion réussie"),
-        @ApiResponse(responseCode = "500", description = "Erreur de connexion")
+        @ApiResponse(responseCode = "200", description = "Connection successful"),
+        @ApiResponse(responseCode = "500", description = "Connection error")
     })
     public ResponseEntity<Map<String, Object>> testAIConnection() {
         try {
             boolean isConnected = externalAIService.testAIConnection();
             Map<String, Object> response = new HashMap<>();
             response.put("connected", isConnected);
-            response.put("message", isConnected ? "Connexion IA réussie" : "Échec de connexion IA");
+            response.put("message", isConnected ? "AI connection successful" : "AI connection failed");
             
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, Object> response = new HashMap<>();
             response.put("connected", false);
-            response.put("message", "Erreur de connexion: " + e.getMessage());
+            response.put("message", "Connection error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(response);
         }
@@ -82,14 +79,13 @@ public class AITrainingController {
     
     /**
      * Get AI service status and health information.
-     * Obtenir le statut et les informations de santé du service IA.
      */
     @GetMapping("/status")
-    @Operation(summary = "Statut du service IA", 
-               description = "Récupère les informations de statut du service IA")
+    @Operation(summary = "AI service status", 
+               description = "Retrieves AI service status information")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Statut récupéré"),
-        @ApiResponse(responseCode = "500", description = "Erreur de statut")
+        @ApiResponse(responseCode = "200", description = "Status retrieved"),
+        @ApiResponse(responseCode = "500", description = "Status error")
     })
     public ResponseEntity<Map<String, Object>> getAIStatus() {
         try {

@@ -10,16 +10,23 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -32,13 +39,21 @@ class TrainingSessionControllerTest {
     private TrainingSessionService trainingSessionService;
     private UserService userService;
     private ObjectMapper objectMapper;
+    private Authentication authentication;
+    private User mockUser;
 
     @BeforeEach
     void setUp() {
         trainingSessionService = mock(TrainingSessionService.class);
         userService = mock(UserService.class);
+        authentication = mock(Authentication.class);
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
+
+        // Créer un utilisateur mock
+        mockUser = new User();
+        mockUser.setId(1L);
+        mockUser.setEmail("test@example.com");
 
         TrainingSessionController controller = new TrainingSessionController();
         try {
@@ -71,10 +86,12 @@ class TrainingSessionControllerTest {
         response.setName("Test Session");
         response.setDescription("Test Description");
 
+        when(userService.getCurrentUser(any(Authentication.class))).thenReturn(mockUser);
         when(trainingSessionService.createTrainingSession(any(User.class), any(CreateTrainingSessionRequest.class)))
             .thenReturn(response);
 
         mockMvc.perform(post("/api/training-sessions")
+                .principal(authentication)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
@@ -89,7 +106,7 @@ class TrainingSessionControllerTest {
         response.setId(1L);
         response.setName("Test Session");
 
-        when(trainingSessionService.getTrainingSessionById(1L)).thenReturn(java.util.Optional.of(response));
+        when(trainingSessionService.getTrainingSessionById(1L)).thenReturn(Optional.of(response));
 
         mockMvc.perform(get("/api/training-sessions/1"))
                 .andExpect(status().isOk())
@@ -116,9 +133,11 @@ class TrainingSessionControllerTest {
         
         List<TrainingSessionDto> sessions = Arrays.asList(session1, session2);
 
+        when(userService.getCurrentUser(any(Authentication.class))).thenReturn(mockUser);
         when(trainingSessionService.getTrainingSessionsByUser(any(User.class))).thenReturn(sessions);
 
-        mockMvc.perform(get("/api/training-sessions"))
+        mockMvc.perform(get("/api/training-sessions")
+                .principal(authentication))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].name").value("Session 1"))
@@ -135,14 +154,21 @@ class TrainingSessionControllerTest {
         request.setSessionDate(LocalDateTime.now());
         request.setDurationMinutes(60);
 
+        TrainingSessionDto existingSession = new TrainingSessionDto();
+        existingSession.setId(1L);
+        existingSession.setUserId(1L); // Même utilisateur que mockUser
+
         TrainingSessionDto response = new TrainingSessionDto();
         response.setId(1L);
         response.setName("Updated Session");
         response.setDescription("Updated Description");
 
-        when(trainingSessionService.updateTrainingSession(1L, request)).thenReturn(response);
+        when(userService.getCurrentUser(any(Authentication.class))).thenReturn(mockUser);
+        when(trainingSessionService.getTrainingSessionById(1L)).thenReturn(Optional.of(existingSession));
+        when(trainingSessionService.updateTrainingSession(eq(1L), any(CreateTrainingSessionRequest.class))).thenReturn(response);
 
         mockMvc.perform(put("/api/training-sessions/1")
+                .principal(authentication)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
@@ -153,7 +179,15 @@ class TrainingSessionControllerTest {
     @Test
     @DisplayName("Should delete training session successfully")
     void deleteTrainingSession_Success() throws Exception {
-        mockMvc.perform(delete("/api/training-sessions/1"))
+        TrainingSessionDto existingSession = new TrainingSessionDto();
+        existingSession.setId(1L);
+        existingSession.setUserId(1L); // Même utilisateur que mockUser
+
+        when(userService.getCurrentUser(any(Authentication.class))).thenReturn(mockUser);
+        when(trainingSessionService.getTrainingSessionById(1L)).thenReturn(Optional.of(existingSession));
+
+        mockMvc.perform(delete("/api/training-sessions/1")
+                .principal(authentication))
                 .andExpect(status().isNoContent());
     }
 
@@ -169,10 +203,12 @@ class TrainingSessionControllerTest {
         
         List<TrainingSessionDto> sessions = Arrays.asList(session);
 
+        when(userService.getCurrentUser(any(Authentication.class))).thenReturn(mockUser);
         when(trainingSessionService.searchTrainingSessionsByUserAndName(any(User.class), anyString()))
             .thenReturn(sessions);
 
         mockMvc.perform(get("/api/training-sessions/search")
+                .principal(authentication)
                 .param("name", "Search"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
@@ -182,9 +218,11 @@ class TrainingSessionControllerTest {
     @Test
     @DisplayName("Should get training sessions count successfully")
     void getTrainingSessionsCount_Success() throws Exception {
+        when(userService.getCurrentUser(any(Authentication.class))).thenReturn(mockUser);
         when(trainingSessionService.countTrainingSessionsByUser(any(User.class))).thenReturn(5L);
 
-        mockMvc.perform(get("/api/training-sessions/count"))
+        mockMvc.perform(get("/api/training-sessions/count")
+                .principal(authentication))
                 .andExpect(status().isOk())
                 .andExpect(content().string("5"));
     }
@@ -206,10 +244,14 @@ class TrainingSessionControllerTest {
         session2.setSessionType("CARDIO");
         session2.setDurationMinutes(45);
         
-        Arrays.asList(session1, session2);
+        List<TrainingSessionDto> sessions = Arrays.asList(session1, session2);
+        Page<TrainingSessionDto> page = new PageImpl<>(sessions, PageRequest.of(0, 10), sessions.size());
 
-       
-        mockMvc.perform(get("/api/training-sessions/user/paginated")
+        when(userService.getCurrentUser(any(Authentication.class))).thenReturn(mockUser);
+        when(trainingSessionService.getTrainingSessionsByUserId(eq(1L), any(Pageable.class))).thenReturn(page);
+
+        mockMvc.perform(get("/api/training-sessions/user/1")
+                .principal(authentication)
                 .param("page", "0")
                 .param("size", "10"))
                 .andExpect(status().isOk());

@@ -5,26 +5,25 @@ import java.time.LocalDateTime;
 
 /**
  * DTO for creating a training session.
- * DTO pour créer une session d'entraînement.
  */
 public class CreateTrainingSessionRequest {
     
-    @NotBlank(message = "Le nom de la session est obligatoire")
-    @Size(min = 1, max = 100, message = "Le nom doit contenir entre 1 et 100 caractères")
+    @NotBlank(message = "Session name is required")
+    @Size(min = 1, max = 100, message = "Name must contain between 1 and 100 characters")
     private String name;
     
-    @Size(max = 1000, message = "La description ne peut pas dépasser 1000 caractères")
+    @Size(max = 1000, message = "Description cannot exceed 1000 characters")
     private String description;
     
-    @NotNull(message = "La date de session est obligatoire")
+    @NotNull(message = "Session date is required")
     private LocalDateTime sessionDate;
     
-    @NotNull(message = "La durée est obligatoire")
-    @Min(value = 1, message = "La durée doit être d'au moins 1 minute")
-    @Max(value = 480, message = "La durée ne peut pas dépasser 8 heures (480 minutes)")
+    @NotNull(message = "Duration is required")
+    @Min(value = 1, message = "Duration must be at least 1 minute")
+    @Max(value = 480, message = "Duration cannot exceed 8 hours (480 minutes)")
     private Integer durationMinutes;
     
-    @Size(max = 50, message = "Le type de session ne peut pas dépasser 50 caractères")
+    @Size(max = 50, message = "Session type cannot exceed 50 characters")
     private String sessionType;
     
     private Long trainingProgramId;

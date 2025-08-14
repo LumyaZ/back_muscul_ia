@@ -291,14 +291,13 @@ class ExerciseControllerTest {
     @DisplayName("Should get exercises by category successfully")
     void shouldGetExercisesByCategorySuccessfully() throws Exception {
         when(exerciseService.getExercisesByCategory("Musculation")).thenReturn(exerciseList);
-
-        mockMvc.perform(get("/api/exercises/category")
-                .param("category", "Musculation"))
+        
+        mockMvc.perform(get("/api/exercises/category/{category}", "Musculation"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
                 .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
                 .andExpect(jsonPath("$[0].category").value(exerciseDto.getCategory()));
-
+        
         verify(exerciseService, times(1)).getExercisesByCategory("Musculation");
     }
 
@@ -310,14 +309,13 @@ class ExerciseControllerTest {
     @DisplayName("Should get exercises by muscle group successfully")
     void shouldGetExercisesByMuscleGroupSuccessfully() throws Exception {
         when(exerciseService.getExercisesByMuscleGroup("Pectoraux")).thenReturn(exerciseList);
-
-        mockMvc.perform(get("/api/exercises/muscle-group")
-                .param("muscleGroup", "Pectoraux"))
+        
+        mockMvc.perform(get("/api/exercises/muscle-group/{muscleGroup}", "Pectoraux"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
                 .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
                 .andExpect(jsonPath("$[0].muscleGroup").value(exerciseDto.getMuscleGroup()));
-
+        
         verify(exerciseService, times(1)).getExercisesByMuscleGroup("Pectoraux");
     }
 
@@ -329,14 +327,13 @@ class ExerciseControllerTest {
     @DisplayName("Should get exercises by difficulty level successfully")
     void shouldGetExercisesByDifficultyLevelSuccessfully() throws Exception {
         when(exerciseService.getExercisesByDifficultyLevel("Débutant")).thenReturn(exerciseList);
-
-        mockMvc.perform(get("/api/exercises/difficulty")
-                .param("difficultyLevel", "Débutant"))
+        
+        mockMvc.perform(get("/api/exercises/difficulty/{difficulty}", "Débutant"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
                 .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
                 .andExpect(jsonPath("$[0].difficultyLevel").value(exerciseDto.getDifficultyLevel()));
-
+        
         verify(exerciseService, times(1)).getExercisesByDifficultyLevel("Débutant");
     }
 
@@ -348,14 +345,13 @@ class ExerciseControllerTest {
     @DisplayName("Should get exercises by equipment successfully")
     void shouldGetExercisesByEquipmentSuccessfully() throws Exception {
         when(exerciseService.getExercisesByEquipment("Poids du corps")).thenReturn(exerciseList);
-
-        mockMvc.perform(get("/api/exercises/equipment")
-                .param("equipment", "Poids du corps"))
+        
+        mockMvc.perform(get("/api/exercises/equipment/{equipment}", "Poids du corps"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(exerciseDto.getId()))
                 .andExpect(jsonPath("$[0].name").value(exerciseDto.getName()))
                 .andExpect(jsonPath("$[0].equipmentNeeded").value(exerciseDto.getEquipmentNeeded()));
-
+        
         verify(exerciseService, times(1)).getExercisesByEquipment("Poids du corps");
     }
 } 

@@ -49,6 +49,9 @@ class TrainingProgramTest {
         newProgram.setName(name);
         newProgram.setDescription(description);
         newProgram.setDifficultyLevel(difficultyLevel);
+        
+        // Appeler manuellement onCreate() pour simuler @PrePersist
+        newProgram.onCreate();
 
         assertEquals(name, newProgram.getName());
         assertEquals(description, newProgram.getDescription());

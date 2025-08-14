@@ -3,6 +3,8 @@ package com.example.muscul_ia.controller;
 import com.example.muscul_ia.dto.CreateTrainingProgramRequest;
 import com.example.muscul_ia.dto.TrainingProgramDto;
 import com.example.muscul_ia.service.TrainingProgramService;
+import com.example.muscul_ia.service.UserTrainingProgramService;
+import com.example.muscul_ia.dto.UserTrainingProgramDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +38,7 @@ class TrainingProgramControllerTest {
 
     private MockMvc mockMvc;
     private TrainingProgramService trainingProgramService;
+    private UserTrainingProgramService userTrainingProgramService;
     private ObjectMapper objectMapper;
 
     private TrainingProgramDto trainingProgramDto;
@@ -45,6 +48,7 @@ class TrainingProgramControllerTest {
     @BeforeEach
     void setUp() {
         trainingProgramService = mock(TrainingProgramService.class);
+        userTrainingProgramService = mock(UserTrainingProgramService.class);
         
         TrainingProgramController controller = new TrainingProgramController();
         
@@ -52,6 +56,10 @@ class TrainingProgramControllerTest {
             java.lang.reflect.Field trainingProgramServiceField = TrainingProgramController.class.getDeclaredField("trainingProgramService");
             trainingProgramServiceField.setAccessible(true);
             trainingProgramServiceField.set(controller, trainingProgramService);
+            
+            java.lang.reflect.Field userTrainingProgramServiceField = TrainingProgramController.class.getDeclaredField("userTrainingProgramService");
+            userTrainingProgramServiceField.setAccessible(true);
+            userTrainingProgramServiceField.set(controller, userTrainingProgramService);
         } catch (Exception e) {
             throw new RuntimeException("Failed to inject dependencies", e);
         }
@@ -91,6 +99,12 @@ class TrainingProgramControllerTest {
         
         when(trainingProgramService.createTrainingProgram(any(CreateTrainingProgramRequest.class), eq(1L)))
                 .thenReturn(trainingProgramDto);
+        
+        // Mock UserTrainingProgramService
+        UserTrainingProgramDto userTrainingProgramDto = new UserTrainingProgramDto();
+        userTrainingProgramDto.setId(1L);
+        when(userTrainingProgramService.subscribeUserToProgram(eq(1L), eq(1L)))
+                .thenReturn(userTrainingProgramDto);
 
         
         mockMvc.perform(post("/api/training-programs")
@@ -300,8 +314,7 @@ class TrainingProgramControllerTest {
         when(trainingProgramService.getProgramsByDifficultyLevel("Débutant")).thenReturn(programList);
 
         
-        mockMvc.perform(get("/api/training-programs/difficulty")
-                .param("level", "Débutant"))
+        mockMvc.perform(get("/api/training-programs/difficulty/{level}", "Débutant"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()));
 
@@ -315,8 +328,7 @@ class TrainingProgramControllerTest {
         when(trainingProgramService.getPublicProgramsByDifficultyLevel("Débutant")).thenReturn(programList);
 
         
-        mockMvc.perform(get("/api/training-programs/public/difficulty")
-                .param("level", "Débutant"))
+        mockMvc.perform(get("/api/training-programs/public/difficulty/{level}", "Débutant"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()));
 
@@ -330,8 +342,7 @@ class TrainingProgramControllerTest {
         when(trainingProgramService.getProgramsByCategory("Musculation")).thenReturn(programList);
 
         
-        mockMvc.perform(get("/api/training-programs/category")
-                .param("category", "Musculation"))
+        mockMvc.perform(get("/api/training-programs/category/{category}", "Musculation"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()));
 
@@ -345,8 +356,7 @@ class TrainingProgramControllerTest {
         when(trainingProgramService.getPublicProgramsByCategory("Musculation")).thenReturn(programList);
 
         
-        mockMvc.perform(get("/api/training-programs/public/category")
-                .param("category", "Musculation"))
+        mockMvc.perform(get("/api/training-programs/public/category/{category}", "Musculation"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()));
 
@@ -360,8 +370,7 @@ class TrainingProgramControllerTest {
         when(trainingProgramService.getProgramsByTargetAudience("Débutants")).thenReturn(programList);
 
         
-        mockMvc.perform(get("/api/training-programs/audience")
-                .param("audience", "Débutants"))
+        mockMvc.perform(get("/api/training-programs/audience/{audience}", "Débutants"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()));
 
@@ -375,8 +384,7 @@ class TrainingProgramControllerTest {
         when(trainingProgramService.getPublicProgramsByTargetAudience("Débutants")).thenReturn(programList);
 
         
-        mockMvc.perform(get("/api/training-programs/public/audience")
-                .param("audience", "Débutants"))
+        mockMvc.perform(get("/api/training-programs/public/audience/{audience}", "Débutants"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()));
 
@@ -420,9 +428,7 @@ class TrainingProgramControllerTest {
         when(trainingProgramService.getProgramsByCategoryAndDifficulty("Musculation", "Débutant")).thenReturn(programList);
 
         
-        mockMvc.perform(get("/api/training-programs/filter")
-                .param("category", "Musculation")
-                .param("difficulty", "Débutant"))
+        mockMvc.perform(get("/api/training-programs/category/{category}/difficulty/{difficulty}", "Musculation", "Débutant"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()));
 
@@ -436,9 +442,7 @@ class TrainingProgramControllerTest {
         when(trainingProgramService.getPublicProgramsByCategoryAndDifficulty("Musculation", "Débutant")).thenReturn(programList);
 
     
-        mockMvc.perform(get("/api/training-programs/public/filter")
-                .param("category", "Musculation")
-                .param("difficulty", "Débutant"))
+        mockMvc.perform(get("/api/training-programs/public/category/{category}/difficulty/{difficulty}", "Musculation", "Débutant"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(trainingProgramDto.getId()));
 
