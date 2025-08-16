@@ -34,14 +34,14 @@ def test_endpoint(url, method="GET", data=None, timeout=10, name="Endpoint"):
         print(f"   Status: {response.status_code}")
         
         if response.status_code == 200:
-            print(f"   ✅ {name} - OK")
+            print(f"   {name} - OK")
             try:
                 result = response.json()
                 return True, result
             except:
                 return True, response.text
         else:
-            print(f"   ❌ {name} - Erreur {response.status_code}")
+            print(f"   {name} - Erreur {response.status_code}")
             print(f"   Response: {response.text}")
             return False, response.text
             
@@ -66,7 +66,7 @@ def check_docker_services():
     if code == 0:
         print(output)
     else:
-        print(f"❌ Erreur lors de la vérification des conteneurs: {error}")
+        print(f"Erreur lors de la vérification des conteneurs: {error}")
         return False
     
     return True
@@ -106,13 +106,13 @@ def check_database_connection():
     if success and isinstance(response, dict):
         db_status = response.get("components", {}).get("db", {})
         if db_status.get("status") == "UP":
-            print("   ✅ Base de données accessible via le backend")
+            print("   Base de données accessible via le backend")
             return True
         else:
-            print(f"   ❌ Problème de base de données: {db_status}")
+            print(f"   Problème de base de données: {db_status}")
             return False
     else:
-        print("   ❌ Impossible de vérifier la base de données")
+        print("   Impossible de vérifier la base de données")
         return False
 
 def check_ai_service():
@@ -128,10 +128,10 @@ def check_ai_service():
     )
     
     if success:
-        print("   ✅ Service IA fonctionne correctement")
+        print("   Service IA fonctionne correctement")
         return True
     else:
-        print("   ❌ Problème avec le service IA")
+        print("   Problème avec le service IA")
         return False
 
 def check_ollama_models():
@@ -148,7 +148,7 @@ def check_ollama_models():
     if success and isinstance(response, dict):
         models = response.get("models", [])
         if models:
-            print(f"   ✅ Modèles disponibles: {len(models)}")
+            print(f"   Modèles disponibles: {len(models)}")
             for model in models:
                 print(f"      - {model.get('name', 'Unknown')}")
             return True
@@ -156,7 +156,7 @@ def check_ollama_models():
             print("   ⚠️ Aucun modèle trouvé - téléchargement en cours ?")
             return False
     else:
-        print("   ❌ Impossible de récupérer les modèles")
+        print("   Impossible de récupérer les modèles")
         return False
 
 def generate_report(results):
@@ -213,7 +213,7 @@ def main():
     
     # Vérifier Docker
     if not check_docker_services():
-        print("❌ Impossible de vérifier les services Docker")
+        print("Impossible de vérifier les services Docker")
         return
     
     # Tests de santé
@@ -235,7 +235,7 @@ def main():
     # Rapport final
     generate_report(complete_results)
     
-    print("\n✅ Diagnostic terminé !")
+    print("\nDiagnostic terminé !")
 
 if __name__ == "__main__":
     main() 

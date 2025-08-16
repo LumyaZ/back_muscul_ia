@@ -15,37 +15,44 @@ import java.util.Optional;
 
 /**
  * Training session repository for managing training session data operations.
+ * Repository de sessions d'entraînement pour gérer les opérations de données de sessions d'entraînement.
  */
 @Repository
 public interface TrainingSessionRepository extends JpaRepository<TrainingSession, Long> {
     
     /**
      * Find training sessions by user ID and session type.
+     * Trouver les sessions d'entraînement par ID utilisateur et type de session.
      */
     List<TrainingSession> findByUserIdAndSessionType(Long userId, String sessionType);
     
     /**
      * Find training sessions by user ID and training program ID.
+     * Trouver les sessions d'entraînement par ID utilisateur et ID de programme d'entraînement.
      */
     List<TrainingSession> findByUserIdAndTrainingProgramId(Long userId, Long trainingProgramId);
     
     /**
      * Find training sessions by user ID and name containing.
+     * Trouver les sessions d'entraînement par ID utilisateur et nom contenant.
      */
     List<TrainingSession> findByUserIdAndNameContainingIgnoreCase(Long userId, String name);
     
     /**
      * Count training sessions by user ID.
+     * Compter les sessions d'entraînement par ID utilisateur.
      */
     long countByUserId(Long userId);
     
     /**
      * Find first training session by user ID ordered by session date desc.
+     * Trouver la première session d'entraînement par ID utilisateur ordonnée par date de session décroissante.
      */
     Optional<TrainingSession> findFirstByUserIdOrderBySessionDateDesc(Long userId);
     
     /**
      * Find training sessions by user ID with training program details.
+     * Trouver les sessions d'entraînement par ID utilisateur avec les détails du programme d'entraînement.
      */
     @Query("SELECT ts FROM TrainingSession ts " +
            "LEFT JOIN FETCH ts.trainingProgram " +
@@ -55,6 +62,7 @@ public interface TrainingSessionRepository extends JpaRepository<TrainingSession
     
     /**
      * Find training sessions by user ID with training program details and pagination.
+     * Trouver les sessions d'entraînement par ID utilisateur avec les détails du programme d'entraînement et pagination.
      */
     @Query("SELECT ts FROM TrainingSession ts " +
            "LEFT JOIN FETCH ts.trainingProgram " +
@@ -64,6 +72,7 @@ public interface TrainingSessionRepository extends JpaRepository<TrainingSession
     
     /**
      * Find training sessions by user ID and date range with training program details.
+     * Trouver les sessions d'entraînement par ID utilisateur et plage de dates avec les détails du programme d'entraînement.
      */
     @Query("SELECT ts FROM TrainingSession ts " +
            "LEFT JOIN FETCH ts.trainingProgram " +

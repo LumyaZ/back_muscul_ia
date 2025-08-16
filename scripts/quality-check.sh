@@ -6,7 +6,7 @@ echo "🔍 Vérification complète de la qualité du code..."
 echo "🧪 Tests unitaires..."
 mvn test
 if [ $? -ne 0 ]; then
-    echo "❌ Tests unitaires échoués"
+    echo "Tests unitaires échoués"
     exit 1
 fi
 
@@ -14,7 +14,7 @@ fi
 echo "📊 Couverture de code..."
 mvn jacoco:report
 if [ $? -ne 0 ]; then
-    echo "❌ Rapport de couverture échoué"
+    echo "Rapport de couverture échoué"
     exit 1
 fi
 
@@ -22,7 +22,7 @@ fi
 echo "📝 Vérification du style de code..."
 mvn checkstyle:check
 if [ $? -ne 0 ]; then
-    echo "❌ Checkstyle échoué"
+    echo "Checkstyle échoué"
     exit 1
 fi
 
@@ -30,11 +30,11 @@ fi
 echo "🐛 Analyse des bugs potentiels..."
 mvn spotbugs:check
 if [ $? -ne 0 ]; then
-    echo "❌ SpotBugs échoué"
+    echo "SpotBugs échoué"
     exit 1
 fi
 
-echo "✅ Toutes les vérifications de qualité réussies !"
+echo "Toutes les vérifications de qualité réussies !"
 echo ""
 echo "📋 Rapports disponibles :"
 echo "  - Couverture de code : target/site/jacoco/index.html"

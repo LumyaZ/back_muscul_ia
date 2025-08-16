@@ -9,7 +9,7 @@ echo ""
 
 # Vérifier si le fichier de log existe
 if [ ! -f "logs/muscul-ia.log" ]; then
-    echo "❌ Fichier de log non trouvé: logs/muscul-ia.log"
+    echo "Fichier de log non trouvé: logs/muscul-ia.log"
     exit 1
 fi
 
@@ -19,7 +19,7 @@ echo ""
 
 echo "🚨 Erreurs détectées (dernières 10):"
 grep -i "error\|exception" logs/muscul-ia.log | tail -10 | while read line; do
-    echo "  ❌ $line"
+    echo "  $line"
 done
 echo ""
 
@@ -35,9 +35,9 @@ grep -i "warn" logs/muscul-ia.log | tail -5 | while read line; do
 done
 echo ""
 
-echo "✅ Connexions réussies (dernières 5):"
+echo "Connexions réussies (dernières 5):"
 grep -i "connexion réussie" logs/muscul-ia.log | tail -5 | while read line; do
-    echo "  ✅ $line"
+    echo "  $line"
 done
 echo ""
 

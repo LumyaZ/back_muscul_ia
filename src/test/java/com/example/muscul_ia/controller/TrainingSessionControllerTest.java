@@ -50,7 +50,6 @@ class TrainingSessionControllerTest {
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
 
-        // Créer un utilisateur mock
         mockUser = new User();
         mockUser.setId(1L);
         mockUser.setEmail("test@example.com");
@@ -156,7 +155,7 @@ class TrainingSessionControllerTest {
 
         TrainingSessionDto existingSession = new TrainingSessionDto();
         existingSession.setId(1L);
-        existingSession.setUserId(1L); // Même utilisateur que mockUser
+        existingSession.setUserId(1L); 
 
         TrainingSessionDto response = new TrainingSessionDto();
         response.setId(1L);
@@ -181,7 +180,7 @@ class TrainingSessionControllerTest {
     void deleteTrainingSession_Success() throws Exception {
         TrainingSessionDto existingSession = new TrainingSessionDto();
         existingSession.setId(1L);
-        existingSession.setUserId(1L); // Même utilisateur que mockUser
+        existingSession.setUserId(1L); 
 
         when(userService.getCurrentUser(any(Authentication.class))).thenReturn(mockUser);
         when(trainingSessionService.getTrainingSessionById(1L)).thenReturn(Optional.of(existingSession));

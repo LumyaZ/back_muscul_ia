@@ -27,11 +27,11 @@ def test_endpoint(url, method="GET", data=None, name="Endpoint"):
             print(f"Error Response: {response.text}")
             
     except requests.exceptions.Timeout:
-        print("❌ Timeout - Le service ne répond pas dans les temps")
+        print("Timeout - Le service ne répond pas dans les temps")
     except requests.exceptions.ConnectionError:
-        print("❌ Connection Error - Impossible de se connecter au service")
+        print("Connection Error - Impossible de se connecter au service")
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f"Error: {str(e)}")
     
     print("-" * 50)
 
@@ -68,9 +68,9 @@ def main():
             name="Generate Training Program"
         )
     except FileNotFoundError:
-        print("\n❌ Fichier test_ai_request.json non trouvé")
+        print("\nFichier test_ai_request.json non trouvé")
     except json.JSONDecodeError:
-        print("\n❌ Erreur de parsing JSON dans test_ai_request.json")
+        print("\nErreur de parsing JSON dans test_ai_request.json")
     
     # Test 5: Test direct Ollama 
     print("\n=== Test direct Ollama ===")
@@ -91,7 +91,7 @@ def main():
         else:
             print(f"Ollama Error: {ollama_response.text}")
     except Exception as e:
-        print(f"❌ Ollama Error: {str(e)}")
+        print(f"Ollama Error: {str(e)}")
 
 if __name__ == "__main__":
     main() 

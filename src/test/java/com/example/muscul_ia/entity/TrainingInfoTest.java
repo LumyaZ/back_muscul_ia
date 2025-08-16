@@ -80,7 +80,7 @@ class TrainingInfoTest {
         info1.setEquipment(Equipment.BASIC);
 
         TrainingInfo info2 = new TrainingInfo();
-        info2.setId(2L); // ID différent pour que les objets ne soient pas égaux
+        info2.setId(2L); 
         info2.setGender(Gender.MALE);
         info2.setWeight(75.0);
         info2.setHeight(180.0);
@@ -194,7 +194,6 @@ class TrainingInfoTest {
         trainingInfo.setWeight(100.0);
         assertEquals(100.0, trainingInfo.getWeight());
 
-        // L'entité n'a pas de validation, donc les valeurs négatives sont acceptées
         trainingInfo.setWeight(-10.0);
         assertEquals(-10.0, trainingInfo.getWeight()); 
 
@@ -213,7 +212,6 @@ class TrainingInfoTest {
         trainingInfo.setHeight(180.0);
         assertEquals(180.0, trainingInfo.getHeight());
 
-        // L'entité n'a pas de validation, donc les valeurs négatives sont acceptées
         trainingInfo.setHeight(-10.0);
         assertEquals(-10.0, trainingInfo.getHeight()); 
 

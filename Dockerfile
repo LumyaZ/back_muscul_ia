@@ -12,8 +12,9 @@ COPY mvnw .
 # Télécharger les dépendances (cache layer)
 RUN mvn dependency:go-offline -B
 
-# Copier le code source
+# Copier le code source et la configuration
 COPY src src
+COPY config config
 
 # Compiler l'application
 RUN mvn clean package -DskipTests

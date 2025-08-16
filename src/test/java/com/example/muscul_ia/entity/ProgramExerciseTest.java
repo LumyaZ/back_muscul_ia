@@ -35,7 +35,7 @@ class ProgramExerciseTest {
         programExercise.setWeightKg(50.0);
         programExercise.setDistanceMeters(100.0);
         programExercise.setNotes("Test notes");
-        programExercise.setCreatedAt(LocalDateTime.now()); // Initialiser createdAt
+        programExercise.setCreatedAt(LocalDateTime.now());
     }
 
     @Test
@@ -44,7 +44,7 @@ class ProgramExerciseTest {
         ProgramExercise newProgramExercise = new ProgramExercise();
 
         assertNotNull(newProgramExercise);
-        // Ne pas tester createdAt car il n'est pas initialisé automatiquement
+        
         assertNull(newProgramExercise.getCreatedAt());
         assertNull(newProgramExercise.getUpdatedAt());
     }

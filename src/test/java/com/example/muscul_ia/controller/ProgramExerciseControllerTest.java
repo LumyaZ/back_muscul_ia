@@ -47,12 +47,11 @@ class ProgramExerciseControllerTest {
             programExerciseServiceField.setAccessible(true);
             programExerciseServiceField.set(controller, programExerciseService);
             
-            // Inject mock UserService to satisfy authentication-dependent code
             com.example.muscul_ia.service.UserService userService = mock(com.example.muscul_ia.service.UserService.class);
             java.lang.reflect.Field userServiceField = ProgramExerciseController.class.getDeclaredField("userService");
             userServiceField.setAccessible(true);
             userServiceField.set(controller, userService);
-            // Stub current user for all tests
+
             when(userService.getCurrentUser(any())).thenReturn(new com.example.muscul_ia.entity.User());
         } catch (Exception e) {
             throw new RuntimeException("Failed to inject dependencies", e);

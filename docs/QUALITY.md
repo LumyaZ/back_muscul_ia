@@ -79,11 +79,11 @@ logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} -
 ```
 
 Ce script exécute :
-1. ✅ Checkstyle
-2. ✅ SpotBugs
-3. ✅ Tests avec couverture
-4. ✅ Compilation
-5. ✅ Analyse des dépendances
+1. Checkstyle
+2. SpotBugs
+3. Tests avec couverture
+4. Compilation
+5. Analyse des dépendances
 
 ### Commandes individuelles
 ```bash

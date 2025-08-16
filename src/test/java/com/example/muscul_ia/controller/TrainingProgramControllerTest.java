@@ -100,7 +100,6 @@ class TrainingProgramControllerTest {
         when(trainingProgramService.createTrainingProgram(any(CreateTrainingProgramRequest.class), eq(1L)))
                 .thenReturn(trainingProgramDto);
         
-        // Mock UserTrainingProgramService
         UserTrainingProgramDto userTrainingProgramDto = new UserTrainingProgramDto();
         userTrainingProgramDto.setId(1L);
         when(userTrainingProgramService.subscribeUserToProgram(eq(1L), eq(1L)))

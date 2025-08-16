@@ -24,7 +24,7 @@ class ExerciseTest {
         exercise.setEquipmentNeeded("Test Equipment");
         exercise.setDifficultyLevel("Beginner");
         exercise.setIsActive(true);
-        exercise.setCreatedAt(LocalDateTime.now()); // Initialiser createdAt
+        exercise.setCreatedAt(LocalDateTime.now()); 
     }
 
     @Test
@@ -34,7 +34,6 @@ class ExerciseTest {
 
         assertNotNull(newExercise);
         assertTrue(newExercise.getIsActive());
-        // Ne pas tester createdAt car il n'est pas initialisé automatiquement
         assertNull(newExercise.getCreatedAt());
         assertNull(newExercise.getUpdatedAt());
     }

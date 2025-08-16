@@ -204,16 +204,16 @@ mvn checkstyle:check
 ## Conformité aux Blocs / Block Compliance
 
 ### C2.2.2 - Tests Unitaires
-✅ **Implémenté** : Tests unitaires complets pour tous les services et contrôleurs
-✅ **Couverture** : JaCoCo configuré avec seuil de 80%
-✅ **Rapports** : Génération automatique des rapports
+**Implémenté** : Tests unitaires complets pour tous les services et contrôleurs
+**Couverture** : JaCoCo configuré avec seuil de 80%
+**Rapports** : Génération automatique des rapports
 
 ### C2.2.4 - Tests d'Intégration
-✅ **Implémenté** : Tests d'intégration pour tous les endpoints
-✅ **Validation** : Tests de validation des données
-✅ **Sécurité** : Tests d'authentification et d'autorisation
+**Implémenté** : Tests d'intégration pour tous les endpoints
+**Validation** : Tests de validation des données
+**Sécurité** : Tests d'authentification et d'autorisation
 
 ### C4.2.1 - Logging
-✅ **Implémenté** : Logging structuré dans les contrôleurs
-✅ **Analyse** : Script d'analyse des logs
-✅ **Monitoring** : Intégration avec Spring Boot Actuator 
+**Implémenté** : Logging structuré dans les contrôleurs
+**Analyse** : Script d'analyse des logs
+**Monitoring** : Intégration avec Spring Boot Actuator 

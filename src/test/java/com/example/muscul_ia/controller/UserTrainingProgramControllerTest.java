@@ -48,7 +48,6 @@ class UserTrainingProgramControllerTest {
         authentication = mock(Authentication.class);
         objectMapper = new ObjectMapper();
         
-        // Créer un utilisateur mock
         mockUser = new User();
         mockUser.setId(1L);
         mockUser.setEmail("test@example.com");
@@ -166,7 +165,7 @@ class UserTrainingProgramControllerTest {
         mockMvc.perform(get("/api/user-training-programs/user/1")
                         .principal(authentication)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError()); // Le contrôleur retourne 500 pour les exceptions
+                .andExpect(status().isInternalServerError()); 
         
         verify(userTrainingProgramService, times(1)).getUserPrograms(1L);
     }
@@ -193,7 +192,7 @@ class UserTrainingProgramControllerTest {
         
         mockMvc.perform(get("/api/user-training-programs/program/1")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError()); // Le contrôleur retourne 500 pour les exceptions
+                .andExpect(status().isInternalServerError()); 
         
         verify(userTrainingProgramService, times(1)).getProgramUsers(1L);
     }
@@ -245,7 +244,7 @@ class UserTrainingProgramControllerTest {
                         .param("userId", "1")
                         .param("trainingProgramId", "1")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError()); // Le contrôleur retourne 500 pour les exceptions
+                .andExpect(status().isInternalServerError()); 
         
         verify(userTrainingProgramService, times(1)).getUserProgram(1L, 1L);
     }

@@ -32,8 +32,6 @@ class TrainingProgramTest {
         TrainingProgram newProgram = new TrainingProgram();
 
         assertNotNull(newProgram);
-        // Avec Lombok, createdAt est initialisé par @PrePersist, donc il peut être null jusqu'à la persistance
-        // On vérifie juste que l'objet est créé correctement
         assertNotNull(newProgram);
         assertNull(newProgram.getUpdatedAt());
     }
@@ -50,7 +48,6 @@ class TrainingProgramTest {
         newProgram.setDescription(description);
         newProgram.setDifficultyLevel(difficultyLevel);
         
-        // Appeler manuellement onCreate() pour simuler @PrePersist
         newProgram.onCreate();
 
         assertEquals(name, newProgram.getName());
@@ -110,8 +107,7 @@ class TrainingProgramTest {
 
     @Test
     @DisplayName("Should update timestamp on update")
-    void shouldUpdateTimestampOnUpdate() {
-        // Initialiser createdAt pour éviter NullPointerException
+    void shouldUpdateTimestampOnUpdate() {  
         trainingProgram.setCreatedAt(LocalDateTime.now());
         LocalDateTime originalCreatedAt = trainingProgram.getCreatedAt();
         

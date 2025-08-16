@@ -7,7 +7,7 @@ echo "🔧 Configuration du monitoring Muscul IA..."
 
 # Vérification des dépendances
 if ! command -v docker &> /dev/null; then
-    echo "❌ Docker n'est pas installé"
+    echo "Docker n'est pas installé"
     exit 1
 fi
 
@@ -33,7 +33,7 @@ docker run -d \
     -e GF_SECURITY_ADMIN_PASSWORD=admin \
     grafana/grafana
 
-echo "✅ Monitoring configuré !"
+echo "Monitoring configuré !"
 echo "📊 Prometheus: http://localhost:9090"
 echo "📈 Grafana: http://localhost:3000 (admin/admin)"
 echo "🔍 Métriques de l'app: http://localhost:8080/actuator/prometheus" 

@@ -203,7 +203,7 @@ tar -czf logs/archive-$(date +%Y-%m).tar.gz logs/*.log.*
 
 ## Conformité C4.2.1 / C4.2.1 Compliance
 
-### ✅ Exigences satisfaites / Satisfied Requirements
+### Exigences satisfaites / Satisfied Requirements
 
 1. **Collecte automatique** : Logging structuré dans tous les contrôleurs
 2. **Détection d'anomalies** : Script `check-logs.sh` pour l'analyse
