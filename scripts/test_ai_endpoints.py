@@ -59,7 +59,7 @@ def main():
         print(f"URL: {base_url}/generate-training-program")
         print(f"Method: POST")
         print(f"Data: {json.dumps(data, indent=2)}")
-        print("⏳ Génération en cours... (cela peut prendre 1-2 minutes)")
+        print("Génération en cours... (cela peut prendre 1-2 minutes)")
         
         test_endpoint(
             f"{base_url}/generate-training-program", 

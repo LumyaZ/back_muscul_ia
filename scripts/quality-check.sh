@@ -11,7 +11,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Couverture de code
-echo "📊 Couverture de code..."
+echo "Couverture de code..."
 mvn jacoco:report
 if [ $? -ne 0 ]; then
     echo "Rapport de couverture échoué"
@@ -19,7 +19,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Checkstyle
-echo "📝 Vérification du style de code..."
+echo "Vérification du style de code..."
 mvn checkstyle:check
 if [ $? -ne 0 ]; then
     echo "Checkstyle échoué"

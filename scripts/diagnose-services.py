@@ -153,7 +153,7 @@ def check_ollama_models():
                 print(f"      - {model.get('name', 'Unknown')}")
             return True
         else:
-            print("   ⚠️ Aucun modèle trouvé - téléchargement en cours ?")
+            print("   ️ Aucun modèle trouvé - téléchargement en cours ?")
             return False
     else:
         print("   Impossible de récupérer les modèles")
@@ -161,7 +161,7 @@ def check_ollama_models():
 
 def generate_report(results):
     """Génère un rapport de diagnostic"""
-    print("\n📊 Rapport de diagnostic")
+    print("\nRapport de diagnostic")
     print("=" * 50)
     
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -183,7 +183,7 @@ def generate_report(results):
         print(f"   {icon} {service}")
     
     # Recommandations
-    print("\n🔧 Recommandations:")
+    print("\nRecommandations:")
     
     if not services_status["MySQL"]:
         print("   - Vérifier la base de données MySQL")

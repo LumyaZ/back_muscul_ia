@@ -13,11 +13,11 @@ if [ ! -f "logs/muscul-ia.log" ]; then
     exit 1
 fi
 
-echo "📊 Statistiques générales:"
+echo "Statistiques générales:"
 echo "Nombre total de lignes: $(wc -l < logs/muscul-ia.log)"
 echo ""
 
-echo "🚨 Erreurs détectées (dernières 10):"
+echo "Erreurs détectées (dernières 10):"
 grep -i "error\|exception" logs/muscul-ia.log | tail -10 | while read line; do
     echo "  $line"
 done
@@ -29,9 +29,9 @@ grep -i "connexion\|login" logs/muscul-ia.log | tail -10 | while read line; do
 done
 echo ""
 
-echo "⚠️ Avertissements (dernières 5):"
+echo "️ Avertissements (dernières 5):"
 grep -i "warn" logs/muscul-ia.log | tail -5 | while read line; do
-    echo "  ⚠️ $line"
+    echo "  ️ $line"
 done
 echo ""
 
@@ -41,7 +41,7 @@ grep -i "connexion réussie" logs/muscul-ia.log | tail -5 | while read line; do
 done
 echo ""
 
-echo "📈 Résumé des anomalies:"
+echo "Résumé des anomalies:"
 ERROR_COUNT=$(grep -i "error\|exception" logs/muscul-ia.log | wc -l)
 LOGIN_ATTEMPTS=$(grep -i "tentative de connexion" logs/muscul-ia.log | wc -l)
 SUCCESSFUL_LOGINS=$(grep -i "connexion réussie" logs/muscul-ia.log | wc -l)
@@ -54,7 +54,7 @@ echo "  Échecs de connexion: $FAILED_LOGINS"
 
 if [ $ERROR_COUNT -gt 0 ]; then
     echo ""
-    echo "🚨 ATTENTION: Des erreurs ont été détectées dans les logs!"
+    echo "ATTENTION: Des erreurs ont été détectées dans les logs!"
 fi
 
 echo ""

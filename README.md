@@ -154,7 +154,7 @@ tail -f logs/muscul-ia.log
 # Voir docs/TESTING.md et docs/LOGGING.md
 ```
 
-## 🛠️ Scripts utilitaires
+## Scripts utilitaires
 
 ### Scripts de diagnostic et test
 - **`diagnose-services.py`** - Diagnostic complet de l'écosystème Muscul IA
@@ -182,7 +182,7 @@ python scripts/test_ai_endpoints.py
 bash scripts/quality-check.sh
 ```
 
-## 📚 API Documentation
+## API Documentation
 
 ### Endpoints d'authentification
 
@@ -259,7 +259,7 @@ Connexion utilisateur.
 - **SpotBugs :** 0 bugs critiques
 - **Tests :** 100% de succès
 
-## 📊 Monitoring
+## Monitoring
 
 ### Endpoints de monitoring
 - **Health Check :** `http://localhost:8080/actuator/health`

@@ -75,7 +75,7 @@ public class ExternalAIService {
             System.out.println("🚀 === DÉBUT GÉNÉRATION IA ===");
             System.out.println("👤 User ID: " + userId);
             
-            System.out.println("📊 1. Récupération des données utilisateur...");
+            System.out.println("1. Récupération des données utilisateur...");
             UserProfileDto userProfileDto = userProfileService.getProfileByUserId(userId);
             TrainingInfoDto trainingInfoDto = trainingInfoService.getTrainingInfoByUserId(userId);
             
@@ -86,7 +86,7 @@ public class ExternalAIService {
                 throw new RuntimeException("Profil utilisateur ou informations d'entraînement non trouvés");
             }
             
-            System.out.println("🔧 2. Préparation des données pour l'IA...");
+            System.out.println("2. Préparation des données pour l'IA...");
             Map<String, Object> userData = buildUserDataForAI(userProfileDto, trainingInfoDto);
             System.out.println("Données préparées: " + userData.size() + " champs");
             
@@ -99,7 +99,7 @@ public class ExternalAIService {
             );
             
             System.out.println("Réponse IA reçue: " + response.getStatusCode());
-            System.out.println("📊 Corps de la réponse: " + (response.getBody() != null ? "OK" : "NULL"));
+            System.out.println("Corps de la réponse: " + (response.getBody() != null ? "OK" : "NULL"));
             
             if (response.getBody() == null) {
                 throw new RuntimeException("Réponse vide du service IA");
@@ -193,7 +193,7 @@ public class ExternalAIService {
     private TrainingProgramDto createTrainingProgramFromAIResponse(Map<String, Object> aiResponse, Long userId) {
         try {
             System.out.println("🔍 === CRÉATION PROGRAMME DEPUIS RÉPONSE IA ===");
-            System.out.println("📊 Réponse IA reçue: " + aiResponse.size() + " champs");
+            System.out.println("Réponse IA reçue: " + aiResponse.size() + " champs");
             System.out.println("👤 User ID: " + userId);
             
             System.out.println("🏗️ Création de la requête...");
@@ -269,19 +269,19 @@ public class ExternalAIService {
              
              Object exercisesObj = aiResponse.get("exercises");
              if (exercisesObj == null) {
-                 System.out.println("⚠️ Aucun exercice trouvé dans la réponse IA");
+                 System.out.println("️ Aucun exercice trouvé dans la réponse IA");
                  return;
              }
              
              if (!(exercisesObj instanceof List)) {
-                 System.out.println("⚠️ Format d'exercices invalide dans la réponse IA");
+                 System.out.println("️ Format d'exercices invalide dans la réponse IA");
                  return;
              }
              
              @SuppressWarnings("unchecked")
              List<Map<String, Object>> exercises = (List<Map<String, Object>>) exercisesObj;
              
-             System.out.println("📊 Nombre d'exercices à traiter: " + exercises.size());
+             System.out.println("Nombre d'exercices à traiter: " + exercises.size());
              
              for (int i = 0; i < exercises.size(); i++) {
                  Map<String, Object> exerciseData = exercises.get(i);

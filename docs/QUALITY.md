@@ -1,6 +1,6 @@
 # Guide de Qualité du Code - Back-end
 
-## 📊 Outils de Qualité
+## Outils de Qualité
 
 ### 1. Checkstyle
 Vérifie la conformité du code aux standards de codage Java.
@@ -38,7 +38,7 @@ Mesure la couverture de code par les tests.
 **Seuil minimum :** 80% de couverture de lignes
 **Rapport :** `target/site/jacoco/index.html`
 
-## 📈 Métriques de Performance
+## Métriques de Performance
 
 ### Endpoints de Monitoring
 - **Health Check :** `http://localhost:8080/actuator/health`
@@ -52,7 +52,7 @@ Mesure la couverture de code par les tests.
 - Connexions base de données
 - Erreurs HTTP
 
-## 📝 Logs Structurés
+## Logs Structurés
 
 ### Configuration
 ```properties
@@ -71,7 +71,7 @@ logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} -
 - **Sécurité :** Tentatives d'accès non autorisées
 - **Performance :** Temps de réponse des API
 
-## 🔧 Scripts Automatisés
+## Scripts Automatisés
 
 ### Vérification complète
 ```bash

@@ -3,7 +3,7 @@
 # Script de configuration du monitoring pour Muscul IA
 # Monitoring setup script for Muscul IA
 
-echo "🔧 Configuration du monitoring Muscul IA..."
+echo "Configuration du monitoring Muscul IA..."
 
 # Vérification des dépendances
 if ! command -v docker &> /dev/null; then
@@ -16,7 +16,7 @@ echo "📡 Création du réseau monitoring..."
 docker network create monitoring-network 2>/dev/null || echo "Réseau monitoring déjà existant"
 
 # Démarrage de Prometheus
-echo "📊 Démarrage de Prometheus..."
+echo "Démarrage de Prometheus..."
 docker run -d \
     --name prometheus \
     --network monitoring-network \
@@ -25,7 +25,7 @@ docker run -d \
     prom/prometheus
 
 # Démarrage de Grafana (optionnel)
-echo "📈 Démarrage de Grafana..."
+echo "Démarrage de Grafana..."
 docker run -d \
     --name grafana \
     --network monitoring-network \
@@ -34,6 +34,6 @@ docker run -d \
     grafana/grafana
 
 echo "Monitoring configuré !"
-echo "📊 Prometheus: http://localhost:9090"
-echo "📈 Grafana: http://localhost:3000 (admin/admin)"
+echo "Prometheus: http://localhost:9090"
+echo "Grafana: http://localhost:3000 (admin/admin)"
 echo "🔍 Métriques de l'app: http://localhost:8080/actuator/prometheus" 
