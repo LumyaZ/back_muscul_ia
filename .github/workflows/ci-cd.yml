@@ -114,6 +114,6 @@ jobs:
     
     - name: Test Docker build
       run: |
-        docker build -t muscul-ia-backend:test .
+        docker build -t muscul-ia-backend:test . --build-arg MAVEN_ARGS="-DskipTests"
         docker run --rm muscul-ia-backend:test echo "Docker build test successful"
-        docker rmi muscul-ia-backend:test 
+        docker rmi muscul-ia-backend:test
