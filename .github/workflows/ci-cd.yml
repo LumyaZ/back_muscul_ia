@@ -60,8 +60,8 @@ jobs:
     - name: Run tests
       run: mvn test
     
-    - name: Run integration tests
-      run: mvn verify
+    - name: Run integration tests only
+      run: mvn test -Dtest=*IntegrationTest
     
     - name: Generate test coverage report
       run: mvn jacoco:report
