@@ -3,7 +3,7 @@
 ## Description
 Backend Spring Boot pour l'application Muscul IA - système d'authentification et API REST pour la gestion des profils utilisateur et des programmes d'entraînement de musculation.
 
-## 🏗️ Architecture
+## Architecture
 
 ### Structure du projet
 ```
@@ -96,7 +96,7 @@ L'application sera accessible sur : `http://localhost:8080`
 - Formulaire de login Spring désactivé
 - Authentification HTTP Basic pour les endpoints protégés
 
-## 🧪 Tests et Qualité
+## Tests et Qualité
 
 ### Tests unitaires (C2.2.2)
 ```bash
@@ -235,7 +235,7 @@ Connexion utilisateur.
 }
 ```
 
-## 🧪 Tests et Qualité
+## Tests et Qualité
 
 ### Vérification de la qualité
 ```bash
@@ -273,13 +273,13 @@ Connexion utilisateur.
 - Connexions base de données
 - Erreurs HTTP
 
-## 📖 Documentation
+## Documentation
 
 - **Guide de qualité :** `docs/QUALITY.md`
 - **Guide de monitoring :** `docs/MONITORING.md`
 - **API Documentation :** `http://localhost:8080/swagger-ui.html`
 
-## 🐳 Docker
+## Docker
 
 ### Construction de l'image
 ```bash
@@ -291,7 +291,7 @@ docker build -t muscul-ia-backend .
 docker run -p 8080:8080 muscul-ia-backend
 ```
 
-## 🤝 Contribution
+## Contribution
 
 1. Fork le projet
 2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)

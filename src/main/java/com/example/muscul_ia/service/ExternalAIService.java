@@ -105,7 +105,7 @@ public class ExternalAIService {
                 throw new RuntimeException("Réponse vide du service IA");
             }
             
-            System.out.println("🏗️ 4. Création du programme à partir de la réponse IA...");
+            System.out.println("4. Création du programme à partir de la réponse IA...");
             TrainingProgramDto result = createTrainingProgramFromAIResponse(response.getBody(), userId);
             System.out.println("Programme créé avec succès: " + result.getName());
             System.out.println("🎉 === GÉNÉRATION IA TERMINÉE ===");
@@ -196,7 +196,7 @@ public class ExternalAIService {
             System.out.println("Réponse IA reçue: " + aiResponse.size() + " champs");
             System.out.println("👤 User ID: " + userId);
             
-            System.out.println("🏗️ Création de la requête...");
+            System.out.println("Création de la requête...");
             CreateTrainingProgramRequest request = new CreateTrainingProgramRequest();
             
             request.setName((String) aiResponse.get("name"));

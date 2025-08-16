@@ -3,7 +3,7 @@
 echo "Vérification complète de la qualité du code..."
 
 # Tests unitaires
-echo "🧪 Tests unitaires..."
+echo "Tests unitaires..."
 mvn test
 if [ $? -ne 0 ]; then
     echo "Tests unitaires échoués"

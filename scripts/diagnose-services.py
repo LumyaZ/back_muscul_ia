@@ -57,7 +57,7 @@ def test_endpoint(url, method="GET", data=None, timeout=10, name="Endpoint"):
 
 def check_docker_services():
     """Vérifie l'état des services Docker"""
-    print("\n🐳 État des services Docker")
+    print("\nÉtat des services Docker")
     print("=" * 50)
     
     # Vérifier l'état des conteneurs

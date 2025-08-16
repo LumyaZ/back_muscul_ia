@@ -36,7 +36,7 @@ def test_endpoint(url, method="GET", data=None, name="Endpoint"):
     print("-" * 50)
 
 def main():
-    print("🧪 Test des endpoints du service IA Muscul IA")
+    print("Test des endpoints du service IA Muscul IA")
     print("=" * 60)
     
     base_url = "http://localhost:8001"
