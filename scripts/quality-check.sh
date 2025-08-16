@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🔍 Vérification complète de la qualité du code..."
+echo "Vérification complète de la qualité du code..."
 
 # Tests unitaires
 echo "🧪 Tests unitaires..."
@@ -36,7 +36,7 @@ fi
 
 echo "Toutes les vérifications de qualité réussies !"
 echo ""
-echo "📋 Rapports disponibles :"
+echo "Rapports disponibles :"
 echo "  - Couverture de code : target/site/jacoco/index.html"
 echo "  - SpotBugs : target/spotbugs/spotbugsXml.xml"
 echo "  - Checkstyle : Console output" 

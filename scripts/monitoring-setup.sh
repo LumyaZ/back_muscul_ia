@@ -36,4 +36,4 @@ docker run -d \
 echo "Monitoring configuré !"
 echo "Prometheus: http://localhost:9090"
 echo "Grafana: http://localhost:3000 (admin/admin)"
-echo "🔍 Métriques de l'app: http://localhost:8080/actuator/prometheus" 
+echo "Métriques de l'app: http://localhost:8080/actuator/prometheus" 

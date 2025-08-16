@@ -1,6 +1,6 @@
 # Muscul IA - Backend API
 
-## 📋 Description
+## Description
 Backend Spring Boot pour l'application Muscul IA - système d'authentification et API REST pour la gestion des profils utilisateur et des programmes d'entraînement de musculation.
 
 ## 🏗️ Architecture
@@ -45,7 +45,7 @@ scripts/             # Scripts utilitaires
 - **Maven** - Gestion des dépendances
 - **Flyway** - Migration de base de données
 
-## 🚀 Installation et démarrage
+## Installation et démarrage
 
 ### Prérequis
 - Java 17 ou supérieur

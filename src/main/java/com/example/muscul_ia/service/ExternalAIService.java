@@ -72,7 +72,7 @@ public class ExternalAIService {
      */
     public TrainingProgramDto generateProgramWithAI(Long userId) {
         try {
-            System.out.println("🚀 === DÉBUT GÉNÉRATION IA ===");
+            System.out.println("=== DÉBUT GÉNÉRATION IA ===");
             System.out.println("👤 User ID: " + userId);
             
             System.out.println("1. Récupération des données utilisateur...");
@@ -192,7 +192,7 @@ public class ExternalAIService {
      */
     private TrainingProgramDto createTrainingProgramFromAIResponse(Map<String, Object> aiResponse, Long userId) {
         try {
-            System.out.println("🔍 === CRÉATION PROGRAMME DEPUIS RÉPONSE IA ===");
+            System.out.println("=== CRÉATION PROGRAMME DEPUIS RÉPONSE IA ===");
             System.out.println("Réponse IA reçue: " + aiResponse.size() + " champs");
             System.out.println("👤 User ID: " + userId);
             
@@ -230,13 +230,13 @@ public class ExternalAIService {
             request.setEquipmentRequired((String) aiResponse.get("equipment_required"));
             System.out.println("Équipement: " + request.getEquipmentRequired());
             
-            System.out.println("🚀 Appel au service de création de programme...");
+            System.out.println("Appel au service de création de programme...");
             TrainingProgramDto result = trainingProgramService.createTrainingProgram(request, userId);
             System.out.println("Programme créé avec succès: " + result.getName());
             
             System.out.println("🔗 5. Liaison utilisateur-programme...");
             System.out.println("👤 User ID: " + userId);
-            System.out.println("📋 Programme ID: " + result.getId());
+            System.out.println("Programme ID: " + result.getId());
             userTrainingProgramService.subscribeUserToProgram(userId, result.getId());
             System.out.println("Utilisateur lié au programme avec succès");
             
@@ -265,7 +265,7 @@ public class ExternalAIService {
       */
      private void processExercisesFromAIResponse(Map<String, Object> aiResponse, Long programId) {
          try {
-             System.out.println("🔍 === TRAITEMENT DES EXERCICES ===");
+             System.out.println("=== TRAITEMENT DES EXERCICES ===");
              
              Object exercisesObj = aiResponse.get("exercises");
              if (exercisesObj == null) {

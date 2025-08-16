@@ -21,7 +21,7 @@ def run_command(command):
 
 def test_endpoint(url, method="GET", data=None, timeout=10, name="Endpoint"):
     """Test un endpoint et retourne les résultats"""
-    print(f"\n🔍 Test {name}")
+    print(f"\nTest {name}")
     print(f"   URL: {url}")
     print(f"   Method: {method}")
     
@@ -208,7 +208,7 @@ def generate_report(results):
 
 def main():
     """Fonction principale"""
-    print("🔍 Diagnostic de l'écosystème Muscul IA")
+    print("Diagnostic de l'écosystème Muscul IA")
     print("=" * 60)
     
     # Vérifier Docker

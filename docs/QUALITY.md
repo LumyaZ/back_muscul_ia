@@ -101,7 +101,7 @@ Ce script exécute :
 ./mvnw dependency:analyze
 ```
 
-## 📋 Standards de Code
+## Standards de Code
 
 ### Conventions de nommage
 - **Classes :** PascalCase (ex: `UserService`)
@@ -126,7 +126,7 @@ com.example.muscul_ia/
 - **README** à jour avec les instructions d'installation
 - **Commentaires** pour la logique complexe
 
-## 🚀 Intégration Continue
+## Intégration Continue
 
 ### GitHub Actions
 - Tests automatiques à chaque push
