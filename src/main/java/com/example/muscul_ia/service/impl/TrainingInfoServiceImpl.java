@@ -5,6 +5,7 @@ import com.example.muscul_ia.dto.TrainingInfoDto;
 import com.example.muscul_ia.dto.UpdateTrainingInfoRequest;
 import com.example.muscul_ia.entity.TrainingInfo;
 import com.example.muscul_ia.entity.User;
+import com.example.muscul_ia.enums.*;
 import com.example.muscul_ia.repository.TrainingInfoRepository;
 import com.example.muscul_ia.service.TrainingInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -33,17 +35,22 @@ public class TrainingInfoServiceImpl implements TrainingInfoService {
         
         TrainingInfo trainingInfo = new TrainingInfo();
         trainingInfo.setUser(user);
-        trainingInfo.setGender(request.getGender());
+        
+        trainingInfo.setGender(Gender.valueOf(request.getGender().toUpperCase()));
         trainingInfo.setWeight(request.getWeight());
         trainingInfo.setHeight(request.getHeight());
         trainingInfo.setBodyFatPercentage(request.getBodyFatPercentage());
-        trainingInfo.setExperienceLevel(request.getExperienceLevel());
-        trainingInfo.setSessionFrequency(request.getSessionFrequency());
-        trainingInfo.setSessionDuration(request.getSessionDuration());
-        trainingInfo.setMainGoal(request.getMainGoal());
-        trainingInfo.setTrainingPreference(request.getTrainingPreference());
-        trainingInfo.setEquipment(request.getEquipment());
+        trainingInfo.setExperienceLevel(ExperienceLevel.valueOf(request.getExperienceLevel().toUpperCase()));
+        trainingInfo.setSessionFrequency(SessionFrequency.valueOf(request.getSessionFrequency().toUpperCase()));
+        trainingInfo.setSessionDuration(SessionDuration.valueOf(request.getSessionDuration().toUpperCase()));
+        trainingInfo.setMainGoal(MainGoal.valueOf(request.getMainGoal().toUpperCase()));
+        trainingInfo.setTrainingPreference(TrainingPreference.valueOf(request.getTrainingPreference().toUpperCase()));
+        trainingInfo.setEquipment(Equipment.valueOf(request.getEquipment().toUpperCase()));
         
+        LocalDateTime now = LocalDateTime.now();
+        trainingInfo.setCreatedAt(now);
+        trainingInfo.setUpdatedAt(now);
+
         TrainingInfo savedTrainingInfo = trainingInfoRepository.save(trainingInfo);
         return new TrainingInfoDto(savedTrainingInfo);
     }
@@ -81,7 +88,7 @@ public class TrainingInfoServiceImpl implements TrainingInfoService {
         TrainingInfo trainingInfo = existingTrainingInfo.get();
         
         if (request.getGender() != null) {
-            trainingInfo.setGender(request.getGender());
+            trainingInfo.setGender(Gender.valueOf(request.getGender().toUpperCase()));
         }
         if (request.getWeight() != null) {
             trainingInfo.setWeight(request.getWeight());
@@ -93,22 +100,22 @@ public class TrainingInfoServiceImpl implements TrainingInfoService {
             trainingInfo.setBodyFatPercentage(request.getBodyFatPercentage());
         }
         if (request.getExperienceLevel() != null) {
-            trainingInfo.setExperienceLevel(request.getExperienceLevel());
+            trainingInfo.setExperienceLevel(ExperienceLevel.valueOf(request.getExperienceLevel().toUpperCase()));
         }
         if (request.getSessionFrequency() != null) {
-            trainingInfo.setSessionFrequency(request.getSessionFrequency());
+            trainingInfo.setSessionFrequency(SessionFrequency.valueOf(request.getSessionFrequency().toUpperCase()));
         }
         if (request.getSessionDuration() != null) {
-            trainingInfo.setSessionDuration(request.getSessionDuration());
+            trainingInfo.setSessionDuration(SessionDuration.valueOf(request.getSessionDuration().toUpperCase()));
         }
         if (request.getMainGoal() != null) {
-            trainingInfo.setMainGoal(request.getMainGoal());
+            trainingInfo.setMainGoal(MainGoal.valueOf(request.getMainGoal().toUpperCase()));
         }
         if (request.getTrainingPreference() != null) {
-            trainingInfo.setTrainingPreference(request.getTrainingPreference());
+            trainingInfo.setTrainingPreference(TrainingPreference.valueOf(request.getTrainingPreference().toUpperCase()));
         }
         if (request.getEquipment() != null) {
-            trainingInfo.setEquipment(request.getEquipment());
+            trainingInfo.setEquipment(Equipment.valueOf(request.getEquipment().toUpperCase()));
         }
         
         trainingInfo.setUpdatedAt(LocalDateTime.now());
@@ -126,6 +133,14 @@ public class TrainingInfoServiceImpl implements TrainingInfoService {
         } else {
             throw new RuntimeException("Training info not found for user: " + user.getId());
         }
+    }
+    
+    @Transactional(readOnly = true)
+    public List<TrainingInfoDto> getAllTrainingInfo() {
+        List<TrainingInfo> allTrainingInfo = trainingInfoRepository.findAll();
+        return allTrainingInfo.stream()
+                .map(TrainingInfoDto::new)
+                .toList();
     }
     
     @Override

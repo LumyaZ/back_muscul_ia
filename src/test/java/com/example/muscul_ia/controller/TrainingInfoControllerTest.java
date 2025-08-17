@@ -80,28 +80,28 @@ class TrainingInfoControllerTest {
 		testTrainingInfoDto.setUpdatedAt(LocalDateTime.now());
 		
 		createRequest = new CreateTrainingInfoRequest();
-		createRequest.setGender(Gender.MALE);
+		createRequest.setGender(Gender.MALE.name());
 		createRequest.setWeight(75.0);
 		createRequest.setHeight(180.0);
 		createRequest.setBodyFatPercentage(15.0);
-		createRequest.setExperienceLevel(ExperienceLevel.BEGINNER);
-		createRequest.setSessionFrequency(SessionFrequency.THREE_TO_FOUR);
-		createRequest.setSessionDuration(SessionDuration.MEDIUM);
-		createRequest.setMainGoal(MainGoal.WEIGHT_LOSS);
-		createRequest.setTrainingPreference(TrainingPreference.STRENGTH_TRAINING);
-		createRequest.setEquipment(Equipment.BASIC);
+		createRequest.setExperienceLevel(ExperienceLevel.BEGINNER.name());
+		createRequest.setSessionFrequency(SessionFrequency.THREE_TO_FOUR.name());
+		createRequest.setSessionDuration(SessionDuration.MEDIUM.name());
+		createRequest.setMainGoal(MainGoal.WEIGHT_LOSS.name());
+		createRequest.setTrainingPreference(TrainingPreference.STRENGTH_TRAINING.name());
+		createRequest.setEquipment(Equipment.BASIC.name());
 		
 		updateRequest = new UpdateTrainingInfoRequest();
-		updateRequest.setGender(Gender.MALE);
+		updateRequest.setGender(Gender.MALE.name());
 		updateRequest.setWeight(80.0);
 		updateRequest.setHeight(180.0);
 		updateRequest.setBodyFatPercentage(12.0);
-		updateRequest.setExperienceLevel(ExperienceLevel.ADVANCED);
-		updateRequest.setSessionFrequency(SessionFrequency.FIVE_TO_SIX);
-		updateRequest.setSessionDuration(SessionDuration.LONG);
-		updateRequest.setMainGoal(MainGoal.STRENGTH);
-		updateRequest.setTrainingPreference(TrainingPreference.STRENGTH_TRAINING);
-		updateRequest.setEquipment(Equipment.BASIC);
+		updateRequest.setExperienceLevel(ExperienceLevel.ADVANCED.name());
+		updateRequest.setSessionFrequency(SessionFrequency.FIVE_TO_SIX.name());
+		updateRequest.setSessionDuration(SessionDuration.LONG.name());
+		updateRequest.setMainGoal(MainGoal.STRENGTH.name());
+		updateRequest.setTrainingPreference(TrainingPreference.STRENGTH_TRAINING.name());
+		updateRequest.setEquipment(Equipment.BASIC.name());
 	}
 	
 	@Test

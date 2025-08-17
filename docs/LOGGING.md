@@ -171,15 +171,6 @@ management.endpoint.health.show-details=always
 - **process.cpu.usage** : Utilisation CPU
 - **hikaricp.connections** : Connexions base de données
 
-### Alertes automatiques / Automatic Alerts
-```bash
-# Vérification de santé / Health check
-curl -f http://localhost:8080/actuator/health || echo "ALERTE: Service down"
-
-# Vérification des métriques / Metrics check
-curl http://localhost:8080/actuator/metrics/http.server.requests
-```
-
 ## Maintenance / Maintenance
 
 ### Rotation des logs / Log Rotation
@@ -200,48 +191,3 @@ find logs/ -name "*.log.*" -mtime +30 -delete
 # Archivage mensuel / Monthly archiving
 tar -czf logs/archive-$(date +%Y-%m).tar.gz logs/*.log.*
 ```
-
-## Conformité C4.2.1 / C4.2.1 Compliance
-
-### Exigences satisfaites / Satisfied Requirements
-
-1. **Collecte automatique** : Logging structuré dans tous les contrôleurs
-2. **Détection d'anomalies** : Script `check-logs.sh` pour l'analyse
-3. **Centralisation** : GlobalExceptionHandler pour les erreurs
-4. **Documentation** : Ce guide et les commentaires dans le code
-5. **Monitoring** : Intégration avec Spring Boot Actuator
-
-### Métriques de conformité / Compliance Metrics
-- **Couverture de logging** : 100% des contrôleurs
-- **Détection d'anomalies** : Automatique via scripts
-- **Temps de réponse** : < 1 minute pour la détection
-- **Rétention des logs** : 30 jours minimum
-
-## Utilisation pratique / Practical Usage
-
-### Démarrage rapide / Quick Start
-```bash
-# 1. Démarrer l'application / Start application
-mvn spring-boot:run
-
-# 2. Surveiller les logs / Monitor logs
-tail -f logs/muscul-ia.log
-
-# 3. Analyser les anomalies / Analyze anomalies
-./scripts/check-logs.sh
-
-# 4. Vérifier la santé / Check health
-curl http://localhost:8080/actuator/health
-```
-
-### Commandes utiles / Useful Commands
-```bash
-# Logs d'authentification / Authentication logs
-grep "connexion\|login" logs/muscul-ia.log
-
-# Erreurs récentes / Recent errors
-grep "$(date +%Y-%m-%d)" logs/muscul-ia.log | grep ERROR
-
-# Performance / Performance
-grep "temps\|duration" logs/muscul-ia.log
-``` 

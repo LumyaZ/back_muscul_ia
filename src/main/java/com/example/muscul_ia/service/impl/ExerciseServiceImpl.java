@@ -8,6 +8,7 @@ import com.example.muscul_ia.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,6 +33,11 @@ public class ExerciseServiceImpl implements ExerciseService {
         exercise.setEquipmentNeeded(request.getEquipmentNeeded());
         exercise.setDifficultyLevel(request.getDifficultyLevel());
         exercise.setIsActive(true);
+        
+        // Définir les timestamps de création et mise à jour
+        LocalDateTime now = LocalDateTime.now();
+        exercise.setCreatedAt(now);
+        exercise.setUpdatedAt(now);
         
         Exercise savedExercise = exerciseRepository.save(exercise);
         return convertToDto(savedExercise);
@@ -60,6 +66,9 @@ public class ExerciseServiceImpl implements ExerciseService {
             exercise.setMuscleGroup(request.getMuscleGroup());
             exercise.setEquipmentNeeded(request.getEquipmentNeeded());
             exercise.setDifficultyLevel(request.getDifficultyLevel());
+            
+            // Mettre à jour le timestamp de modification
+            exercise.setUpdatedAt(LocalDateTime.now());
             
             Exercise updatedExercise = exerciseRepository.save(exercise);
             return convertToDto(updatedExercise);

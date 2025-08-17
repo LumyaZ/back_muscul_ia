@@ -2,6 +2,8 @@ package com.example.muscul_ia.dto;
 
 import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * DTO for creating a training session.
@@ -15,8 +17,8 @@ public class CreateTrainingSessionRequest {
     @Size(max = 1000, message = "Description cannot exceed 1000 characters")
     private String description;
     
-    @NotNull(message = "Session date is required")
-    private LocalDateTime sessionDate;
+    @NotBlank(message = "Session date is required")
+    private String sessionDate; // Accepte les dates en format String
     
     @NotNull(message = "Duration is required")
     @Min(value = 1, message = "Duration must be at least 1 minute")
@@ -26,19 +28,47 @@ public class CreateTrainingSessionRequest {
     @Size(max = 50, message = "Session type cannot exceed 50 characters")
     private String sessionType;
     
-    private Long trainingProgramId;
+    private String trainingProgramId; // Accepte les IDs en format String
+    
+    private String userId; // Accepte les IDs en format String
     
     // Constructors
     public CreateTrainingSessionRequest() {}
     
-    public CreateTrainingSessionRequest(String name, String description, LocalDateTime sessionDate, 
-                                     Integer durationMinutes, String sessionType, Long trainingProgramId) {
+    public CreateTrainingSessionRequest(String name, String description, String sessionDate, 
+                                     Integer durationMinutes, String sessionType, String trainingProgramId, String userId) {
         this.name = name;
         this.description = description;
         this.sessionDate = sessionDate;
         this.durationMinutes = durationMinutes;
         this.sessionType = sessionType;
         this.trainingProgramId = trainingProgramId;
+        this.userId = userId;
+    }
+    
+    // Méthodes de conversion pour maintenir la compatibilité
+    public LocalDateTime getSessionDateAsLocalDateTime() {
+        try {
+            return LocalDateTime.parse(this.sessionDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid session date format. Expected format: yyyy-MM-ddTHH:mm:ss");
+        }
+    }
+    
+    public Long getTrainingProgramIdAsLong() {
+        try {
+            return this.trainingProgramId != null ? Long.parseLong(this.trainingProgramId) : null;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid training program ID format");
+        }
+    }
+    
+    public Long getUserIdAsLong() {
+        try {
+            return this.userId != null ? Long.parseLong(this.userId) : null;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid user ID format");
+        }
     }
     
     // Getters and Setters
@@ -58,11 +88,11 @@ public class CreateTrainingSessionRequest {
         this.description = description;
     }
     
-    public LocalDateTime getSessionDate() {
+    public String getSessionDate() {
         return sessionDate;
     }
 
-    public void setSessionDate(LocalDateTime sessionDate) {
+    public void setSessionDate(String sessionDate) {
         this.sessionDate = sessionDate;
     }
 
@@ -82,12 +112,20 @@ public class CreateTrainingSessionRequest {
         this.sessionType = sessionType;
     }
     
-    public Long getTrainingProgramId() {
+    public String getTrainingProgramId() {
         return trainingProgramId;
     }
     
-    public void setTrainingProgramId(Long trainingProgramId) {
+    public void setTrainingProgramId(String trainingProgramId) {
         this.trainingProgramId = trainingProgramId;
+    }
+    
+    public String getUserId() {
+        return userId;
+    }
+    
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
     
     @Override
@@ -95,10 +133,11 @@ public class CreateTrainingSessionRequest {
         return "CreateTrainingSessionRequest{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", sessionDate=" + sessionDate +
+                ", sessionDate='" + sessionDate + '\'' +
                 ", durationMinutes=" + durationMinutes +
                 ", sessionType='" + sessionType + '\'' +
-                ", trainingProgramId=" + trainingProgramId +
+                ", trainingProgramId='" + trainingProgramId + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 } 

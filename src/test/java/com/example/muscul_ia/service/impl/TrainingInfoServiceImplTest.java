@@ -69,16 +69,16 @@ class TrainingInfoServiceImplTest {
         testTrainingInfo.setUpdatedAt(LocalDateTime.now());
 
         createRequest = new CreateTrainingInfoRequest();
-        createRequest.setGender(Gender.MALE);
+        createRequest.setGender(Gender.MALE.name());
         createRequest.setWeight(75.0);
         createRequest.setHeight(180.0);
         createRequest.setBodyFatPercentage(15.0);
-        createRequest.setExperienceLevel(ExperienceLevel.INTERMEDIATE);
-        createRequest.setSessionFrequency(SessionFrequency.THREE_TO_FOUR);
-        createRequest.setSessionDuration(SessionDuration.MEDIUM);
-        createRequest.setMainGoal(MainGoal.MUSCLE_GAIN);
-        createRequest.setTrainingPreference(TrainingPreference.STRENGTH_TRAINING);
-        createRequest.setEquipment(Equipment.GYM_ACCESS);
+        createRequest.setExperienceLevel(ExperienceLevel.INTERMEDIATE.name());
+        createRequest.setSessionFrequency(SessionFrequency.THREE_TO_FOUR.name());
+        createRequest.setSessionDuration(SessionDuration.MEDIUM.name());
+        createRequest.setMainGoal(MainGoal.MUSCLE_GAIN.name());
+        createRequest.setTrainingPreference(TrainingPreference.STRENGTH_TRAINING.name());
+        createRequest.setEquipment(Equipment.GYM_ACCESS.name());
 
         updateRequest = new UpdateTrainingInfoRequest();
         updateRequest.setWeight(80.0);

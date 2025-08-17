@@ -1,12 +1,11 @@
 package com.example.muscul_ia.dto;
 
-import com.example.muscul_ia.enums.*;
 import jakarta.validation.constraints.*;
 
 public class CreateTrainingInfoRequest {
     
     @NotNull(message = "Le genre est obligatoire")
-    private Gender gender;
+    private String gender;
     
     @NotNull(message = "Le poids est obligatoire")
     @DecimalMin(value = "30.0", message = "Le poids doit être d'au moins 30 kg")
@@ -23,30 +22,30 @@ public class CreateTrainingInfoRequest {
     private Double bodyFatPercentage;
     
     @NotNull(message = "Le niveau d'expérience est obligatoire")
-    private ExperienceLevel experienceLevel;
-    
+    private String experienceLevel;
+
     @NotNull(message = "La fréquence des sessions est obligatoire")
-    private SessionFrequency sessionFrequency;
+    private String sessionFrequency;
     
     @NotNull(message = "La durée des sessions est obligatoire")
-    private SessionDuration sessionDuration;
+    private String sessionDuration;
     
     @NotNull(message = "L'objectif principal est obligatoire")
-    private MainGoal mainGoal;
+    private String mainGoal;
     
     @NotNull(message = "La préférence d'entraînement est obligatoire")
-    private TrainingPreference trainingPreference;
+    private String trainingPreference;
     
     @NotNull(message = "L'équipement disponible est obligatoire")
-    private Equipment equipment;
+    private String equipment;
 
     // Constructors
     public CreateTrainingInfoRequest() {}
 
-    public CreateTrainingInfoRequest(Gender gender, Double weight, Double height, Double bodyFatPercentage,
-                                   ExperienceLevel experienceLevel, SessionFrequency sessionFrequency,
-                                   SessionDuration sessionDuration, MainGoal mainGoal,
-                                   TrainingPreference trainingPreference, Equipment equipment) {
+    public CreateTrainingInfoRequest(String gender, Double weight, Double height, Double bodyFatPercentage,
+                                   String experienceLevel, String sessionFrequency,
+                                   String sessionDuration, String mainGoal,
+                                   String trainingPreference, String equipment) {
         this.gender = gender;
         this.weight = weight;
         this.height = height;
@@ -60,8 +59,8 @@ public class CreateTrainingInfoRequest {
     }
 
     // Getters and Setters
-    public Gender getGender() { return gender; }
-    public void setGender(Gender gender) { this.gender = gender; }
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
     
     public Double getWeight() { return weight; }
     public void setWeight(Double weight) { this.weight = weight; }
@@ -72,23 +71,23 @@ public class CreateTrainingInfoRequest {
     public Double getBodyFatPercentage() { return bodyFatPercentage; }
     public void setBodyFatPercentage(Double bodyFatPercentage) { this.bodyFatPercentage = bodyFatPercentage; }
     
-    public ExperienceLevel getExperienceLevel() { return experienceLevel; }
-    public void setExperienceLevel(ExperienceLevel experienceLevel) { this.experienceLevel = experienceLevel; }
+    public String getExperienceLevel() { return experienceLevel; }
+    public void setExperienceLevel(String experienceLevel) { this.experienceLevel = experienceLevel; }
     
-    public SessionFrequency getSessionFrequency() { return sessionFrequency; }
-    public void setSessionFrequency(SessionFrequency sessionFrequency) { this.sessionFrequency = sessionFrequency; }
+    public String getSessionFrequency() { return sessionFrequency; }
+    public void setSessionFrequency(String sessionFrequency) { this.sessionFrequency = sessionFrequency; }
     
-    public SessionDuration getSessionDuration() { return sessionDuration; }
-    public void setSessionDuration(SessionDuration sessionDuration) { this.sessionDuration = sessionDuration; }
+    public String getSessionDuration() { return sessionDuration; }
+    public void setSessionDuration(String sessionDuration) { this.sessionDuration = sessionDuration; }
     
-    public MainGoal getMainGoal() { return mainGoal; }
-    public void setMainGoal(MainGoal mainGoal) { this.mainGoal = mainGoal; }
+    public String getMainGoal() { return mainGoal; }
+    public void setMainGoal(String mainGoal) { this.mainGoal = mainGoal; }
     
-    public TrainingPreference getTrainingPreference() { return trainingPreference; }
-    public void setTrainingPreference(TrainingPreference trainingPreference) { this.trainingPreference = trainingPreference; }
+    public String getTrainingPreference() { return trainingPreference; }
+    public void setTrainingPreference(String trainingPreference) { this.trainingPreference = trainingPreference; }
     
-    public Equipment getEquipment() { return equipment; }
-    public void setEquipment(Equipment equipment) { this.equipment = equipment; }
+    public String getEquipment() { return equipment; }
+    public void setEquipment(String equipment) { this.equipment = equipment; }
 
     @Override
     public String toString() {

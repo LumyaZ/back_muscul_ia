@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -77,8 +78,9 @@ class TrainingSessionControllerTest {
         request.setDescription("Test Description");
         request.setSessionType("STRENGTH");
         request.setDurationMinutes(60);
-        request.setSessionDate(LocalDateTime.now());
-        request.setTrainingProgramId(1L);
+        request.setSessionDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)); // Convertir en String
+        request.setTrainingProgramId("1"); // Convertir en String
+        request.setUserId("1"); // Ajouter userId
 
         TrainingSessionDto response = new TrainingSessionDto();
         response.setId(1L);
@@ -150,7 +152,7 @@ class TrainingSessionControllerTest {
         CreateTrainingSessionRequest request = new CreateTrainingSessionRequest();
         request.setName("Updated Session");
         request.setDescription("Updated Description");
-        request.setSessionDate(LocalDateTime.now());
+        request.setSessionDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)); // Convertir en String
         request.setDurationMinutes(60);
 
         TrainingSessionDto existingSession = new TrainingSessionDto();

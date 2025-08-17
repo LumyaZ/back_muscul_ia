@@ -179,8 +179,7 @@ def generate_report(results):
     }
     
     for service, status in services_status.items():
-        icon = "✅" if status else "❌"
-        print(f"   {icon} {service}")
+        print(f"   {service}")
     
     # Recommandations
     print("\nRecommandations:")

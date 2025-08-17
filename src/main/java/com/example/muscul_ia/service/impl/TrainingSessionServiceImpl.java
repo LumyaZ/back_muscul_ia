@@ -39,12 +39,17 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
         trainingSession.setUser(user);
         trainingSession.setName(request.getName());
         trainingSession.setDescription(request.getDescription());
-        trainingSession.setSessionDate(request.getSessionDate());
+        trainingSession.setSessionDate(request.getSessionDateAsLocalDateTime()); // Utilise la méthode de conversion
         trainingSession.setDurationMinutes(request.getDurationMinutes());
         trainingSession.setSessionType(request.getSessionType());
         
+        // Définir les timestamps
+        LocalDateTime now = LocalDateTime.now();
+        trainingSession.setCreatedAt(now);
+        trainingSession.setUpdatedAt(now);
+        
         if (request.getTrainingProgramId() != null) {
-            Optional<TrainingProgram> trainingProgram = trainingProgramRepository.findById(request.getTrainingProgramId());
+            Optional<TrainingProgram> trainingProgram = trainingProgramRepository.findById(request.getTrainingProgramIdAsLong()); // Utilise la méthode de conversion
             if (trainingProgram.isPresent()) {
                 trainingSession.setTrainingProgram(trainingProgram.get());
             } else {
@@ -140,12 +145,15 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
             
             trainingSession.setName(request.getName());
             trainingSession.setDescription(request.getDescription());
-            trainingSession.setSessionDate(request.getSessionDate());
+            trainingSession.setSessionDate(request.getSessionDateAsLocalDateTime()); // Utilise la méthode de conversion
             trainingSession.setDurationMinutes(request.getDurationMinutes());
             trainingSession.setSessionType(request.getSessionType());
             
+            // Mettre à jour le timestamp
+            trainingSession.setUpdatedAt(LocalDateTime.now());
+            
             if (request.getTrainingProgramId() != null) {
-                Optional<TrainingProgram> trainingProgram = trainingProgramRepository.findById(request.getTrainingProgramId());
+                Optional<TrainingProgram> trainingProgram = trainingProgramRepository.findById(request.getTrainingProgramIdAsLong()); // Utilise la méthode de conversion
                 if (trainingProgram.isPresent()) {
                     trainingSession.setTrainingProgram(trainingProgram.get());
                 } else {

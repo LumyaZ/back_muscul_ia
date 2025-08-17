@@ -67,8 +67,8 @@ public class GlobalExceptionHandler {
     }
     
     /**
-     * Enhanced error response class.
-     * Classe de réponse d'erreur améliorée.
+     * Error response class.
+     * Classe de réponse d'erreur.
      */
     public static class ErrorResponse {
         private String message;
